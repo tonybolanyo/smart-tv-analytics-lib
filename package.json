@@ -1,0 +1,92 @@
+{
+  "name": "smart-tv-analytics",
+  "version": "1.0.0",
+  "description": "Libreria de Firebase Analytics para aplicaciones Angular en Smart TVs compatible con ES5 para Tizen y WebOS",
+  "main": "bundles/smart-tv-analytics.umd.js",
+  "module": "fesm2015/smart-tv-analytics.js",
+  "es2015": "fesm2015/smart-tv-analytics.js",
+  "es5": "fesm5/smart-tv-analytics.js",
+  "esm2015": "esm2015/smart-tv-analytics.js",
+  "esm5": "esm5/smart-tv-analytics.js",
+  "fesm2015": "fesm2015/smart-tv-analytics.js",
+  "fesm5": "fesm5/smart-tv-analytics.js",
+  "typings": "smart-tv-analytics.d.ts",
+  "metadata": "smart-tv-analytics.metadata.json",
+  "keywords": [
+    "angular",
+    "firebase",
+    "analytics",
+    "smart-tv",
+    "tizen",
+    "webos",
+    "television",
+    "es5",
+    "smart-tv-analytics",
+    "tv-analytics"
+  ],
+  "author": "Smart TV Analytics Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/smart-tv-analytics.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/smart-tv-analytics/issues"
+  },
+  "homepage": "https://github.com/your-org/smart-tv-analytics#readme",
+  "peerDependencies": {
+    "@angular/common": "^12.0.0",
+    "@angular/core": "^12.0.0",
+    "@angular/router": "^12.0.0",
+    "rxjs": "^7.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^12.2.0",
+    "@angular/animations": "^12.2.0",
+    "@angular/common": "^12.2.0",
+    "@angular/compiler": "^12.2.0",
+    "@angular/compiler-cli": "^12.2.0",
+    "@angular/core": "^12.2.0",
+    "@angular/forms": "^12.2.0",
+    "@angular/platform-browser": "^12.2.0",
+    "@angular/platform-browser-dynamic": "^12.2.0",
+    "@angular/router": "^12.2.0",
+    "@babel/core": "^7.28.4",
+    "@babel/plugin-transform-arrow-functions": "^7.27.1",
+    "@babel/plugin-transform-block-scoped-functions": "^7.27.1",
+    "@babel/plugin-transform-block-scoping": "^7.28.4",
+    "@babel/plugin-transform-classes": "^7.28.4",
+    "@babel/plugin-transform-computed-properties": "^7.27.1",
+    "@babel/plugin-transform-destructuring": "^7.28.0",
+    "@babel/plugin-transform-for-of": "^7.27.1",
+    "@babel/plugin-transform-parameters": "^7.27.7",
+    "@babel/plugin-transform-shorthand-properties": "^7.27.1",
+    "@babel/plugin-transform-spread": "^7.27.1",
+    "@babel/plugin-transform-template-literals": "^7.27.1",
+    "@babel/preset-env": "^7.28.3",
+    "@types/node": "^14.18.63",
+    "core-js": "^3.46.0",
+    "jasmine-core": "~3.8.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^12.2.0",
+    "typescript": "~4.3.0"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json && node transpile-es5.js",
+    "build:lib": "ng-packagr -p ng-package.json",
+    "build:es5": "node transpile-es5.js",
+    "test": "karma start",
+    "test:headless": "karma start --browsers=ChromeHeadless --single-run",
+    "test:watch": "karma start --watch",
+    "lint": "ng lint",
+    "pack": "npm run build && npm pack dist"
+  },
+  "sideEffects": false
+}
