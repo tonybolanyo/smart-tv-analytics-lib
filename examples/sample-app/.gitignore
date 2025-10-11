@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Builds
+dist/
+*.tgz
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Angular
+.angular/
+
+# Paquetes generados
+*.ipk
+*.wgt
+
+# Temporal
+tmp/
+temp/

@@ -1,0 +1,138 @@
+.video-container {
+  padding: 20px;
+}
+
+.back-button {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.back-button:hover,
+.back-button:focus {
+  background: #1565c0;
+  outline: 2px solid #1976d2;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.video-player {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.video-placeholder {
+  height: 400px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.player-icon {
+  font-size: 80px;
+  color: white;
+  opacity: 0.9;
+}
+
+.player-icon.playing {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.5; }
+}
+
+.video-info-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+.video-info-overlay p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.control-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.control-btn:hover:not(:disabled),
+.control-btn:focus:not(:disabled) {
+  background: #1565c0;
+  outline: 2px solid #1976d2;
+}
+
+.control-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.analytics-info {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #4caf50;
+}
+
+.analytics-info h3 {
+  margin-top: 0;
+  color: #4caf50;
+}
+
+.analytics-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.analytics-info li {
+  padding: 8px 0;
+  color: #555;
+}
+
+.analytics-info strong {
+  color: #1976d2;
+  font-family: monospace;
+}
+
+.note {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  color: #666;
+  font-size: 14px;
+}

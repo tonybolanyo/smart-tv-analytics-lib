@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://yourdomain.org/SmartTVAnalyticsSample" version="1.0.0" viewmodes="maximized">
+    <tizen:application id="SmartTVAnalyticsSample.SmartTVAnalyticsSample" package="SmartTVAnalyticsSample" required_version="2.4"/>
+    <content src="dist/index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+    <icon src="icon.png"/>
+    <name>Smart TV Analytics Sample</name>
+    <tizen:profile name="tv-samsung"/>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:setting screen-orientation="landscape" context-menu="enable" background-support="disable" encryption="disable" install-location="auto" hwkey-event="enable"/>
+    <description>Aplicación de ejemplo para demostrar smart-tv-analytics en Tizen</description>
+    <author href="http://yourdomain.org" email="developer@yourdomain.org">Smart TV Analytics Team</author>
+    <license href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License, Version 2.0</license>
+</widget>

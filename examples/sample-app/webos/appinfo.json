@@ -1,0 +1,17 @@
+{
+  "id": "com.example.smarttvanalytics",
+  "version": "1.0.0",
+  "vendor": "Smart TV Analytics Team",
+  "type": "web",
+  "main": "dist/index.html",
+  "title": "Smart TV Analytics Sample",
+  "icon": "icon.png",
+  "largeIcon": "icon.png",
+  "appDescription": "Aplicación de ejemplo para demostrar smart-tv-analytics en webOS",
+  "resolution": "1920x1080",
+  "disallowScrollingInMainView": true,
+  "transparent": false,
+  "requiredPermissions": [
+    "internet"
+  ]
+}
