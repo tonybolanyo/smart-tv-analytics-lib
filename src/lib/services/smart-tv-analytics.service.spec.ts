@@ -264,6 +264,20 @@ describe('SmartTVAnalyticsService', () => {
       );
     });
 
+    it('should not track first visit if not first session', () => {
+      const notFirstSessionInfo = { ...mockSessionInfo, isFirstSession: false };
+      sessionService.getCurrentSession.and.returnValue(notFirstSessionInfo);
+      storageService.getItem.and.returnValue('1.0.0');
+      eventBatchingService.addEvent.calls.reset();
+
+      service.initialize(mockConfig);
+
+      const firstVisitCalls = eventBatchingService.addEvent.calls.all().filter(call => 
+        call.args[0].name === 'first_visit'
+      );
+      expect(firstVisitCalls.length).toBe(0);
+    });
+
     it('should track app update event', () => {
       storageService.getItem.and.returnValue('0.9.0');
 
@@ -278,6 +292,18 @@ describe('SmartTVAnalyticsService', () => {
           })
         })
       );
+    });
+
+    it('should not track app update if version unchanged', () => {
+      storageService.getItem.and.returnValue('1.0.0');
+      eventBatchingService.addEvent.calls.reset();
+
+      service.initialize(mockConfig);
+
+      const appUpdateCalls = eventBatchingService.addEvent.calls.all().filter(call => 
+        call.args[0].name === 'app_update'
+      );
+      expect(appUpdateCalls.length).toBe(0);
     });
   });
 });
