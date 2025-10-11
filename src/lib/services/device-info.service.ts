@@ -91,57 +91,59 @@ export class DeviceInfoService {
    * @private
    */
   private detectPlatform(userAgent: string): string {
+    // Convert to lowercase for case-insensitive matching
+    const ua = userAgent.toLowerCase();
+    
     // Samsung Tizen
-    if (userAgent.includes('Tizen')) {
+    if (ua.includes('tizen')) {
       return 'Tizen';
     }
     
-    // LG WebOS
-    if (userAgent.includes('webOS') || userAgent.includes('Web0S')) {
+    // LG WebOS (case-insensitive: webos, webOS, Web0S, WEB0S)
+    if (ua.includes('webos') || ua.includes('web0s')) {
       return 'WebOS';
     }
     
     // Generic Smart TV detection
-    if (userAgent.includes('SmartTV') || 
-        userAgent.includes('Smart-TV') ||
-        userAgent.includes('SMART-TV')) {
+    if (ua.includes('smarttv') || 
+        ua.includes('smart-tv')) {
       return 'SmartTV';
     }
     
     // Android TV
-    if (userAgent.includes('Android') && userAgent.includes('TV')) {
+    if (ua.includes('android') && ua.includes('tv')) {
       return 'AndroidTV';
     }
     
     // Roku
-    if (userAgent.includes('Roku')) {
+    if (ua.includes('roku')) {
       return 'Roku';
     }
     
     // Apple TV
-    if (userAgent.includes('AppleTV')) {
+    if (ua.includes('appletv')) {
       return 'AppleTV';
     }
     
     // Fire TV
-    if (userAgent.includes('AFTT') || userAgent.includes('AFTM')) {
+    if (ua.includes('aftt') || ua.includes('aftm')) {
       return 'FireTV';
     }
     
     // Fallback to browser detection
-    if (userAgent.includes('Chrome')) {
+    if (ua.includes('chrome')) {
       return 'Chrome';
     }
     
-    if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+    if (ua.includes('safari') && !ua.includes('chrome')) {
       return 'Safari';
     }
     
-    if (userAgent.includes('Firefox')) {
+    if (ua.includes('firefox')) {
       return 'Firefox';
     }
     
-    if (userAgent.includes('Edge')) {
+    if (ua.includes('edge')) {
       return 'Edge';
     }
     
@@ -188,6 +190,11 @@ export class DeviceInfoService {
       const webosMatch = userAgent.match(/webOS[;\s]([0-9.]+)/i);
       if (webosMatch) {
         version = webosMatch[1];
+      }
+    } else if (platform === 'AndroidTV') {
+      const androidMatch = userAgent.match(/Android[;\s]([0-9.]+)/i);
+      if (androidMatch) {
+        version = androidMatch[1];
       }
     }
     

@@ -4,7 +4,7 @@
  * @version 1.0.0
  */
 
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, flush, flushMicrotasks, waitForAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -292,36 +292,38 @@ describe('SmartTVAnalyticsService', () => {
       expect(service.getCurrentSession()).toBeTruthy();
     });
 
-    it('should track first visit event for new users', async () => {
+    it('should track first visit event for new users', (done) => {
       const firstSessionInfo = { ...mockSessionInfo, isFirstSession: true };
       sessionService.getCurrentSession.and.returnValue(firstSessionInfo);
       storageService.getItem.and.returnValue(null);
 
       service.initialize(mockConfig);
       
-      // Wait for async event logging
-      await new Promise(resolve => setTimeout(resolve, 10));
-      
-      // First visit event should be logged
-      const firstVisitCalls = eventBatchingService.addEvent.calls.all().filter(call => 
-        call.args[0].name === 'first_visit'
-      );
-      expect(firstVisitCalls.length).toBeGreaterThan(0);
+      // Wait for promises to resolve (longer delay for promise chain)
+      setTimeout(() => {
+        // First visit event should be logged
+        const firstVisitCalls = eventBatchingService.addEvent.calls.all().filter(call => 
+          call.args[0].name === 'first_visit'
+        );
+        expect(firstVisitCalls.length).toBeGreaterThan(0);
+        done();
+      }, 100);
     });
 
-    it('should track app update event when version changes', async () => {
+    it('should track app update event when version changes', (done) => {
       storageService.getItem.and.returnValue('0.9.0');
 
       service.initialize(mockConfig);
       
-      // Wait for async event logging
-      await new Promise(resolve => setTimeout(resolve, 10));
-      
-      // App update event should be logged
-      const appUpdateCalls = eventBatchingService.addEvent.calls.all().filter(call => 
-        call.args[0].name === 'app_update'
-      );
-      expect(appUpdateCalls.length).toBeGreaterThan(0);
+      // Wait for promises to resolve (longer delay for promise chain)
+      setTimeout(() => {
+        // App update event should be logged
+        const appUpdateCalls = eventBatchingService.addEvent.calls.all().filter(call => 
+          call.args[0].name === 'app_update'
+        );
+        expect(appUpdateCalls.length).toBeGreaterThan(0);
+        done();
+      }, 100);
     });
 
     it('should handle app version checking', () => {
@@ -493,15 +495,7 @@ describe('SmartTVAnalyticsService', () => {
   });
 
   describe('engagement tracking', () => {
-    beforeEach(() => {
-      jasmine.clock().install();
-    });
-
-    afterEach(() => {
-      jasmine.clock().uninstall();
-    });
-
-    it('should setup engagement tracking when enabled', () => {
+    it('should setup engagement tracking when enabled', fakeAsync(() => {
       const engagementConfig = {
         ...mockConfig,
         enableEngagementTracking: true
@@ -509,13 +503,16 @@ describe('SmartTVAnalyticsService', () => {
       
       service.initialize(engagementConfig);
       
-      // Advance time to trigger engagement event
-      jasmine.clock().tick(31000); // 30 seconds + 1
+      // Advance time to trigger engagement event (30 seconds default interval + 1 second)
+      tick(31000);
       
       expect(eventBatchingService.addEvent).toHaveBeenCalled();
-    });
+      
+      // Clean up periodic tasks
+      discardPeriodicTasks();
+    }));
 
-    it('should reset engagement time on user interactions', () => {
+    it('should reset engagement time on user interactions', fakeAsync(() => {
       const engagementConfig = {
         ...mockConfig,
         enableEngagementTracking: true
@@ -529,10 +526,15 @@ describe('SmartTVAnalyticsService', () => {
       document.dispatchEvent(new Event('mousemove'));
       document.dispatchEvent(new TouchEvent('touchstart'));
       
+      tick();
+      
       expect(true).toBe(true);
-    });
+      
+      // Clean up periodic tasks
+      discardPeriodicTasks();
+    }));
 
-    it('should track engagement time accurately', () => {
+    it('should track engagement time accurately', fakeAsync(() => {
       const engagementConfig = {
         ...mockConfig,
         enableEngagementTracking: true
@@ -540,11 +542,14 @@ describe('SmartTVAnalyticsService', () => {
       
       service.initialize(engagementConfig);
       
-      // Fast-forward time
-      jasmine.clock().tick(60000); // 1 minute
+      // Fast-forward time (1 minute)
+      tick(60000);
       
       // Engagement event should be logged
       expect(eventBatchingService.addEvent).toHaveBeenCalled();
-    });
+      
+      // Clean up periodic tasks
+      discardPeriodicTasks();
+    }));
   });
 });
