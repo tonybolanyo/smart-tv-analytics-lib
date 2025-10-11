@@ -10,6 +10,7 @@ Esta es una aplicación de ejemplo completa que demuestra cómo integrar y usar 
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Desarrollo](#desarrollo)
 - [Compilación](#compilación)
+- [Testing](#testing)
 - [Empaquetado](#empaquetado)
 - [Funcionalidades Demostradas](#funcionalidades-demostradas)
 
@@ -25,6 +26,7 @@ Esta aplicación de ejemplo incluye:
 - ✅ Optimización para Smart TVs (Tizen y webOS)
 - ✅ Scripts de empaquetado para ambas plataformas
 - ✅ Configuración lista para producción
+- ✅ **Suite completa de tests end-to-end con Playwright**
 
 ## 📦 Requisitos Previos
 
@@ -200,6 +202,55 @@ npm run build:webos
 Este comando:
 1. Compila la aplicación en modo producción
 2. Copia los archivos al directorio `webos/dist/`
+
+## 🧪 Testing
+
+Esta aplicación incluye una suite completa de tests end-to-end (E2E) usando Playwright.
+
+### Tests Unitarios
+
+```bash
+npm test
+```
+
+### Tests End-to-End
+
+```bash
+# Ejecutar todos los tests E2E
+npm run e2e
+
+# Ejecutar con interfaz visual
+npm run e2e:headed
+
+# Modo interactivo
+npm run e2e:ui
+
+# Ver reporte de tests
+npm run e2e:report
+```
+
+### Cobertura de Tests E2E
+
+Los tests E2E cubren los siguientes flujos críticos:
+
+- ✅ **Página de Inicio**: Carga, visualización del catálogo, navegación
+- ✅ **Reproductor de Video**: Controles de reproducción, pausa, seek
+- ✅ **Navegación**: Flujos completos de usuario entre páginas
+- ✅ **Analytics**: Verificación de eventos de tracking
+
+### Documentación Completa de Testing
+
+Para una guía completa sobre cómo ejecutar, escribir y extender los tests E2E, consulta:
+
+**[📖 E2E Testing Guide](./E2E-TESTING.md)**
+
+Este documento incluye:
+- Configuración del entorno de testing
+- Cómo ejecutar tests
+- Cómo escribir nuevos tests
+- Mejores prácticas
+- Troubleshooting
+- Integración con CI/CD
 
 ## 📦 Empaquetado
 

@@ -14,7 +14,12 @@
     "package:tizen": "bash scripts/build-tizen.sh",
     "package:webos": "bash scripts/build-webos.sh",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
+    "e2e:ui": "playwright test --ui",
+    "e2e:debug": "playwright test --debug",
+    "e2e:report": "playwright show-report"
   },
   "private": true,
   "dependencies": {
@@ -27,16 +32,17 @@
     "@angular/platform-browser-dynamic": "^12.2.0",
     "@angular/router": "^12.2.0",
     "rxjs": "^7.0.0",
+    "smart-tv-analytics": "file:../..",
     "tslib": "^2.0.0",
-    "zone.js": "~0.11.4",
-    "smart-tv-analytics": "file:../.."
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.0",
     "@angular/cli": "^12.2.0",
     "@angular/compiler-cli": "^12.2.0",
+    "@playwright/test": "^1.56.0",
     "@types/jasmine": "~3.8.0",
-    "@types/node": "^14.0.0",
+    "@types/node": "^14.18.63",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
