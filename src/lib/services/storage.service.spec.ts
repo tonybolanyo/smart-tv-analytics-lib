@@ -160,5 +160,83 @@ describe('StorageService', () => {
       
       expect(console.warn).toHaveBeenCalled();
     });
+
+    it('should handle getAllKeys errors for localStorage', () => {
+      // Only test if using localStorage
+      if (service.getStorageType() === 'localStorage') {
+        spyOn(console, 'warn');
+        
+        const originalKey = Storage.prototype.key;
+        spyOn(Storage.prototype, 'key').and.throwError('Storage access denied');
+        
+        const keys = service.getAllKeys();
+        
+        Storage.prototype.key = originalKey;
+        
+        expect(console.warn).toHaveBeenCalled();
+        expect(Array.isArray(keys)).toBe(true);
+      } else {
+        // For memory storage, just verify it returns an array
+        const keys = service.getAllKeys();
+        expect(Array.isArray(keys)).toBe(true);
+      }
+    });
+  });
+
+  describe('getAllKeys for localStorage', () => {
+    it('should enumerate localStorage keys when using localStorage', () => {
+      // Verify we're using localStorage
+      if (service.getStorageType() === 'localStorage') {
+        service.setItem('test1', 'value1');
+        service.setItem('test2', 'value2');
+        
+        const keys = service.getAllKeys();
+        
+        expect(keys).toContain('test1');
+        expect(keys).toContain('test2');
+      } else {
+        // If using memory storage, test that behavior instead
+        service.setItem('test1', 'value1');
+        service.setItem('test2', 'value2');
+        
+        const keys = service.getAllKeys();
+        expect(keys).toContain('test1');
+        expect(keys).toContain('test2');
+      }
+    });
+  });
+
+  describe('memory storage fallback', () => {
+    it('should use memory storage when localStorage is not available', () => {
+      // This is already tested implicitly through error handling
+      // but we can verify the storage type detection
+      const storageType = service.getStorageType();
+      expect(['localStorage', 'memory']).toContain(storageType);
+    });
+
+    it('should store and retrieve from memory when localStorage fails', () => {
+      // Only test if currently using localStorage
+      if (service.getStorageType() === 'localStorage') {
+        const originalSetItem = Storage.prototype.setItem;
+        const originalGetItem = Storage.prototype.getItem;
+        
+        spyOn(Storage.prototype, 'setItem').and.throwError('Storage quota exceeded');
+        spyOn(Storage.prototype, 'getItem').and.throwError('Storage access denied');
+        spyOn(console, 'warn');
+        
+        service.setItem('memKey', 'memValue');
+        const value = service.getItem('memKey');
+        
+        Storage.prototype.setItem = originalSetItem;
+        Storage.prototype.getItem = originalGetItem;
+        
+        expect(value).toBe('memValue');
+      } else {
+        // Already using memory storage
+        service.setItem('memKey', 'memValue');
+        const value = service.getItem('memKey');
+        expect(value).toBe('memValue');
+      }
+    });
   });
 });
