@@ -32,7 +32,7 @@ import { StorageService } from './storage.service';
 })
 export class SmartTVAnalyticsService implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
-  private config: SmartTVAnalyticsConfig;
+  private config!: SmartTVAnalyticsConfig;
   private isInitialized = false;
   private collectionEnabled = true;
   private userId?: string;
@@ -206,21 +206,26 @@ export class SmartTVAnalyticsService implements OnDestroy {
     const session = this.sessionService.getCurrentSession();
     const device = this.deviceInfo.getDeviceInfo();
 
-    const baseParams = {
+    const baseParams: Record<string, string | number | boolean> = {
       app_name: this.config.appName,
       app_version: this.config.appVersion,
       platform: device.platform,
-      language: device.language,
-      session_id: session?.sessionId,
-      session_number: session?.sessionNumber,
+      language: device.language || '',
       engagement_time_msec: Date.now() - this.lastEngagementTime,
       ...this.config.defaultParameters,
       ...parameters
     };
+    
+    if (session?.sessionId) {
+      baseParams['session_id'] = session.sessionId;
+    }
+    if (session?.sessionNumber !== undefined) {
+      baseParams['session_number'] = session.sessionNumber;
+    }
 
     return {
       name: eventName,
-      params: baseParams,
+      params: baseParams as EventParameters,
       timestamp_micros: Date.now() * 1000
     };
   }
@@ -234,7 +239,7 @@ export class SmartTVAnalyticsService implements OnDestroy {
     if (this.config.enablePageViewTracking && DEFAULT_AUTO_EVENTS.pageView) {
       this.router.events
         .pipe(
-          filter(event => event instanceof NavigationEnd),
+          filter((event): event is NavigationEnd => event instanceof NavigationEnd),
           takeUntil(this.destroy$)
         )
         .subscribe((event: NavigationEnd) => {
