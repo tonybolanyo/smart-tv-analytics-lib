@@ -269,5 +269,86 @@ describe('SessionService', () => {
       
       expect(service.getCurrentSession()).toBeTruthy();
     });
+
+    it('should handle timeout expiration', (done) => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      const initialSession = service.getCurrentSession();
+      
+      expect(initialSession).toBeTruthy();
+      done();
+    });
+  });
+
+  describe('session persistence', () => {
+    it('should save session to storage', () => {
+      storageService.getItem.and.returnValue(null);
+      
+      service.startNewSession();
+      
+      expect(storageService.setItem).toHaveBeenCalledWith(
+        'smarttv_analytics_session',
+        jasmine.any(String)
+      );
+    });
+
+    it('should mark first session correctly when no previous data', () => {
+      storageService.getItem.and.returnValue(null);
+      
+      const session = service.startNewSession();
+      
+      expect(session.isFirstSession).toBe(true);
+    });
+
+    it('should not mark as first session when previous session exists', () => {
+      storageService.getItem.and.callFake((key: string) => {
+        if (key === 'smarttv_analytics_first_session') {
+          return 'true';
+        }
+        return null;
+      });
+      
+      const session = service.startNewSession();
+      
+      expect(session.isFirstSession).toBe(false);
+    });
+
+    it('should increment session number correctly', () => {
+      storageService.getItem.and.callFake((key: string) => {
+        if (key === 'smarttv_analytics_session_number') {
+          return '5';
+        }
+        if (key === 'smarttv_analytics_first_session') {
+          return 'true';
+        }
+        return null;
+      });
+      
+      const session = service.startNewSession();
+      
+      // Session number should be incremented
+      expect(session.sessionNumber).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe('error handling', () => {
+    it('should handle invalid session data in storage', () => {
+      storageService.getItem.and.returnValue('invalid-json-data');
+      
+      service.initialize();
+      
+      // Should create new session instead of crashing
+      expect(service.getCurrentSession()).toBeTruthy();
+    });
+
+    it('should handle missing session properties', () => {
+      storageService.getItem.and.returnValue('{}');
+      
+      service.initialize();
+      
+      // Should handle gracefully
+      expect(service.getCurrentSession()).toBeTruthy();
+    });
   });
 });

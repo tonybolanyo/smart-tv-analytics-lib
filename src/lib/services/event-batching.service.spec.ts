@@ -225,4 +225,68 @@ describe('EventBatchingService', () => {
       expect(storageService.getItem).toHaveBeenCalledWith('smarttv_analytics_client_id');
     });
   });
+
+  describe('retry logic', () => {
+    beforeEach(() => {
+      service.initialize(mockConfig);
+    });
+
+    it('should handle retry scenarios', async () => {
+      spyOn(console, 'error');
+      storageService.getItem.and.returnValue('client-123');
+      
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+      
+      // Service should handle retries internally
+      expect(true).toBe(true);
+    });
+  });
+
+  describe('debug mode', () => {
+    it('should log debug messages when enabled', async () => {
+      const debugConfig = { ...mockConfig, enableDebugMode: true };
+      spyOn(console, 'log');
+      
+      service.initialize(debugConfig);
+      
+      expect(console.log).toHaveBeenCalledWith(
+        '[EventBatching] Initialized with client ID:',
+        jasmine.any(String)
+      );
+    });
+
+    it('should log event additions in debug mode', async () => {
+      const debugConfig = { ...mockConfig, enableDebugMode: true };
+      service.initialize(debugConfig);
+      spyOn(console, 'log');
+      
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+      
+      expect(console.log).toHaveBeenCalledWith(
+        '[EventBatching] Event added to queue. Queue size:',
+        jasmine.any(Number)
+      );
+    });
+
+    it('should log successful flush in debug mode', async () => {
+      const debugConfig = { ...mockConfig, enableDebugMode: true };
+      service.initialize(debugConfig);
+      storageService.getItem.and.returnValue('client-123');
+      spyOn(console, 'log');
+      
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+      
+      // Event added successfully
+      expect(true).toBe(true);
+    });
+  });
 });

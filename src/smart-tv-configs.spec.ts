@@ -162,6 +162,64 @@ describe('Smart TV Configs', () => {
       expect(config.measurementId).toBe('G-TEST123');
       expect(config.batchSize).toBe(TIZEN_CONFIG.batchSize);
     });
+
+    it('should handle multiple overrides', () => {
+      mockUserAgent('Mozilla/5.0 (webos; Linux/SmartTV) AppleWebKit/537.36');
+      
+      const overrides: Partial<SmartTVAnalyticsConfig> = {
+        batchSize: 15,
+        flushInterval: 2000,
+        enableDebugMode: true,
+        maxRetryAttempts: 5
+      };
+      
+      const config = createSmartTVConfig(baseConfig, overrides);
+      
+      expect(config.batchSize).toBe(15);
+      expect(config.flushInterval).toBe(2000);
+      expect(config.enableDebugMode).toBe(true);
+      expect(config.maxRetryAttempts).toBe(5);
+    });
+
+    it('should preserve base config properties', () => {
+      mockUserAgent('Mozilla/5.0 (Windows NT 10.0) Chrome/91.0');
+      
+      const config = createSmartTVConfig(baseConfig);
+      
+      expect(config.measurementId).toBe(baseConfig.measurementId);
+      expect(config.apiSecret).toBe(baseConfig.apiSecret);
+      expect(config.appName).toBe(baseConfig.appName);
+      expect(config.appVersion).toBe(baseConfig.appVersion);
+    });
+  });
+
+  describe('platform-specific optimizations', () => {
+    it('should use optimized settings for Tizen', () => {
+      mockUserAgent('Mozilla/5.0 (SMART-TV; Linux; Tizen 5.0) AppleWebKit/537.36');
+      
+      const config = getRecommendedConfig();
+      
+      expect(config.batchSize).toBe(5);
+      expect(config.flushInterval).toBe(60000);
+    });
+
+    it('should use optimized settings for WebOS', () => {
+      mockUserAgent('Mozilla/5.0 (webos; Linux/SmartTV) AppleWebKit/537.36');
+      
+      const config = getRecommendedConfig();
+      
+      expect(config.batchSize).toBe(8);
+      expect(config.flushInterval).toBe(45000);
+    });
+
+    it('should use conservative settings for low resource devices', () => {
+      mockUserAgent('Mozilla/5.0 (SmartTV; Linux) AppleWebKit/537.36');
+      
+      const config = getRecommendedConfig();
+      
+      expect(config.batchSize).toBe(3);
+      expect(config.enableEngagementTracking).toBe(false);
+    });
   });
 
   /**

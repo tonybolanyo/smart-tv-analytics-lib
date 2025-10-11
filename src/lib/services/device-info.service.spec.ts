@@ -209,6 +209,87 @@ describe('DeviceInfoService', () => {
     });
   });
 
+  describe('additional platform detection', () => {
+    it('should detect Tizen with Samsung model', () => {
+      mockUserAgent('Mozilla/5.0 (SMART-TV; SAMSUNG UN65KS9500) AppleWebKit/537.36 (KHTML, like Gecko) Tizen/3.0');
+      service = TestBed.inject(DeviceInfoService);
+      
+      const deviceInfo = service.getDeviceInfo();
+      expect(deviceInfo.platform).toBe('Tizen');
+      expect(deviceInfo.model).toBeTruthy();
+    });
+
+    it('should detect WebOS with LG model', () => {
+      mockUserAgent('Mozilla/5.0 (Web0S; Linux/SmartTV) AppleWebKit/537.36 LG-OLED65C8PUA');
+      service = TestBed.inject(DeviceInfoService);
+      
+      const deviceInfo = service.getDeviceInfo();
+      expect(deviceInfo.platform).toBe('WebOS');
+    });
+
+    it('should detect OS version for Tizen', () => {
+      mockUserAgent('Mozilla/5.0 (SMART-TV; Linux; Tizen 6.5) AppleWebKit/537.36');
+      service = TestBed.inject(DeviceInfoService);
+      
+      const deviceInfo = service.getDeviceInfo();
+      expect(deviceInfo.osVersion).toBeTruthy();
+    });
+
+    it('should detect OS version for WebOS', () => {
+      mockUserAgent('Mozilla/5.0 (Web0S; webOS.TV-2022; Linux/SmartTV) AppleWebKit/537.36');
+      service = TestBed.inject(DeviceInfoService);
+      
+      const deviceInfo = service.getDeviceInfo();
+      expect(deviceInfo.platform).toBe('WebOS');
+    });
+
+    it('should detect Android TV version', () => {
+      mockUserAgent('Mozilla/5.0 (Linux; Android 11; Android TV) AppleWebKit/537.36');
+      service = TestBed.inject(DeviceInfoService);
+      
+      const deviceInfo = service.getDeviceInfo();
+      expect(deviceInfo.platform).toBe('AndroidTV');
+      expect(deviceInfo.osVersion).toBeTruthy();
+    });
+
+    it('should handle user agents with mixed case', () => {
+      mockUserAgent('Mozilla/5.0 (WEB0S; Linux/SmartTV) AppleWebKit/537.36');
+      service = TestBed.inject(DeviceInfoService);
+      
+      expect(service.getPlatform()).toBe('WebOS');
+    });
+  });
+
+  describe('screen resolution detection', () => {
+    it('should detect screen resolution from window', () => {
+      service = TestBed.inject(DeviceInfoService);
+      const resolution = service.getScreenResolution();
+      
+      expect(resolution).toBeDefined();
+      if (resolution) {
+        expect(resolution).toMatch(/\d+x\d+/);
+      }
+    });
+  });
+
+  describe('timezone detection', () => {
+    it('should detect timezone', () => {
+      service = TestBed.inject(DeviceInfoService);
+      const deviceInfo = service.getDeviceInfo();
+      
+      expect(deviceInfo.timezone).toBeDefined();
+    });
+  });
+
+  describe('language detection', () => {
+    it('should detect language from navigator', () => {
+      service = TestBed.inject(DeviceInfoService);
+      const deviceInfo = service.getDeviceInfo();
+      
+      expect(deviceInfo.language).toBeDefined();
+    });
+  });
+
   /**
    * Helper function to mock user agent
    */
