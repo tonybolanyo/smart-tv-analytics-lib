@@ -1,11 +1,12 @@
-<div class="home">
-  <h2>Catálogo de Videos</h2>
-  <p>Bienvenido a la aplicación de ejemplo de Smart TV Analytics</p>
+<div class="home" data-testid="home-page">
+  <h2 data-testid="home-title">Catálogo de Videos</h2>
+  <p data-testid="home-welcome">Bienvenido a la aplicación de ejemplo de Smart TV Analytics</p>
   
-  <div class="video-grid">
+  <div class="video-grid" data-testid="video-grid">
     <div 
       *ngFor="let video of videos" 
       class="video-card"
+      [attr.data-testid]="'video-card-' + video.id"
       [routerLink]="['/video', video.id]"
       (click)="onVideoClick(video)"
       tabindex="0">
@@ -13,8 +14,8 @@
         <div class="play-icon">▶</div>
       </div>
       <div class="video-info">
-        <h3>{{ video.title }}</h3>
-        <p class="duration">{{ video.duration }}</p>
+        <h3 [attr.data-testid]="'video-title-' + video.id">{{ video.title }}</h3>
+        <p class="duration" [attr.data-testid]="'video-duration-' + video.id">{{ video.duration }}</p>
       </div>
     </div>
   </div>

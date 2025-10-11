@@ -1,32 +1,32 @@
-<div class="video-container">
-  <button class="back-button" (click)="goBack()">← Volver</button>
+<div class="video-container" data-testid="video-page">
+  <button class="back-button" data-testid="back-button" (click)="goBack()">← Volver</button>
   
-  <h2>{{ videoTitle }}</h2>
+  <h2 data-testid="video-title">{{ videoTitle }}</h2>
   
-  <div class="video-player">
+  <div class="video-player" data-testid="video-player">
     <div class="video-placeholder">
-      <div class="player-icon" *ngIf="!isPlaying">▶</div>
-      <div class="player-icon playing" *ngIf="isPlaying">⏸</div>
+      <div class="player-icon" *ngIf="!isPlaying" data-testid="player-icon-paused">▶</div>
+      <div class="player-icon playing" *ngIf="isPlaying" data-testid="player-icon-playing">⏸</div>
       <div class="video-info-overlay">
-        <p>{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</p>
+        <p data-testid="video-time">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</p>
       </div>
     </div>
   </div>
   
-  <div class="controls">
-    <button (click)="onPlay()" [disabled]="isPlaying" class="control-btn">
+  <div class="controls" data-testid="video-controls">
+    <button (click)="onPlay()" [disabled]="isPlaying" class="control-btn" data-testid="play-button">
       ▶ Reproducir
     </button>
-    <button (click)="onPause()" [disabled]="!isPlaying" class="control-btn">
+    <button (click)="onPause()" [disabled]="!isPlaying" class="control-btn" data-testid="pause-button">
       ⏸ Pausar
     </button>
-    <button (click)="onSeek(-10)" class="control-btn">
+    <button (click)="onSeek(-10)" class="control-btn" data-testid="seek-backward-button">
       ⏪ -10s
     </button>
-    <button (click)="onSeek(10)" class="control-btn">
+    <button (click)="onSeek(10)" class="control-btn" data-testid="seek-forward-button">
       ⏩ +10s
     </button>
-    <button (click)="onComplete()" class="control-btn">
+    <button (click)="onComplete()" class="control-btn" data-testid="complete-button">
       ⏹ Finalizar
     </button>
   </div>

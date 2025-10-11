@@ -28,3 +28,8 @@ Thumbs.db
 # Temporal
 tmp/
 temp/
+
+# Playwright
+playwright-report/
+test-results/
+playwright/.cache/

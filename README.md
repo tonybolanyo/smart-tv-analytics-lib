@@ -247,6 +247,17 @@ La librería incluye tests unitarios completos usando Jasmine y Karma.
 npm test
 ```
 
+### Tests End-to-End
+
+La aplicación de ejemplo incluye una suite completa de tests E2E usando Playwright:
+
+```bash
+cd examples/sample-app
+npm run e2e
+```
+
+Para más información sobre testing E2E, consulta la [guía completa de E2E testing](./examples/sample-app/E2E-TESTING.md).
+
 ### Ejemplo de test personalizado
 
 ```typescript
@@ -362,6 +373,7 @@ this.analytics.logEvent('app_navigation', {
 - API REST con Firebase Measurement Protocol
 - Eventos automáticos y batching
 - Tests unitarios completos
+- **Suite completa de tests E2E con Playwright**
 
 ## 🤝 Contribuir
 
