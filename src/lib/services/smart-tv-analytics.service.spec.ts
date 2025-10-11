@@ -171,6 +171,7 @@ describe('SmartTVAnalyticsService', () => {
     });
 
     it('should not log when collection is disabled', async () => {
+      eventBatchingService.addEvent.calls.reset();
       service.enableCollection(false);
       await service.logEvent('test_event');
 
@@ -178,6 +179,7 @@ describe('SmartTVAnalyticsService', () => {
     });
 
     it('should warn when not initialized', async () => {
+      eventBatchingService.addEvent.calls.reset();
       const uninitializedService = new SmartTVAnalyticsService(
         eventBatchingService,
         sessionService,
@@ -292,37 +294,43 @@ describe('SmartTVAnalyticsService', () => {
       expect(service.getCurrentSession()).toBeTruthy();
     });
 
-    it('should track first visit event for new users', async () => {
+    it('should track first visit event for new users', fakeAsync(() => {
       const firstSessionInfo = { ...mockSessionInfo, isFirstSession: true };
       sessionService.getCurrentSession.and.returnValue(firstSessionInfo);
       storageService.getItem.and.returnValue(null);
 
       service.initialize(mockConfig);
       
-      // Give time for the async logEvent to complete
-      await new Promise(resolve => setTimeout(resolve, 50));
+      // Flush all pending promises and microtasks
+      flushMicrotasks();
       
       // First visit event should be logged
       const firstVisitCalls = eventBatchingService.addEvent.calls.all().filter(call => 
         call.args[0].name === 'first_visit'
       );
       expect(firstVisitCalls.length).toBeGreaterThan(0);
-    });
+      
+      // Clean up periodic tasks
+      discardPeriodicTasks();
+    }));
 
-    it('should track app update event when version changes', async () => {
+    it('should track app update event when version changes', fakeAsync(() => {
       storageService.getItem.and.returnValue('0.9.0');
 
       service.initialize(mockConfig);
       
-      // Give time for the async logEvent to complete
-      await new Promise(resolve => setTimeout(resolve, 50));
+      // Flush all pending promises and microtasks
+      flushMicrotasks();
       
       // App update event should be logged
       const appUpdateCalls = eventBatchingService.addEvent.calls.all().filter(call => 
         call.args[0].name === 'app_update'
       );
       expect(appUpdateCalls.length).toBeGreaterThan(0);
-    });
+      
+      // Clean up periodic tasks
+      discardPeriodicTasks();
+    }));
 
     it('should handle app version checking', () => {
       storageService.getItem.and.returnValue('0.9.0');

@@ -68,13 +68,14 @@ export class SmartTVAnalyticsService implements OnDestroy {
     this.eventBatching.initialize(this.config);
     this.sessionService.initialize();
 
+    // Mark as initialized before sending events
+    this.isInitialized = true;
+
     // Set up automatic events
     this.setupAutomaticEvents();
 
     // Send initial events
     this.sendInitialEvents();
-
-    this.isInitialized = true;
 
     if (this.config.enableDebugMode) {
       console.log('[SmartTVAnalytics] Initialization complete');
