@@ -229,7 +229,7 @@ Para los usuarios que implementen esta app:
 ## 📊 Métricas del Proyecto
 
 - **Total de archivos creados**: 36
-- **Líneas de documentación**: ~750 (aprox. 3 documentos principales)
+- **Líneas de documentación**: ~2,500 (5 documentos principales)
 - **Líneas de código**: ~500 (TypeScript + HTML + CSS)
 - **Scripts de empaquetado**: 2 (bash) + 2 (JavaScript)
 - **Plataformas soportadas**: 2 (Tizen + webOS)
