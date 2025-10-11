@@ -48,8 +48,8 @@ export class SessionService {
    */
   onSessionStart(): Observable<SessionInfo> {
     return this.sessionStartSubject.asObservable().pipe(
-      filter(session => session !== null)
-    ) as Observable<SessionInfo>;
+      filter((session): session is SessionInfo => session !== null)
+    );
   }
 
   /**
@@ -222,6 +222,8 @@ export class SessionService {
 /**
  * Filter function for RxJS (needed for Angular 12 compatibility)
  */
+function filter<T, S extends T>(predicate: (value: T) => value is S): (source: Observable<T>) => Observable<S>;
+function filter<T>(predicate: (value: T) => boolean): (source: Observable<T>) => Observable<T>;
 function filter<T>(predicate: (value: T) => boolean): (source: Observable<T>) => Observable<T> {
   return (source: Observable<T>) => {
     return new Observable<T>(subscriber => {

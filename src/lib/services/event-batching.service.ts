@@ -26,11 +26,11 @@ import { StorageService } from './storage.service';
 })
 export class EventBatchingService {
   private readonly destroy$ = new Subject<void>();
-  private config: SmartTVAnalyticsConfig;
+  private config!: SmartTVAnalyticsConfig;
   private eventQueue: AnalyticsEvent[] = [];
   private userProperties: UserProperties = {};
   private userId?: string;
-  private clientId: string;
+  private clientId!: string;
   private flushTimer?: any;
   private retryConfig: RetryConfig = DEFAULT_RETRY_CONFIG;
 

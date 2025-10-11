@@ -46,6 +46,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.2.0",
     "@angular/animations": "^12.2.0",
+    "@angular/cli": "^12.2.0",
     "@angular/common": "^12.2.0",
     "@angular/compiler": "^12.2.0",
     "@angular/compiler-cli": "^12.2.0",
@@ -67,6 +68,7 @@
     "@babel/plugin-transform-spread": "^7.27.1",
     "@babel/plugin-transform-template-literals": "^7.27.1",
     "@babel/preset-env": "^7.28.3",
+    "@types/jasmine": "^5.1.9",
     "@types/node": "^14.18.63",
     "core-js": "^3.46.0",
     "jasmine-core": "~3.8.0",

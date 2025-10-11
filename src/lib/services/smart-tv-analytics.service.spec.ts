@@ -58,7 +58,7 @@ describe('SmartTVAnalyticsService', () => {
       ['getDeviceInfo']);
     const storageSpy = jasmine.createSpyObj('StorageService',
       ['getItem', 'setItem', 'removeItem']);
-    const routerSpy = jasmine.createSpyObj('Router', ['events']);
+    const routerSpy = jasmine.createSpyObj('Router', [], { events: of() });
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -83,7 +83,6 @@ describe('SmartTVAnalyticsService', () => {
     sessionService.getCurrentSession.and.returnValue(mockSessionInfo);
     sessionService.onSessionStart.and.returnValue(of(mockSessionInfo));
     deviceInfoService.getDeviceInfo.and.returnValue(mockDeviceInfo);
-    router.events = of();
     eventBatchingService.addEvent.and.returnValue(Promise.resolve());
   });
 
