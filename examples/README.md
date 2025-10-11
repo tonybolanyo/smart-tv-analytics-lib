@@ -19,6 +19,16 @@ Una aplicación Angular completa que demuestra:
 
 ## 🚀 Inicio Rápido
 
+### Prerrequisito: Compilar la Librería
+
+Si trabajas desde el repositorio clonado, primero compila la librería:
+
+```bash
+# Desde la raíz del repositorio
+npm install
+npm run build
+```
+
 ### 1. Instalar Dependencias
 
 ```bash

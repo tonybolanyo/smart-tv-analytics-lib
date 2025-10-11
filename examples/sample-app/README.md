@@ -53,19 +53,59 @@ npm install -g @webosose/ares-cli
 
 ## 🚀 Instalación
 
+### Opción 1: Desde el Repositorio (para desarrollo)
+
+Si has clonado el repositorio completo de smart-tv-analytics:
+
+1. **Compila la librería primero (desde la raíz del repositorio):**
+
+```bash
+cd /path/to/smart-tv-analytics-lib
+npm install
+npm run build
+```
+
+2. **Navega al directorio de la aplicación de ejemplo:**
+
+```bash
+cd examples/sample-app
+```
+
+3. **Instala las dependencias:**
+
+```bash
+npm install
+```
+
+La aplicación está configurada para usar la librería local mediante `"smart-tv-analytics": "file:../.."` en package.json.
+
+### Opción 2: Desde NPM (cuando la librería esté publicada)
+
+Si la librería ya está publicada en NPM:
+
 1. **Navega al directorio de la aplicación de ejemplo:**
 
 ```bash
 cd examples/sample-app
 ```
 
-2. **Instala las dependencias:**
+2. **Actualiza package.json para usar la versión de NPM:**
+
+```json
+{
+  "dependencies": {
+    "smart-tv-analytics": "^1.0.0"
+  }
+}
+```
+
+3. **Instala las dependencias:**
 
 ```bash
 npm install
 ```
 
-3. **Configura las credenciales de Firebase Analytics:**
+## 🔧 Configuración
 
 Edita el archivo `src/environments/environment.prod.ts`:
 
