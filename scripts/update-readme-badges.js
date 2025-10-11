@@ -92,9 +92,9 @@ ${statementsBadge} ${branchesBadge} ${functionsBadge}
 
 `;
 
-// Replace the title and add badges
-const titleRegex = /^# Smart TV Analytics Library\n*/m;
-readme = readme.replace(titleRegex, badgesSection);
+// Replace the title and add badges - handle both old format and new format
+const titleWithBadgesRegex = /^# Smart TV Analytics Library\n+(?:!\[.*?\]\(.*?\).*\n+)*\n*/m;
+readme = readme.replace(titleWithBadgesRegex, badgesSection);
 
 // Write updated README.md
 fs.writeFileSync(readmePath, readme, 'utf8');
