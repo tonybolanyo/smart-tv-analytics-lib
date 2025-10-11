@@ -1,0 +1,27 @@
+/* Estilos globales para la aplicación */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #e3f2fd;
+  color: #333;
+}
+
+/* Mejoras para accesibilidad en Smart TVs */
+*:focus {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:focus,
+a:focus {
+  outline: 3px solid #1976d2;
+  outline-offset: 2px;
+}

@@ -1,0 +1,35 @@
+<div class="home">
+  <h2>Catálogo de Videos</h2>
+  <p>Bienvenido a la aplicación de ejemplo de Smart TV Analytics</p>
+  
+  <div class="video-grid">
+    <div 
+      *ngFor="let video of videos" 
+      class="video-card"
+      [routerLink]="['/video', video.id]"
+      (click)="onVideoClick(video)"
+      tabindex="0">
+      <div class="video-thumbnail">
+        <div class="play-icon">▶</div>
+      </div>
+      <div class="video-info">
+        <h3>{{ video.title }}</h3>
+        <p class="duration">{{ video.duration }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="info-section">
+    <h3>Sobre esta aplicación</h3>
+    <p>
+      Esta es una aplicación de ejemplo que demuestra el uso de la librería 
+      <strong>smart-tv-analytics</strong> para el tracking de eventos en Smart TVs.
+    </p>
+    <ul>
+      <li>✓ Tracking automático de sesiones</li>
+      <li>✓ Tracking automático de navegación de páginas</li>
+      <li>✓ Eventos personalizados de interacción</li>
+      <li>✓ Compatible con Tizen y WebOS</li>
+    </ul>
+  </div>
+</div>

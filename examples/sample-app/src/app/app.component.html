@@ -1,0 +1,18 @@
+<div class="container">
+  <header>
+    <h1>{{ title }}</h1>
+    <nav>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+      <a routerLink="/video/1" routerLinkActive="active">Video 1</a>
+      <a routerLink="/video/2" routerLinkActive="active">Video 2</a>
+    </nav>
+  </header>
+  
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  
+  <footer>
+    <p>Aplicación de ejemplo - Smart TV Analytics Library</p>
+  </footer>
+</div>
