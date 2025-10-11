@@ -87,6 +87,8 @@
     "test": "karma start",
     "test:headless": "karma start --browsers=ChromeHeadless --single-run",
     "test:watch": "karma start --watch",
+    "test:coverage": "karma start --browsers=ChromeHeadless --single-run --code-coverage",
+    "update-badges": "node scripts/update-readme-badges.js",
     "lint": "ng lint",
     "pack": "npm run build && npm pack dist"
   },

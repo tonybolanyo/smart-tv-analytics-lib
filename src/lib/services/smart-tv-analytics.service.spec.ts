@@ -292,38 +292,36 @@ describe('SmartTVAnalyticsService', () => {
       expect(service.getCurrentSession()).toBeTruthy();
     });
 
-    it('should track first visit event for new users', (done) => {
+    it('should track first visit event for new users', async () => {
       const firstSessionInfo = { ...mockSessionInfo, isFirstSession: true };
       sessionService.getCurrentSession.and.returnValue(firstSessionInfo);
       storageService.getItem.and.returnValue(null);
 
       service.initialize(mockConfig);
       
-      // Wait for promises to resolve (longer delay for promise chain)
-      setTimeout(() => {
-        // First visit event should be logged
-        const firstVisitCalls = eventBatchingService.addEvent.calls.all().filter(call => 
-          call.args[0].name === 'first_visit'
-        );
-        expect(firstVisitCalls.length).toBeGreaterThan(0);
-        done();
-      }, 100);
+      // Give time for the async logEvent to complete
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
+      // First visit event should be logged
+      const firstVisitCalls = eventBatchingService.addEvent.calls.all().filter(call => 
+        call.args[0].name === 'first_visit'
+      );
+      expect(firstVisitCalls.length).toBeGreaterThan(0);
     });
 
-    it('should track app update event when version changes', (done) => {
+    it('should track app update event when version changes', async () => {
       storageService.getItem.and.returnValue('0.9.0');
 
       service.initialize(mockConfig);
       
-      // Wait for promises to resolve (longer delay for promise chain)
-      setTimeout(() => {
-        // App update event should be logged
-        const appUpdateCalls = eventBatchingService.addEvent.calls.all().filter(call => 
-          call.args[0].name === 'app_update'
-        );
-        expect(appUpdateCalls.length).toBeGreaterThan(0);
-        done();
-      }, 100);
+      // Give time for the async logEvent to complete
+      await new Promise(resolve => setTimeout(resolve, 50));
+      
+      // App update event should be logged
+      const appUpdateCalls = eventBatchingService.addEvent.calls.all().filter(call => 
+        call.args[0].name === 'app_update'
+      );
+      expect(appUpdateCalls.length).toBeGreaterThan(0);
     });
 
     it('should handle app version checking', () => {

@@ -1,5 +1,9 @@
 # Smart TV Analytics Library
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![npm](https://img.shields.io/npm/v/smart-tv-analytics.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Coverage](https://img.shields.io/badge/coverage-88.28%25-green.svg)
+
+![Statements](https://img.shields.io/badge/statements-88.28%25-green.svg) ![Branches](https://img.shields.io/badge/branches-67.45%25-yellow.svg) ![Functions](https://img.shields.io/badge/functions-87.50%25-green.svg)
+
 Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compatible con ES5, diseñada específicamente para funcionar en Tizen, WebOS y otros sistemas de Smart TVs.
 
 ## Características
