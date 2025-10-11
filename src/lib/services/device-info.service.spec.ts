@@ -202,6 +202,11 @@ describe('DeviceInfoService', () => {
       // OS version may or may not be available
       expect(deviceInfo.osVersion !== undefined || deviceInfo.osVersion === undefined).toBe(true);
     });
+
+    it('should have screenResolution defined', () => {
+      const resolution = service.getScreenResolution();
+      expect(resolution).toBeDefined();
+    });
   });
 
   /**
