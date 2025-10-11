@@ -78,7 +78,15 @@ VERSION=$(grep -o 'version="[^"]*"' config.xml | head -1 | cut -d'"' -f2)
 PACKAGE_NAME="${APP_NAME}.wgt"
 
 # Crear el paquete
-tizen package -t wgt -s <your-certificate-profile>
+# Nota: Reemplaza "MyProfile" con el nombre de tu perfil de certificado
+# Puedes ver tus perfiles con: tizen security-profiles list
+CERT_PROFILE="${TIZEN_SECURITY_PROFILE:-MyProfile}"
+
+echo "Usando perfil de certificado: $CERT_PROFILE"
+echo "Si no tienes un perfil configurado, consulta EMPAQUETADO.md"
+echo ""
+
+tizen package -t wgt -s "$CERT_PROFILE"
 
 if [ $? -eq 0 ]; then
     # Mover el paquete al directorio de salida

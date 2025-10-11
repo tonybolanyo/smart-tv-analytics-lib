@@ -26,6 +26,23 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 npm install smart-tv-analytics
 ```
 
+## 📖 Ejemplos
+
+Tenemos una **aplicación de ejemplo completa** que demuestra cómo integrar y usar esta librería:
+
+- **[Aplicación de Ejemplo](./examples/sample-app/README.md)**: App Angular completa con tracking de video
+- **[Scripts de Empaquetado](./examples/sample-app/EMPAQUETADO.md)**: Guía para crear paquetes Tizen (.wgt) y webOS (.ipk)
+
+### Inicio Rápido con el Ejemplo
+
+```bash
+cd examples/sample-app
+npm install
+npm start
+```
+
+Para más información, consulta la [documentación de ejemplos](./examples/README.md).
+
 ## Configuración
 
 ### 1. Configurar en app.module.ts
