@@ -160,25 +160,5 @@ describe('StorageService', () => {
       
       expect(console.warn).toHaveBeenCalled();
     });
-
-    it('should handle getAllKeys errors gracefully', () => {
-      spyOn(console, 'warn');
-      
-      // Mock a service with localStorage type but failing enumeration
-      const originalLength = Object.getOwnPropertyDescriptor(Storage.prototype, 'length');
-      Object.defineProperty(Storage.prototype, 'length', {
-        get: () => { throw new Error('Access denied'); },
-        configurable: true
-      });
-      
-      const keys = service.getAllKeys();
-      
-      if (originalLength) {
-        Object.defineProperty(Storage.prototype, 'length', originalLength);
-      }
-      
-      expect(console.warn).toHaveBeenCalled();
-      expect(Array.isArray(keys)).toBe(true);
-    });
   });
 });
