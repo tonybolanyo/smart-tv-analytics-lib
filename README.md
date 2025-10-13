@@ -34,6 +34,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 
 - **[Índice de Documentación](./docs/INDEX.md)** - Inicio y guía completa
 - **[Guía Principal](./docs/README.md)** - Instalación, configuración y API
+- **[Solución de Problemas](./docs/TROUBLESHOOTING.md)** - Guía para resolver problemas comunes
 - **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)** - Tutorial completo con ejemplo
 - **[Historial de Cambios](./docs/CHANGELOG.md)** - Versiones y actualizaciones
 

@@ -12,19 +12,26 @@ Bienvenido a la documentación de Smart TV Analytics, una librería de Firebase 
    - Configuración específica para Tizen y webOS
    - API completa de referencia
 
-2. **[CHANGELOG.md](./CHANGELOG.md)** - Historial de versiones
+2. **[TROUBLESHOOTING.md](./TROUBLESHOOTING.md)** - Guía de solución de problemas
+   - Problemas de inicialización
+   - Problemas de credenciales (GA4 vs Firebase)
+   - Eventos no aparecen en Google Analytics
+   - Problemas en localhost y producción
+   - Problemas específicos de Smart TV
+
+3. **[CHANGELOG.md](./CHANGELOG.md)** - Historial de versiones
    - Cambios en cada versión
    - Nuevas características
    - Correcciones de errores
 
 ### Ejemplos y Tutoriales
 
-3. **[EXAMPLES.md](./EXAMPLES.md)** - Índice de ejemplos
+4. **[EXAMPLES.md](./EXAMPLES.md)** - Índice de ejemplos
    - Visión general de ejemplos disponibles
    - Inicio rápido
    - Scripts de empaquetado
 
-4. **[SAMPLE-APP.md](./SAMPLE-APP.md)** - Aplicación de ejemplo completa
+5. **[SAMPLE-APP.md](./SAMPLE-APP.md)** - Aplicación de ejemplo completa
    - Instalación y configuración
    - Funcionalidades demostradas
    - Testing y depuración
@@ -147,6 +154,8 @@ Ver [SAMPLE-APP.md](./SAMPLE-APP.md) para más detalles.
 
 ## 🐛 Solución de Problemas
 
+**Para una guía completa de solución de problemas, consulta [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)**
+
 ### El servicio no se inicializa
 
 **Problema**: "SmartTVAnalytics service is not initialized"
@@ -165,17 +174,19 @@ imports: [
 ]
 ```
 
-### Errores de credenciales
+### Errores de credenciales (GA4 vs Firebase)
 
 **Problema**: Errores al enviar eventos a Google Analytics
 
+**⚠️ Importante**: Esta librería usa **Google Analytics 4**, NO Firebase Analytics directamente.
+
 **Solución**: Verifica que estés usando:
-- **Google Analytics 4** (no Universal Analytics)
+- **Google Analytics 4** (no Universal Analytics ni Firebase)
 - **Measurement ID** correcto (formato: `G-XXXXXXXXXX`)
 - **API Secret** del Measurement Protocol (no Firebase API key)
 
 Para obtener el API Secret:
-1. Ve a tu propiedad GA4
+1. Ve a tu propiedad GA4 en https://analytics.google.com/
 2. Admin > Data Streams > Web
 3. Measurement Protocol API secrets
 4. Create > Copia el valor del secret
@@ -183,14 +194,16 @@ Para obtener el API Secret:
 ### Los eventos no aparecen en GA4
 
 **Causas comunes**:
-1. Credenciales incorrectas
+1. Credenciales incorrectas (verifica que uses GA4, no Firebase)
 2. Bloqueador de anuncios activo
-3. Esperando en lugar incorrecto (usa DebugView para tiempo real)
+3. Esperando en reportes estándar (usa DebugView para tiempo real)
 
 **Solución**:
-1. Verifica credenciales
+1. Verifica credenciales en `environment.ts`
 2. Abre GA4 > DebugView para ver eventos en tiempo real
 3. Habilita modo debug: `enableDebugMode: true`
+
+**Ver más**: [Guía completa de solución de problemas](./TROUBLESHOOTING.md)
 
 ## 📚 Documentación Adicional
 
