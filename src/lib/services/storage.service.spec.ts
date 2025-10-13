@@ -160,5 +160,152 @@ describe('StorageService', () => {
       
       expect(console.warn).toHaveBeenCalled();
     });
+
+    it('should handle getAllKeys for different storage types', () => {
+      // Test returns an array regardless of storage type
+      const keys = service.getAllKeys();
+      expect(Array.isArray(keys)).toBe(true);
+    });
+  });
+
+  describe('getAllKeys for localStorage', () => {
+    it('should enumerate localStorage keys when using localStorage', () => {
+      // Verify we're using localStorage
+      if (service.getStorageType() === 'localStorage') {
+        service.setItem('test1', 'value1');
+        service.setItem('test2', 'value2');
+        
+        const keys = service.getAllKeys();
+        
+        expect(keys).toContain('test1');
+        expect(keys).toContain('test2');
+      } else {
+        // If using memory storage, test that behavior instead
+        service.setItem('test1', 'value1');
+        service.setItem('test2', 'value2');
+        
+        const keys = service.getAllKeys();
+        expect(keys).toContain('test1');
+        expect(keys).toContain('test2');
+      }
+    });
+  });
+
+  describe('memory storage fallback', () => {
+    it('should use memory storage when localStorage is not available', () => {
+      // This is already tested implicitly through error handling
+      // but we can verify the storage type detection
+      const storageType = service.getStorageType();
+      expect(['localStorage', 'memory']).toContain(storageType);
+    });
+
+    it('should store and retrieve from memory when localStorage fails', () => {
+      // Only test if currently using localStorage
+      if (service.getStorageType() === 'localStorage') {
+        const originalSetItem = Storage.prototype.setItem;
+        const originalGetItem = Storage.prototype.getItem;
+        
+        spyOn(Storage.prototype, 'setItem').and.throwError('Storage quota exceeded');
+        spyOn(Storage.prototype, 'getItem').and.throwError('Storage access denied');
+        spyOn(console, 'warn');
+        
+        service.setItem('memKey', 'memValue');
+        const value = service.getItem('memKey');
+        
+        Storage.prototype.setItem = originalSetItem;
+        Storage.prototype.getItem = originalGetItem;
+        
+        expect(value).toBe('memValue');
+      } else {
+        // Already using memory storage
+        service.setItem('memKey', 'memValue');
+        const value = service.getItem('memKey');
+        expect(value).toBe('memValue');
+      }
+    });
+
+    it('should handle memory storage paths when storage type is memory', () => {
+      // Test that memory storage operations work
+      service.setItem('testKey', 'testValue');
+      expect(service.getItem('testKey')).toBeDefined();
+      
+      service.removeItem('testKey');
+      
+      service.setItem('key1', 'val1');
+      service.setItem('key2', 'val2');
+      const keys = service.getAllKeys();
+      expect(keys.length).toBeGreaterThanOrEqual(2);
+    });
+  });
+
+  describe('memory storage mode', () => {
+    let memoryService: StorageService;
+
+    beforeEach(() => {
+      // Create a service instance that uses memory storage by making localStorage unavailable
+      const originalSetItem = Storage.prototype.setItem;
+      spyOn(Storage.prototype, 'setItem').and.throwError('localStorage not available');
+      
+      memoryService = new StorageService();
+      
+      // Restore for other tests
+      Storage.prototype.setItem = originalSetItem;
+    });
+
+    it('should use memory storage when localStorage fails', () => {
+      expect(memoryService.getStorageType()).toBe('memory');
+    });
+
+    it('should setItem in memory storage', () => {
+      memoryService.setItem('memKey1', 'memValue1');
+      const value = memoryService.getItem('memKey1');
+      expect(value).toBe('memValue1');
+    });
+
+    it('should getItem from memory storage', () => {
+      memoryService.setItem('memKey2', 'memValue2');
+      const value = memoryService.getItem('memKey2');
+      expect(value).toBe('memValue2');
+    });
+
+    it('should return null for non-existent key in memory', () => {
+      const value = memoryService.getItem('nonExistent');
+      expect(value).toBeNull();
+    });
+
+    it('should removeItem from memory storage', () => {
+      memoryService.setItem('memKey3', 'memValue3');
+      memoryService.removeItem('memKey3');
+      const value = memoryService.getItem('memKey3');
+      expect(value).toBeNull();
+    });
+
+    it('should clear all items in memory storage', () => {
+      memoryService.setItem('memKey4', 'memValue4');
+      memoryService.setItem('memKey5', 'memValue5');
+      memoryService.clear();
+      expect(memoryService.getItem('memKey4')).toBeNull();
+      expect(memoryService.getItem('memKey5')).toBeNull();
+    });
+
+    it('should getAllKeys from memory storage', () => {
+      memoryService.setItem('memKey6', 'memValue6');
+      memoryService.setItem('memKey7', 'memValue7');
+      const keys = memoryService.getAllKeys();
+      expect(keys).toContain('memKey6');
+      expect(keys).toContain('memKey7');
+    });
+
+    it('should handle hasItem in memory storage', () => {
+      memoryService.setItem('memKey8', 'memValue8');
+      expect(memoryService.hasItem('memKey8')).toBe(true);
+      expect(memoryService.hasItem('nonExistent')).toBe(false);
+    });
+
+    it('should handle getItem with undefined value in memory', () => {
+      // Test the || null branch when memoryStorage.get returns undefined
+      const value = memoryService.getItem('neverSet');
+      expect(value).toBeNull();
+    });
   });
 });

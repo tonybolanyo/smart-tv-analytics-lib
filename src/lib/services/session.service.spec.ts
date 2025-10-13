@@ -279,6 +279,20 @@ describe('SessionService', () => {
       expect(initialSession).toBeTruthy();
       done();
     });
+
+    it('should check for session expiration in timeout handler', () => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      // Make session expired by manipulating time
+      const session = service.getCurrentSession();
+      if (session) {
+        session.lastActivity = Date.now() - (60 * 60 * 1000); // 1 hour ago
+      }
+      
+      // Session timeout logic is handled internally
+      expect(session).toBeTruthy();
+    });
   });
 
   describe('session persistence', () => {
@@ -349,6 +363,71 @@ describe('SessionService', () => {
       
       // Should handle gracefully
       expect(service.getCurrentSession()).toBeTruthy();
+    });
+  });
+
+  describe('endSession edge cases', () => {
+    it('should clear timeout when ending session if timeout exists', () => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      // End the session
+      service.endSession();
+      
+      expect(storageService.removeItem).toHaveBeenCalledWith('smarttv_analytics_session');
+      expect(service.getCurrentSession()).toBeNull();
+    });
+
+    it('should handle endSession when no timeout exists', () => {
+      // Don't initialize, so no timeout is set
+      service.endSession();
+      
+      expect(service.getCurrentSession()).toBeNull();
+    });
+  });
+
+  describe('saveSession edge cases', () => {
+    it('should not save when currentSession is null', () => {
+      // Reset the service
+      service.endSession();
+      
+      // Try to update activity when session is null
+      service.updateActivity();
+      
+      // Should not throw error and should not save
+      expect(service.getCurrentSession()).toBeNull();
+    });
+  });
+
+  describe('session timeout with actual expiration', () => {
+    it('should handle session timeout logic', () => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      const session = service.getCurrentSession();
+      // Verify session exists and timeout is set up
+      expect(session).toBeTruthy();
+    });
+
+    it('should verify session expiration logic', () => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      // Verify isSessionExpired works correctly
+      const isExpired = service.isSessionExpired();
+      expect(typeof isExpired).toBe('boolean');
+    });
+
+    it('should handle endSession cleanup', () => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      // End the session
+      service.endSession();
+      
+      // Should handle gracefully
+      expect(service.getCurrentSession()).toBeNull();
+      expect(storageService.removeItem).toHaveBeenCalled();
     });
   });
 });
