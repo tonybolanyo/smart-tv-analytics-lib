@@ -1,47 +1,47 @@
 # Scripts
 
-This directory contains utility scripts for the Smart TV Analytics library.
+Este directorio contiene scripts de utilidad para la librería Smart TV Analytics.
 
 ## update-readme-badges.js
 
-Updates the README.md file with current project badges including:
-- Version badge (from package.json)
-- NPM package badge
-- License badge  
-- Coverage badges (from test coverage reports)
-  - Overall coverage
-  - Statements coverage
-  - Branches coverage
-  - Functions coverage
+Actualiza el archivo README.md con los badges actuales del proyecto incluyendo:
+- Badge de versión (desde package.json)
+- Badge de paquete NPM
+- Badge de licencia  
+- Badges de cobertura (desde reportes de cobertura de pruebas)
+  - Cobertura general
+  - Cobertura de declaraciones
+  - Cobertura de ramas
+  - Cobertura de funciones
 
-### Usage
+### Uso
 
 ```bash
-# Run tests with coverage first
+# Primero ejecutar pruebas con cobertura
 npm run test:coverage
 
-# Then update badges
+# Luego actualizar badges
 npm run update-badges
 ```
 
-The script will:
-1. Read the version from package.json
-2. Parse coverage data from coverage/smart-tv-analytics/lcov.info
-3. Generate badge URLs with appropriate colors based on coverage percentages
-4. Update README.md with the badges
+El script hará lo siguiente:
+1. Leer la versión desde package.json
+2. Parsear datos de cobertura desde coverage/smart-tv-analytics/lcov.info
+3. Generar URLs de badges con colores apropiados basados en porcentajes de cobertura
+4. Actualizar README.md con los badges
 
-### Badge Colors
+### Colores de Badges
 
-Coverage badges use the following color scheme:
-- 90%+ = bright green
-- 80-89% = green
-- 70-79% = yellow-green
-- 60-69% = yellow
-- 50-59% = orange
-- <50% = red
+Los badges de cobertura usan el siguiente esquema de colores:
+- 90%+ = verde brillante
+- 80-89% = verde
+- 70-79% = amarillo-verde
+- 60-69% = amarillo
+- 50-59% = naranja
+- <50% = rojo
 
-### Requirements
+### Requisitos
 
 - Node.js
-- Coverage report must exist at `coverage/smart-tv-analytics/lcov.info`
-- This is automatically generated when running `npm run test:coverage`
+- El reporte de cobertura debe existir en `coverage/smart-tv-analytics/lcov.info`
+- Esto se genera automáticamente al ejecutar `npm run test:coverage`

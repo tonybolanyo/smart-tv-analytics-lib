@@ -1,236 +1,236 @@
-# End-to-End Testing Guide
+# Guía de Pruebas End-to-End
 
-This guide covers how to use, run, and extend the Playwright end-to-end tests for the Smart TV Analytics sample application.
+Esta guía cubre cómo usar, ejecutar y extender las pruebas end-to-end de Playwright para la aplicación de ejemplo de Smart TV Analytics.
 
-## Table of Contents
+## Tabla de Contenidos
 
-- [Overview](#overview)
-- [Setup](#setup)
-- [Running Tests](#running-tests)
-- [Test Structure](#test-structure)
-- [Writing New Tests](#writing-new-tests)
-- [Best Practices](#best-practices)
-- [Troubleshooting](#troubleshooting)
+- [Resumen](#resumen)
+- [Configuración](#configuración)
+- [Ejecutar Pruebas](#ejecutar-pruebas)
+- [Estructura de Pruebas](#estructura-de-pruebas)
+- [Escribir Nuevas Pruebas](#escribir-nuevas-pruebas)
+- [Mejores Prácticas](#mejores-prácticas)
+- [Solución de Problemas](#solución-de-problemas)
 
-## Overview
+## Resumen
 
-The E2E tests are built using [Playwright](https://playwright.dev/), a modern end-to-end testing framework that provides:
+Las pruebas E2E están construidas usando [Playwright](https://playwright.dev/), un framework moderno de pruebas end-to-end que proporciona:
 
-- Cross-browser testing (Chromium, Firefox, WebKit)
-- Auto-waiting for elements
-- Built-in test reports and traces
-- Screenshot and video capture on failures
-- Network interception and mocking
+- Pruebas multi-navegador (Chromium, Firefox, WebKit)
+- Espera automática de elementos
+- Reportes y trazas integrados
+- Captura de pantallas y videos en fallos
+- Interceptación y simulación de red
 
-### Test Coverage
+### Cobertura de Pruebas
 
-The test suite covers the following critical paths:
+La suite de pruebas cubre las siguientes rutas críticas:
 
-1. **Home Page** (`e2e/home.spec.ts`)
-   - Page load and display
-   - Video catalog rendering
-   - Video card information
-   - Navigation to video pages
-   - Accessibility (focus management)
+1. **Página de Inicio** (`e2e/home.spec.ts`)
+   - Carga y visualización de página
+   - Renderizado del catálogo de videos
+   - Información de tarjetas de video
+   - Navegación a páginas de video
+   - Accesibilidad (gestión de foco)
 
-2. **Video Player** (`e2e/video-player.spec.ts`)
-   - Player UI rendering
-   - Play/pause functionality
-   - Seek controls
-   - Video completion
-   - Time display
+2. **Reproductor de Video** (`e2e/video-player.spec.ts`)
+   - Renderizado de UI del reproductor
+   - Funcionalidad de reproducir/pausar
+   - Controles de búsqueda
+   - Finalización de video
+   - Visualización de tiempo
 
-3. **Navigation Flow** (`e2e/navigation.spec.ts`)
-   - Complete user journeys
-   - Page state management
-   - Browser navigation (back/forward)
-   - Multi-page workflows
+3. **Flujo de Navegación** (`e2e/navigation.spec.ts`)
+   - Recorridos completos de usuario
+   - Gestión de estado de página
+   - Navegación del navegador (atrás/adelante)
+   - Flujos de trabajo multi-página
 
-4. **Analytics Integration** (`e2e/analytics.spec.ts`)
-   - Event tracking verification
-   - User interaction analytics
-   - Session tracking
-   - Network request monitoring
+4. **Integración de Analytics** (`e2e/analytics.spec.ts`)
+   - Verificación de seguimiento de eventos
+   - Analytics de interacción de usuario
+   - Seguimiento de sesión
+   - Monitoreo de solicitudes de red
 
-## Setup
+## Configuración
 
-### Prerequisites
+### Prerequisitos
 
-- Node.js 14 or higher
-- npm 6 or higher
+- Node.js 14 o superior
+- npm 6 o superior
 
-### Installation
+### Instalación
 
-1. **Install dependencies** (if not already done):
+1. **Instalar dependencias** (si aún no lo has hecho):
 
 ```bash
 cd examples/sample-app
 npm install
 ```
 
-2. **Install Playwright browsers**:
+2. **Instalar navegadores de Playwright**:
 
 ```bash
 npx playwright install chromium
 ```
 
-For additional browsers:
+Para navegadores adicionales:
 
 ```bash
-npx playwright install  # Installs all browsers
+npx playwright install  # Instala todos los navegadores
 ```
 
-### Build the Library
+### Compilar la Librería
 
-Before running E2E tests, ensure the main library is built:
+Antes de ejecutar las pruebas E2E, asegúrate de que la librería principal esté compilada:
 
 ```bash
-# From the repository root
+# Desde la raíz del repositorio
 cd /path/to/smart-tv-analytics-lib
 npm install
 npm run build
 ```
 
-Then install dependencies in the sample app:
+Luego instala las dependencias en la aplicación de ejemplo:
 
 ```bash
 cd examples/sample-app
 npm install
 ```
 
-## Running Tests
+## Ejecutar Pruebas
 
-### Run All Tests
+### Ejecutar Todas las Pruebas
 
 ```bash
 npm run e2e
 ```
 
-This runs all tests in headless mode (no browser UI).
+Esto ejecuta todas las pruebas en modo headless (sin interfaz de navegador).
 
-### Run Tests with UI
+### Ejecutar Pruebas con UI
 
 ```bash
 npm run e2e:headed
 ```
 
-Opens a browser window so you can see tests executing.
+Abre una ventana de navegador para que puedas ver la ejecución de las pruebas.
 
-### Interactive UI Mode
+### Modo UI Interactivo
 
 ```bash
 npm run e2e:ui
 ```
 
-Opens Playwright's interactive UI for running and debugging tests.
+Abre la interfaz interactiva de Playwright para ejecutar y depurar pruebas.
 
-### Debug Mode
+### Modo Depuración
 
 ```bash
 npm run e2e:debug
 ```
 
-Runs tests in debug mode with Playwright Inspector.
+Ejecuta pruebas en modo depuración con el Inspector de Playwright.
 
-### Run Specific Test File
+### Ejecutar Archivo de Prueba Específico
 
 ```bash
 npx playwright test e2e/home.spec.ts
 ```
 
-### Run Tests Matching a Pattern
+### Ejecutar Pruebas que Coincidan con un Patrón
 
 ```bash
 npx playwright test --grep "video player"
 ```
 
-### View Test Report
+### Ver Reporte de Pruebas
 
-After running tests, view the HTML report:
+Después de ejecutar las pruebas, ver el reporte HTML:
 
 ```bash
 npm run e2e:report
 ```
 
-## Test Structure
+## Estructura de Pruebas
 
-### Directory Layout
+### Diseño de Directorios
 
 ```
 examples/sample-app/
-├── e2e/                          # E2E test directory
-│   ├── home.spec.ts              # Home page tests
-│   ├── video-player.spec.ts      # Video player tests
-│   ├── navigation.spec.ts        # Navigation flow tests
-│   └── analytics.spec.ts         # Analytics integration tests
-├── playwright.config.ts          # Playwright configuration
-├── playwright-report/            # Generated test reports
-└── test-results/                 # Test artifacts (screenshots, videos)
+├── e2e/                          # Directorio de pruebas E2E
+│   ├── home.spec.ts              # Pruebas de página de inicio
+│   ├── video-player.spec.ts      # Pruebas de reproductor de video
+│   ├── navigation.spec.ts        # Pruebas de flujo de navegación
+│   └── analytics.spec.ts         # Pruebas de integración de analytics
+├── playwright.config.ts          # Configuración de Playwright
+├── playwright-report/            # Reportes de pruebas generados
+└── test-results/                 # Artefactos de pruebas (capturas, videos)
 ```
 
-### Configuration
+### Configuración
 
-The `playwright.config.ts` file configures:
+El archivo `playwright.config.ts` configura:
 
-- Test directory location
-- Timeouts
-- Retries
-- Reporters
-- Browser settings
-- Web server (auto-starts Angular dev server)
+- Ubicación del directorio de pruebas
+- Tiempos de espera
+- Reintentos
+- Reporteros
+- Configuraciones de navegador
+- Servidor web (inicia automáticamente el servidor de desarrollo Angular)
 
-### Test Data Attributes
+### Atributos de Datos de Prueba
 
-Components use `data-testid` attributes for reliable element selection:
+Los componentes usan atributos `data-testid` para selección confiable de elementos:
 
-**Home Component:**
-- `home-page` - Main container
-- `home-title` - Page title
-- `video-grid` - Video catalog grid
-- `video-card-{id}` - Individual video cards
-- `video-title-{id}` - Video titles
-- `video-duration-{id}` - Video durations
+**Componente Home:**
+- `home-page` - Contenedor principal
+- `home-title` - Título de página
+- `video-grid` - Cuadrícula de catálogo de video
+- `video-card-{id}` - Tarjetas de video individuales
+- `video-title-{id}` - Títulos de videos
+- `video-duration-{id}` - Duraciones de videos
 
-**Video Component:**
-- `video-page` - Main container
-- `video-title` - Video title
-- `video-player` - Player container
-- `player-icon-paused` - Paused state icon
-- `player-icon-playing` - Playing state icon
-- `play-button` - Play control
-- `pause-button` - Pause control
-- `seek-forward-button` - Seek forward (+10s)
-- `seek-backward-button` - Seek backward (-10s)
-- `complete-button` - Complete video
-- `back-button` - Back navigation
-- `video-time` - Time display
+**Componente Video:**
+- `video-page` - Contenedor principal
+- `video-title` - Título del video
+- `video-player` - Contenedor del reproductor
+- `player-icon-paused` - Icono de estado pausado
+- `player-icon-playing` - Icono de estado reproduciendo
+- `play-button` - Control de reproducción
+- `pause-button` - Control de pausa
+- `seek-forward-button` - Adelantar (+10s)
+- `seek-backward-button` - Retroceder (-10s)
+- `complete-button` - Completar video
+- `back-button` - Navegación atrás
+- `video-time` - Visualización de tiempo
 
-## Writing New Tests
+## Escribir Nuevas Pruebas
 
-### Basic Test Structure
+### Estructura Básica de Prueba
 
 ```typescript
 import { test, expect } from '@playwright/test';
 
-test.describe('Feature Name', () => {
+test.describe('Nombre de Característica', () => {
   test.beforeEach(async ({ page }) => {
-    // Setup code that runs before each test
+    // Código de configuración que se ejecuta antes de cada prueba
     await page.goto('/');
   });
 
-  test('should do something specific', async ({ page }) => {
-    // Test code
-    const element = page.getByTestId('my-element');
+  test('debería hacer algo específico', async ({ page }) => {
+    // Código de prueba
+    const element = page.getByTestId('mi-elemento');
     await expect(element).toBeVisible();
   });
 });
 ```
 
-### Example: Testing a New Feature
+### Ejemplo: Probar una Nueva Característica
 
-Let's say you add a search feature to the home page:
+Supongamos que agregas una característica de búsqueda a la página de inicio:
 
-1. **Add data-testid to the component:**
+1. **Agregar data-testid al componente:**
 
 ```html
 <!-- home.component.html -->
@@ -245,60 +245,60 @@ Let's say you add a search feature to the home page:
 </button>
 ```
 
-2. **Create a test:**
+2. **Crear una prueba:**
 
 ```typescript
 // e2e/search.spec.ts
 import { test, expect } from '@playwright/test';
 
-test.describe('Search Feature', () => {
+test.describe('Característica de Búsqueda', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 
-  test('should filter videos by search query', async ({ page }) => {
-    // Type in search box
+  test('debería filtrar videos por consulta de búsqueda', async ({ page }) => {
+    // Escribir en el cuadro de búsqueda
     const searchInput = page.getByTestId('search-input');
     await searchInput.fill('Video 1');
 
-    // Click search button
+    // Hacer clic en botón de búsqueda
     const searchButton = page.getByTestId('search-button');
     await searchButton.click();
 
-    // Verify results
+    // Verificar resultados
     await expect(page.getByTestId('video-card-1')).toBeVisible();
     await expect(page.getByTestId('video-card-2')).not.toBeVisible();
   });
 });
 ```
 
-### Common Patterns
+### Patrones Comunes
 
-#### Waiting for Navigation
+#### Esperar Navegación
 
 ```typescript
 await page.getByTestId('link').click();
-await page.waitForURL('/expected-path');
+await page.waitForURL('/ruta-esperada');
 ```
 
-#### Checking Element State
+#### Verificar Estado de Elemento
 
 ```typescript
-const button = page.getByTestId('my-button');
+const button = page.getByTestId('mi-boton');
 await expect(button).toBeVisible();
 await expect(button).toBeEnabled();
-await expect(button).toHaveText('Expected Text');
+await expect(button).toHaveText('Texto Esperado');
 ```
 
-#### Interacting with Forms
+#### Interactuar con Formularios
 
 ```typescript
-await page.getByTestId('input-field').fill('value');
+await page.getByTestId('campo-entrada').fill('valor');
 await page.getByTestId('checkbox').check();
-await page.getByTestId('select').selectOption('option-value');
+await page.getByTestId('select').selectOption('valor-opcion');
 ```
 
-#### Network Mocking
+#### Simulación de Red
 
 ```typescript
 await page.route('**/api/analytics', route => {
@@ -309,92 +309,92 @@ await page.route('**/api/analytics', route => {
 });
 ```
 
-#### Taking Screenshots
+#### Tomar Capturas de Pantalla
 
 ```typescript
-await page.screenshot({ path: 'screenshot.png' });
-await page.getByTestId('element').screenshot({ path: 'element.png' });
+await page.screenshot({ path: 'captura.png' });
+await page.getByTestId('elemento').screenshot({ path: 'elemento.png' });
 ```
 
-## Best Practices
+## Mejores Prácticas
 
-### 1. Use data-testid Attributes
+### 1. Usar Atributos data-testid
 
-Always use `data-testid` for selecting elements instead of CSS classes or XPath:
+Siempre usa `data-testid` para seleccionar elementos en lugar de clases CSS o XPath:
 
 ```typescript
-// Good
-page.getByTestId('submit-button')
+// Bueno
+page.getByTestId('boton-enviar')
 
-// Avoid
+// Evitar
 page.locator('.btn.btn-primary.submit')
 ```
 
-### 2. Write Descriptive Test Names
+### 2. Escribir Nombres de Prueba Descriptivos
 
 ```typescript
-// Good
-test('should display error message when form is submitted with empty fields', ...)
+// Bueno
+test('debería mostrar mensaje de error cuando el formulario se envía con campos vacíos', ...)
 
-// Avoid
-test('test form validation', ...)
+// Evitar
+test('probar validación de formulario', ...)
 ```
 
-### 3. Keep Tests Independent
+### 3. Mantener Pruebas Independientes
 
-Each test should be able to run independently:
+Cada prueba debe poder ejecutarse independientemente:
 
 ```typescript
 test.beforeEach(async ({ page }) => {
-  // Reset state before each test
+  // Restablecer estado antes de cada prueba
   await page.goto('/');
 });
 ```
 
-### 4. Use Assertions Liberally
+### 4. Usar Aserciones Liberalmente
 
-Verify expected behavior explicitly:
+Verificar comportamiento esperado explícitamente:
 
 ```typescript
 await expect(page.getByTestId('video-page')).toBeVisible();
 await expect(page).toHaveURL(/\/video\/1/);
 ```
 
-### 5. Handle Async Properly
+### 5. Manejar Async Apropiadamente
 
-Playwright auto-waits, but be explicit when needed:
+Playwright espera automáticamente, pero sé explícito cuando sea necesario:
 
 ```typescript
 await page.waitForLoadState('networkidle');
-await page.waitForSelector('[data-testid="loaded"]');
+await page.waitForSelector('[data-testid="cargado"]');
 ```
 
-### 6. Group Related Tests
+### 6. Agrupar Pruebas Relacionadas
 
 ```typescript
-test.describe('Video Player Controls', () => {
-  test.describe('Play/Pause', () => {
-    // Play/pause tests
+test.describe('Controles del Reproductor de Video', () => {
+  test.describe('Reproducir/Pausar', () => {
+    // Pruebas de reproducir/pausar
   });
   
-  test.describe('Seek Controls', () => {
-    // Seek tests
+  test.describe('Controles de Búsqueda', () => {
+    // Pruebas de búsqueda
   });
 });
 ```
 
-### 7. Smart TV Specific Testing
+### 7. Pruebas Específicas para Smart TV
 
-For Smart TV applications, test keyboard navigation:
+Para aplicaciones de Smart TV, prueba la navegación con teclado:
 
 ```typescript
-test('should navigate with arrow keys', async ({ page }) => {
+test('debería navegar con teclas de dirección', async ({ page }) => {
   await page.goto('/');
   
   const firstCard = page.getByTestId('video-card-1');
   await firstCard.focus();
   
-  // Simulate TV remote arrow key
+  // Simular tecla de dirección del control remoto
   await page.keyboard.press('ArrowRight');
   
   const secondCard = page.getByTestId('video-card-2');
@@ -402,22 +402,22 @@ test('should navigate with arrow keys', async ({ page }) => {
 });
 ```
 
-## Troubleshooting
+## Solución de Problemas
 
-### Tests Fail to Start
+### Las Pruebas Fallan al Iniciar
 
-**Issue:** `Error: browserType.launch: Executable doesn't exist`
+**Problema:** `Error: browserType.launch: Executable doesn't exist`
 
-**Solution:** Install browsers:
+**Solución:** Instalar navegadores:
 ```bash
 npx playwright install
 ```
 
-### Port Already in Use
+### Puerto Ya en Uso
 
-**Issue:** `Error: listen EADDRINUSE: address already in use :::4200`
+**Problema:** `Error: listen EADDRINUSE: address already in use :::4200`
 
-**Solution:** Kill the process using port 4200:
+**Solución:** Terminar el proceso usando el puerto 4200:
 ```bash
 # Linux/Mac
 lsof -ti:4200 | xargs kill -9
@@ -427,60 +427,60 @@ netstat -ano | findstr :4200
 taskkill /PID <PID> /F
 ```
 
-### Tests Timeout
+### Tiempo de Espera de Pruebas
 
-**Issue:** Tests timeout waiting for elements
+**Problema:** Las pruebas agotan el tiempo de espera esperando elementos
 
-**Solution:** Increase timeout in `playwright.config.ts`:
+**Solución:** Aumentar el tiempo de espera en `playwright.config.ts`:
 ```typescript
-timeout: 60 * 1000, // 60 seconds
+timeout: 60 * 1000, // 60 segundos
 ```
 
-### Flaky Tests
+### Pruebas Inestables
 
-**Issue:** Tests pass sometimes and fail other times
+**Problema:** Las pruebas pasan a veces y fallan otras veces
 
-**Solutions:**
-- Add explicit waits: `await page.waitForLoadState('networkidle')`
-- Use auto-retries: Configure `retries: 2` in config
-- Check for race conditions in component code
+**Soluciones:**
+- Agregar esperas explícitas: `await page.waitForLoadState('networkidle')`
+- Usar reintentos automáticos: Configurar `retries: 2` en config
+- Verificar condiciones de carrera en código del componente
 
-### Debugging Tips
+### Consejos de Depuración
 
-1. **Run in headed mode:**
+1. **Ejecutar en modo headed:**
    ```bash
    npm run e2e:headed
    ```
 
-2. **Use debug mode:**
+2. **Usar modo depuración:**
    ```bash
    npm run e2e:debug
    ```
 
-3. **Add console logs:**
+3. **Agregar logs de consola:**
    ```typescript
-   test('my test', async ({ page }) => {
+   test('mi prueba', async ({ page }) => {
      console.log(await page.title());
      console.log(await page.content());
    });
    ```
 
-4. **Pause execution:**
+4. **Pausar ejecución:**
    ```typescript
-   await page.pause(); // Opens Playwright Inspector
+   await page.pause(); // Abre el Inspector de Playwright
    ```
 
-5. **View trace files:**
+5. **Ver archivos de traza:**
    ```bash
    npx playwright show-trace test-results/trace.zip
    ```
 
-## CI/CD Integration
+## Integración CI/CD
 
-### GitHub Actions Example
+### Ejemplo de GitHub Actions
 
 ```yaml
-name: E2E Tests
+name: Pruebas E2E
 on: [push, pull_request]
 
 jobs:
@@ -492,21 +492,21 @@ jobs:
         with:
           node-version: '18'
       
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: |
           npm install
           cd examples/sample-app && npm install
       
-      - name: Install Playwright browsers
+      - name: Instalar navegadores de Playwright
         run: cd examples/sample-app && npx playwright install --with-deps chromium
       
-      - name: Build library
+      - name: Compilar librería
         run: npm run build
       
-      - name: Run E2E tests
+      - name: Ejecutar pruebas E2E
         run: cd examples/sample-app && npm run e2e
       
-      - name: Upload test report
+      - name: Subir reporte de pruebas
         if: always()
         uses: actions/upload-artifact@v3
         with:
@@ -514,36 +514,36 @@ jobs:
           path: examples/sample-app/playwright-report/
 ```
 
-## Coverage Reports
+## Reportes de Cobertura
 
-Playwright generates detailed test reports automatically:
+Playwright genera reportes de pruebas detallados automáticamente:
 
-- **HTML Report:** Visual report with test results, screenshots, and videos
-- **JSON Report:** Machine-readable results for CI/CD integration
+- **Reporte HTML:** Reporte visual con resultados de pruebas, capturas de pantalla y videos
+- **Reporte JSON:** Resultados legibles por máquina para integración CI/CD
 
-View the HTML report:
+Ver el reporte HTML:
 ```bash
 npm run e2e:report
 ```
 
-The report shows:
-- Test execution time
-- Pass/fail status
-- Error messages and stack traces
-- Screenshots of failures
-- Video recordings (if enabled)
-- Trace files for debugging
+El reporte muestra:
+- Tiempo de ejecución de pruebas
+- Estado de éxito/fallo
+- Mensajes de error y trazas de pila
+- Capturas de pantalla de fallos
+- Grabaciones de video (si está habilitado)
+- Archivos de traza para depuración
 
-## Additional Resources
+## Recursos Adicionales
 
-- [Playwright Documentation](https://playwright.dev/)
-- [Playwright Best Practices](https://playwright.dev/docs/best-practices)
-- [Smart TV Analytics Library](../../README.md)
-- [Sample App README](./README.md)
+- [Documentación de Playwright](https://playwright.dev/)
+- [Mejores Prácticas de Playwright](https://playwright.dev/docs/best-practices)
+- [Librería Smart TV Analytics](../../README.md)
+- [README de Aplicación de Ejemplo](./README.md)
 
-## Support
+## Soporte
 
-For issues or questions:
-- Open an issue on GitHub
-- Check the Playwright documentation
-- Review existing test examples in the `e2e/` directory
+Para problemas o preguntas:
+- Abre un issue en GitHub
+- Consulta la documentación de Playwright
+- Revisa los ejemplos de pruebas existentes en el directorio `e2e/`

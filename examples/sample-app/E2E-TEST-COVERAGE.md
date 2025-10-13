@@ -1,247 +1,247 @@
-# E2E Test Coverage Report
+# Reporte de Cobertura de Pruebas E2E
 
-## Overview
+## Resumen
 
-The Smart TV Analytics sample application includes a comprehensive suite of 24 end-to-end tests covering all critical user paths and functionality.
+La aplicación de ejemplo de Smart TV Analytics incluye una suite completa de 24 pruebas end-to-end que cubren todas las rutas críticas de usuario y funcionalidad.
 
-## Test Statistics
+## Estadísticas de Pruebas
 
-- **Total Tests**: 24
-- **Test Files**: 4
-- **Browser Coverage**: Chromium (with support for Firefox and WebKit)
+- **Total de Pruebas**: 24
+- **Archivos de Prueba**: 4
+- **Cobertura de Navegadores**: Chromium (con soporte para Firefox y WebKit)
 
-## Test Breakdown by Feature
+## Desglose de Pruebas por Característica
 
-### 1. Home Page Tests (5 tests)
-**File**: `e2e/home.spec.ts`
+### 1. Pruebas de Página de Inicio (5 pruebas)
+**Archivo**: `e2e/home.spec.ts`
 
-| Test | Description | Purpose |
-|------|-------------|---------|
-| Display home page | Verifies page title and welcome message | Ensures home page loads correctly |
-| Display video grid | Checks video catalog renders | Confirms video list is visible |
-| Display video information | Validates video titles and metadata | Ensures data is shown correctly |
-| Navigate to video | Tests clicking video cards | Verifies navigation works |
-| Focusable video cards | Tests keyboard navigation | Smart TV accessibility |
+| Prueba | Descripción | Propósito |
+|--------|-------------|-----------|
+| Mostrar página de inicio | Verifica título de página y mensaje de bienvenida | Asegura que la página de inicio carga correctamente |
+| Mostrar cuadrícula de videos | Verifica renderizado del catálogo de videos | Confirma que la lista de videos es visible |
+| Mostrar información de videos | Valida títulos y metadatos de videos | Asegura que los datos se muestran correctamente |
+| Navegar a video | Prueba hacer clic en tarjetas de video | Verifica que la navegación funciona |
+| Tarjetas de video enfocables | Prueba navegación con teclado | Accesibilidad para Smart TV |
 
-**Coverage**: 
-- ✅ Page rendering
-- ✅ Video catalog display
-- ✅ Navigation to video pages
-- ✅ Accessibility (focus management)
+**Cobertura**: 
+- Renderizado de página
+- Visualización de catálogo de videos
+- Navegación a páginas de video
+- Accesibilidad (gestión de foco)
 
-### 2. Video Player Tests (9 tests)
-**File**: `e2e/video-player.spec.ts`
+### 2. Pruebas de Reproductor de Video (9 pruebas)
+**Archivo**: `e2e/video-player.spec.ts`
 
-| Test | Description | Purpose |
-|------|-------------|---------|
-| Display video player | Verifies player UI and title | Page loads correctly |
-| Display all controls | Checks all buttons are present | UI completeness |
-| Show paused icon | Initial state verification | Correct default state |
-| Play video | Tests play button | Play functionality |
-| Pause video | Tests pause button | Pause functionality |
-| Seek controls | Tests forward/backward seek | Seek functionality |
-| Navigate back | Tests back button | Navigation works |
-| Display time | Verifies time display | Time info shown |
-| Complete button | Tests complete action | Complete functionality |
+| Prueba | Descripción | Propósito |
+|--------|-------------|-----------|
+| Mostrar reproductor de video | Verifica UI del reproductor y título | La página carga correctamente |
+| Mostrar todos los controles | Verifica que todos los botones estén presentes | Completitud de UI |
+| Mostrar icono pausado | Verificación de estado inicial | Estado predeterminado correcto |
+| Reproducir video | Prueba botón de reproducción | Funcionalidad de reproducción |
+| Pausar video | Prueba botón de pausa | Funcionalidad de pausa |
+| Controles de búsqueda | Prueba búsqueda adelante/atrás | Funcionalidad de búsqueda |
+| Navegar atrás | Prueba botón de atrás | La navegación funciona |
+| Mostrar tiempo | Verifica visualización de tiempo | Se muestra información de tiempo |
+| Botón completar | Prueba acción de completar | Funcionalidad de completar |
 
-**Coverage**:
-- ✅ Player UI rendering
-- ✅ Play/pause functionality
-- ✅ Seek controls (forward/backward)
-- ✅ Video completion
-- ✅ Time display
-- ✅ Back navigation
+**Cobertura**:
+- Renderizado de UI del reproductor
+- Funcionalidad de reproducir/pausar
+- Controles de búsqueda (adelante/atrás)
+- Finalización de video
+- Visualización de tiempo
+- Navegación atrás
 
-### 3. Navigation Flow Tests (4 tests)
-**File**: `e2e/navigation.spec.ts`
+### 3. Pruebas de Flujo de Navegación (4 pruebas)
+**Archivo**: `e2e/navigation.spec.ts`
 
-| Test | Description | Purpose |
-|------|-------------|---------|
-| Complete user journey | Full workflow through app | End-to-end flow |
-| Maintain page state | Tests state preservation | State management |
-| URL navigation | Direct URL navigation | URL routing |
-| Browser back/forward | Browser navigation buttons | History management |
+| Prueba | Descripción | Propósito |
+|--------|-------------|-----------|
+| Recorrido completo de usuario | Flujo de trabajo completo a través de la app | Flujo end-to-end |
+| Mantener estado de página | Prueba preservación de estado | Gestión de estado |
+| Navegación por URL | Navegación directa por URL | Enrutamiento de URL |
+| Atrás/adelante del navegador | Botones de navegación del navegador | Gestión de historial |
 
-**Coverage**:
-- ✅ Complete user journeys
-- ✅ Multi-page workflows
-- ✅ Page state management
-- ✅ Browser navigation (back/forward)
-- ✅ URL-based navigation
+**Cobertura**:
+- Recorridos completos de usuario
+- Flujos de trabajo multi-página
+- Gestión de estado de página
+- Navegación del navegador (atrás/adelante)
+- Navegación basada en URL
 
-### 4. Analytics Integration Tests (6 tests)
-**File**: `e2e/analytics.spec.ts`
+### 4. Pruebas de Integración de Analytics (6 pruebas)
+**Archivo**: `e2e/analytics.spec.ts`
 
-| Test | Description | Purpose |
-|------|-------------|---------|
-| Track page view | Page view event tracking | Analytics initialized |
-| Track video interactions | Play/pause/seek events | Video event tracking |
-| Track video selection | Video click events | Selection tracking |
-| Multiple playback sessions | Multi-session tracking | Session management |
-| Intercept network requests | Monitor analytics calls | Request verification |
-| Complete journey tracking | Full session analytics | Complete flow tracking |
+| Prueba | Descripción | Propósito |
+|--------|-------------|-----------|
+| Rastrear vista de página | Seguimiento de evento de vista de página | Analytics inicializado |
+| Rastrear interacciones de video | Eventos de reproducir/pausar/buscar | Seguimiento de eventos de video |
+| Rastrear selección de video | Eventos de clic en video | Seguimiento de selección |
+| Múltiples sesiones de reproducción | Seguimiento multi-sesión | Gestión de sesión |
+| Interceptar solicitudes de red | Monitorear llamadas de analytics | Verificación de solicitudes |
+| Seguimiento de recorrido completo | Analytics de sesión completa | Seguimiento de flujo completo |
 
-**Coverage**:
-- ✅ Event tracking verification
-- ✅ User interaction analytics
-- ✅ Session tracking
-- ✅ Network request monitoring
-- ✅ Multiple session handling
+**Cobertura**:
+- Verificación de seguimiento de eventos
+- Analytics de interacción de usuario
+- Seguimiento de sesión
+- Monitoreo de solicitudes de red
+- Manejo de múltiples sesiones
 
-## Critical Paths Covered
+## Rutas Críticas Cubiertas
 
-### Path 1: Browse and Watch Video
+### Ruta 1: Explorar y Ver Video
 ```
-Home Page → Click Video → Video Page → Play → Pause → Back to Home
+Página de Inicio → Clic en Video → Página de Video → Reproducir → Pausar → Volver a Inicio
 ```
-**Tests**: 
+**Pruebas**: 
 - `navigation.spec.ts: should complete full user journey`
 - `video-player.spec.ts: should play/pause video`
 
-### Path 2: Video Navigation
+### Ruta 2: Navegación de Video
 ```
-Home → Video 1 → Back → Home → Video 2
+Inicio → Video 1 → Atrás → Inicio → Video 2
 ```
-**Tests**:
+**Pruebas**:
 - `navigation.spec.ts: should complete full user journey`
 - `home.spec.ts: should navigate to video page`
 
-### Path 3: Video Controls
+### Ruta 3: Controles de Video
 ```
-Video Page → Play → Seek Forward → Seek Backward → Complete
+Página de Video → Reproducir → Adelantar → Retroceder → Completar
 ```
-**Tests**:
+**Pruebas**:
 - `video-player.spec.ts: should allow seeking`
 - `video-player.spec.ts: should handle complete button`
 
-### Path 4: Analytics Tracking
+### Ruta 4: Seguimiento de Analytics
 ```
-Home → Video → Play → Pause → Track Events
+Inicio → Video → Reproducir → Pausar → Rastrear Eventos
 ```
-**Tests**:
+**Pruebas**:
 - `analytics.spec.ts: should track complete user journey`
 - `analytics.spec.ts: should track video interactions`
 
-## Test Quality Metrics
+## Métricas de Calidad de Pruebas
 
-### Reliability
-- ✅ Uses `data-testid` attributes for stable selectors
-- ✅ Auto-waiting for elements (Playwright feature)
-- ✅ Retry logic configured for flaky tests
-- ✅ Proper async/await usage
+### Confiabilidad
+- Usa atributos `data-testid` para selectores estables
+- Espera automática de elementos (característica de Playwright)
+- Lógica de reintentos configurada para pruebas inestables
+- Uso apropiado de async/await
 
-### Maintainability
-- ✅ Clear, descriptive test names
-- ✅ Consistent test structure
-- ✅ Separated by feature/page
-- ✅ Well-documented code
+### Mantenibilidad
+- Nombres de prueba claros y descriptivos
+- Estructura de pruebas consistente
+- Separado por característica/página
+- Código bien documentado
 
-### Coverage
-- ✅ All major user workflows
-- ✅ Critical functionality tested
-- ✅ Error scenarios included
-- ✅ Accessibility considerations
+### Cobertura
+- Todos los flujos de trabajo principales de usuario
+- Funcionalidad crítica probada
+- Escenarios de error incluidos
+- Consideraciones de accesibilidad
 
-## Running Tests
+## Ejecutar Pruebas
 
-### Quick Start
+### Inicio Rápido
 ```bash
 cd examples/sample-app
 npm run e2e
 ```
 
-### Specific Test Suites
+### Suites de Prueba Específicas
 ```bash
-# Home page tests only
+# Solo pruebas de página de inicio
 npx playwright test e2e/home.spec.ts
 
-# Video player tests only
+# Solo pruebas de reproductor de video
 npx playwright test e2e/video-player.spec.ts
 
-# Navigation tests only
+# Solo pruebas de navegación
 npx playwright test e2e/navigation.spec.ts
 
-# Analytics tests only
+# Solo pruebas de analytics
 npx playwright test e2e/analytics.spec.ts
 ```
 
-### Development Mode
+### Modo Desarrollo
 ```bash
-# Run with browser UI visible
+# Ejecutar con UI de navegador visible
 npm run e2e:headed
 
-# Interactive UI mode
+# Modo UI interactivo
 npm run e2e:ui
 
-# Debug mode
+# Modo depuración
 npm run e2e:debug
 ```
 
-## Test Reporting
+## Reportes de Pruebas
 
-After running tests, view detailed reports:
+Después de ejecutar las pruebas, ver reportes detallados:
 
 ```bash
 npm run e2e:report
 ```
 
-Reports include:
-- ✅ Test execution results
-- ✅ Screenshots on failure
-- ✅ Video recordings (if configured)
-- ✅ Trace files for debugging
-- ✅ Execution timing
+Los reportes incluyen:
+- Resultados de ejecución de pruebas
+- Capturas de pantalla en fallos
+- Grabaciones de video (si está configurado)
+- Archivos de traza para depuración
+- Tiempo de ejecución
 
-## CI/CD Integration
+## Integración CI/CD
 
-Tests are integrated with GitHub Actions:
-- Runs on every push and PR
-- Automatic browser installation
-- Report artifacts uploaded
-- Screenshots on failures
+Las pruebas están integradas con GitHub Actions:
+- Se ejecutan en cada push y PR
+- Instalación automática de navegador
+- Artefactos de reportes subidos
+- Capturas de pantalla en fallos
 
-See `.github/workflows/e2e-tests.yml`
+Ver `.github/workflows/e2e-tests.yml`
 
-## Future Test Enhancements
+## Mejoras Futuras de Pruebas
 
-Potential areas for expansion:
+Áreas potenciales de expansión:
 
-1. **Cross-browser Testing**
-   - Add Firefox tests
-   - Add WebKit tests
-   - Test on different screen sizes
+1. **Pruebas Multi-navegador**
+   - Agregar pruebas de Firefox
+   - Agregar pruebas de WebKit
+   - Probar en diferentes tamaños de pantalla
 
-2. **Performance Testing**
-   - Measure page load times
-   - Check analytics event timing
-   - Monitor memory usage
+2. **Pruebas de Rendimiento**
+   - Medir tiempos de carga de página
+   - Verificar timing de eventos de analytics
+   - Monitorear uso de memoria
 
-3. **Error Handling**
-   - Network failure scenarios
-   - Invalid data handling
-   - Edge cases
+3. **Manejo de Errores**
+   - Escenarios de fallo de red
+   - Manejo de datos inválidos
+   - Casos extremos
 
-4. **Smart TV Specific**
-   - Remote control simulation
-   - D-pad navigation
-   - Focus management details
+4. **Específico para Smart TV**
+   - Simulación de control remoto
+   - Navegación D-pad
+   - Detalles de gestión de foco
 
-5. **Accessibility**
-   - Screen reader compatibility
-   - Keyboard-only navigation
-   - ARIA attributes validation
+5. **Accesibilidad**
+   - Compatibilidad con lector de pantalla
+   - Navegación solo con teclado
+   - Validación de atributos ARIA
 
-## Documentation
+## Documentación
 
-For detailed information:
-- **[E2E Testing Guide](./E2E-TESTING.md)** - Complete testing documentation
-- **[Sample App README](./README.md)** - Application overview
-- **[e2e/README.md](./e2e/README.md)** - Test directory guide
+Para información detallada:
+- **[Guía de Pruebas E2E](./E2E-TESTING.md)** - Documentación completa de pruebas
+- **[README de Aplicación de Ejemplo](./README.md)** - Resumen de aplicación
+- **[e2e/README.md](./e2e/README.md)** - Guía de directorio de pruebas
 
-## Support
+## Soporte
 
-For questions or issues:
-- Review test code in `e2e/` directory
-- Check documentation files
-- Open GitHub issue
-- Consult Playwright documentation
+Para preguntas o problemas:
+- Revisa código de pruebas en directorio `e2e/`
+- Consulta archivos de documentación
+- Abre un issue en GitHub
+- Consulta la documentación de Playwright

@@ -1,78 +1,78 @@
-# E2E Testing Quick Reference
+# Referencia Rápida de Pruebas E2E
 
-## Quick Commands
+## Comandos Rápidos
 
 ```bash
-# Run all tests (headless)
+# Ejecutar todas las pruebas (headless)
 npm run e2e
 
-# Run with visible browser
+# Ejecutar con navegador visible
 npm run e2e:headed
 
-# Interactive UI mode
+# Modo UI interactivo
 npm run e2e:ui
 
-# Debug specific test
+# Depurar prueba específica
 npm run e2e:debug
 
-# View test report
+# Ver reporte de pruebas
 npm run e2e:report
 
-# Run specific test file
+# Ejecutar archivo de prueba específico
 npx playwright test e2e/home.spec.ts
 
-# Run tests matching pattern
+# Ejecutar pruebas que coincidan con patrón
 npx playwright test --grep "video player"
 
-# List all tests
+# Listar todas las pruebas
 npx playwright test --list
 ```
 
-## Common Test Selectors
+## Selectores de Prueba Comunes
 
-### Home Page
+### Página de Inicio
 ```typescript
-page.getByTestId('home-page')           // Main container
-page.getByTestId('video-grid')          // Video grid
-page.getByTestId('video-card-1')        // Video card by ID
-page.getByTestId('video-title-1')       // Video title
+page.getByTestId('home-page')           // Contenedor principal
+page.getByTestId('video-grid')          // Cuadrícula de videos
+page.getByTestId('video-card-1')        // Tarjeta de video por ID
+page.getByTestId('video-title-1')       // Título de video
 ```
 
-### Video Page
+### Página de Video
 ```typescript
-page.getByTestId('video-page')          // Main container
-page.getByTestId('play-button')         // Play button
-page.getByTestId('pause-button')        // Pause button
-page.getByTestId('seek-forward-button') // Seek +10s
-page.getByTestId('seek-backward-button')// Seek -10s
-page.getByTestId('back-button')         // Back to home
-page.getByTestId('video-time')          // Time display
+page.getByTestId('video-page')          // Contenedor principal
+page.getByTestId('play-button')         // Botón reproducir
+page.getByTestId('pause-button')        // Botón pausar
+page.getByTestId('seek-forward-button') // Adelantar +10s
+page.getByTestId('seek-backward-button')// Retroceder -10s
+page.getByTestId('back-button')         // Volver a inicio
+page.getByTestId('video-time')          // Visualización de tiempo
 ```
 
-## Test Template
+## Plantilla de Prueba
 
 ```typescript
 import { test, expect } from '@playwright/test';
 
-test.describe('Feature Name', () => {
+test.describe('Nombre de Característica', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
   });
 
-  test('should do something', async ({ page }) => {
-    // Arrange
-    const element = page.getByTestId('my-element');
+  test('debería hacer algo', async ({ page }) => {
+    // Preparar
+    const element = page.getByTestId('mi-elemento');
     
-    // Act
+    // Actuar
     await element.click();
     
-    // Assert
+    // Afirmar
     await expect(element).toBeVisible();
   });
 });
 ```
 
-## Common Assertions
+## Aserciones Comunes
 
 ```typescript
 await expect(element).toBeVisible()
@@ -80,95 +80,95 @@ await expect(element).toBeHidden()
 await expect(element).toBeEnabled()
 await expect(element).toBeDisabled()
 await expect(element).toBeFocused()
-await expect(element).toHaveText('text')
-await expect(element).toContainText('text')
-await expect(page).toHaveURL('/expected-path')
-await expect(page).toHaveTitle('Title')
+await expect(element).toHaveText('texto')
+await expect(element).toContainText('texto')
+await expect(page).toHaveURL('/ruta-esperada')
+await expect(page).toHaveTitle('Título')
 ```
 
-## Debugging Tips
+## Consejos de Depuración
 
-1. **Run in headed mode**: See what's happening
+1. **Ejecutar en modo headed**: Ver qué está sucediendo
    ```bash
    npm run e2e:headed
    ```
 
-2. **Use Playwright Inspector**:
+2. **Usar Inspector de Playwright**:
    ```bash
    npm run e2e:debug
    ```
 
-3. **Add pause in test**:
+3. **Agregar pausa en prueba**:
    ```typescript
-   await page.pause(); // Opens inspector
+   await page.pause(); // Abre inspector
    ```
 
-4. **Take screenshot**:
+4. **Tomar captura de pantalla**:
    ```typescript
    await page.screenshot({ path: 'debug.png' });
    ```
 
-5. **Check page content**:
+5. **Verificar contenido de página**:
    ```typescript
    console.log(await page.content());
    ```
 
-## Adding New Tests
+## Agregar Nuevas Pruebas
 
-1. Create file in `e2e/` directory: `my-feature.spec.ts`
-2. Add `data-testid` to HTML elements
-3. Write tests following existing patterns
-4. Run tests: `npx playwright test e2e/my-feature.spec.ts`
-5. Verify all pass
-6. Commit changes
+1. Crear archivo en directorio `e2e/`: `mi-caracteristica.spec.ts`
+2. Agregar `data-testid` a elementos HTML
+3. Escribir pruebas siguiendo patrones existentes
+4. Ejecutar pruebas: `npx playwright test e2e/mi-caracteristica.spec.ts`
+5. Verificar que todas pasen
+6. Hacer commit de cambios
 
-## Test Structure
+## Estructura de Pruebas
 
 ```
 examples/sample-app/
 ├── e2e/
-│   ├── home.spec.ts              # Home page tests
-│   ├── video-player.spec.ts      # Video player tests
-│   ├── navigation.spec.ts        # Navigation tests
-│   └── analytics.spec.ts         # Analytics tests
-├── playwright.config.ts          # Configuration
-└── playwright-report/            # Generated reports
+│   ├── home.spec.ts              # Pruebas de página de inicio
+│   ├── video-player.spec.ts      # Pruebas de reproductor de video
+│   ├── navigation.spec.ts        # Pruebas de navegación
+│   └── analytics.spec.ts         # Pruebas de analytics
+├── playwright.config.ts          # Configuración
+└── playwright-report/            # Reportes generados
 ```
 
-## Documentation
+## Documentación
 
-- **Full Guide**: [E2E-TESTING.md](./E2E-TESTING.md)
-- **Coverage Report**: [E2E-TEST-COVERAGE.md](./E2E-TEST-COVERAGE.md)
-- **Directory README**: [e2e/README.md](./e2e/README.md)
+- **Guía Completa**: [E2E-TESTING.md](./E2E-TESTING.md)
+- **Reporte de Cobertura**: [E2E-TEST-COVERAGE.md](./E2E-TEST-COVERAGE.md)
+- **README de Directorio**: [e2e/README.md](./e2e/README.md)
 
 ## CI/CD
 
-Tests run automatically on:
-- Push to main/develop
+Las pruebas se ejecutan automáticamente en:
+- Push a main/develop
 - Pull requests
-- Via GitHub Actions
+- Vía GitHub Actions
 
-See: `.github/workflows/e2e-tests.yml`
+Ver: `.github/workflows/e2e-tests.yml`
 
-## Troubleshooting
+## Solución de Problemas
 
-**Browser not installed?**
+**¿Navegador no instalado?**
 ```bash
 npx playwright install chromium
 ```
 
-**Port 4200 in use?**
+**¿Puerto 4200 en uso?**
 ```bash
-# Kill process on port 4200
+# Terminar proceso en puerto 4200
 lsof -ti:4200 | xargs kill -9
 ```
 
-**Tests timing out?**
-- Increase timeout in `playwright.config.ts`
-- Check network speed
-- Verify app builds correctly
+**¿Pruebas agotando tiempo?**
+- Aumentar timeout en `playwright.config.ts`
+- Verificar velocidad de red
+- Verificar que la app compile correctamente
 
-**Need help?**
-- Check [E2E-TESTING.md](./E2E-TESTING.md) troubleshooting section
-- Review Playwright docs: https://playwright.dev
-- Check test examples in `e2e/` directory
+**¿Necesitas ayuda?**
+- Consulta la sección de solución de problemas en [E2E-TESTING.md](./E2E-TESTING.md)
+- Revisa documentación de Playwright: https://playwright.dev
+- Verifica ejemplos de pruebas en directorio `e2e/`
