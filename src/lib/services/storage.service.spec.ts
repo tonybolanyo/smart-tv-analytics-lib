@@ -237,4 +237,75 @@ describe('StorageService', () => {
       expect(keys.length).toBeGreaterThanOrEqual(2);
     });
   });
+
+  describe('memory storage mode', () => {
+    let memoryService: StorageService;
+
+    beforeEach(() => {
+      // Create a service instance that uses memory storage by making localStorage unavailable
+      const originalSetItem = Storage.prototype.setItem;
+      spyOn(Storage.prototype, 'setItem').and.throwError('localStorage not available');
+      
+      memoryService = new StorageService();
+      
+      // Restore for other tests
+      Storage.prototype.setItem = originalSetItem;
+    });
+
+    it('should use memory storage when localStorage fails', () => {
+      expect(memoryService.getStorageType()).toBe('memory');
+    });
+
+    it('should setItem in memory storage', () => {
+      memoryService.setItem('memKey1', 'memValue1');
+      const value = memoryService.getItem('memKey1');
+      expect(value).toBe('memValue1');
+    });
+
+    it('should getItem from memory storage', () => {
+      memoryService.setItem('memKey2', 'memValue2');
+      const value = memoryService.getItem('memKey2');
+      expect(value).toBe('memValue2');
+    });
+
+    it('should return null for non-existent key in memory', () => {
+      const value = memoryService.getItem('nonExistent');
+      expect(value).toBeNull();
+    });
+
+    it('should removeItem from memory storage', () => {
+      memoryService.setItem('memKey3', 'memValue3');
+      memoryService.removeItem('memKey3');
+      const value = memoryService.getItem('memKey3');
+      expect(value).toBeNull();
+    });
+
+    it('should clear all items in memory storage', () => {
+      memoryService.setItem('memKey4', 'memValue4');
+      memoryService.setItem('memKey5', 'memValue5');
+      memoryService.clear();
+      expect(memoryService.getItem('memKey4')).toBeNull();
+      expect(memoryService.getItem('memKey5')).toBeNull();
+    });
+
+    it('should getAllKeys from memory storage', () => {
+      memoryService.setItem('memKey6', 'memValue6');
+      memoryService.setItem('memKey7', 'memValue7');
+      const keys = memoryService.getAllKeys();
+      expect(keys).toContain('memKey6');
+      expect(keys).toContain('memKey7');
+    });
+
+    it('should handle hasItem in memory storage', () => {
+      memoryService.setItem('memKey8', 'memValue8');
+      expect(memoryService.hasItem('memKey8')).toBe(true);
+      expect(memoryService.hasItem('nonExistent')).toBe(false);
+    });
+
+    it('should handle getItem with undefined value in memory', () => {
+      // Test the || null branch when memoryStorage.get returns undefined
+      const value = memoryService.getItem('neverSet');
+      expect(value).toBeNull();
+    });
+  });
 });

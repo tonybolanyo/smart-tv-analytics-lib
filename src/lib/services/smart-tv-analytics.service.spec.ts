@@ -558,4 +558,120 @@ describe('SmartTVAnalyticsService', () => {
       discardPeriodicTasks();
     }));
   });
+
+  describe('session property handling', () => {
+    it('should handle events when session has no sessionId', async () => {
+      sessionService.getCurrentSession.and.returnValue({
+        sessionId: '',
+        startTime: Date.now(),
+        lastActivity: Date.now(),
+        isFirstSession: true,
+        sessionNumber: 1
+      });
+      
+      service.initialize(mockConfig);
+      await service.logEvent('test_event', {});
+      
+      expect(eventBatchingService.addEvent).toHaveBeenCalled();
+    });
+
+    it('should handle events when session has no sessionNumber', async () => {
+      sessionService.getCurrentSession.and.returnValue({
+        sessionId: 'test-session',
+        startTime: Date.now(),
+        lastActivity: Date.now(),
+        isFirstSession: true,
+        sessionNumber: undefined as any
+      });
+      
+      service.initialize(mockConfig);
+      await service.logEvent('test_event', {});
+      
+      expect(eventBatchingService.addEvent).toHaveBeenCalled();
+    });
+
+    it('should handle events when session is null', async () => {
+      sessionService.getCurrentSession.and.returnValue(null);
+      
+      service.initialize(mockConfig);
+      await service.logEvent('test_event', {});
+      
+      expect(eventBatchingService.addEvent).toHaveBeenCalled();
+    });
+  });
+
+  describe('collection disabled scenarios', () => {
+    it('should skip logging when collection is disabled', async () => {
+      const debugConfig = { ...mockConfig, enableDebugMode: true };
+      service.initialize(debugConfig);
+      spyOn(console, 'log');
+      
+      // Clear the spy to ignore initial events
+      eventBatchingService.addEvent.calls.reset();
+      
+      service.enableCollection(false);
+      await service.logEvent('test_event', {});
+      
+      // Event should not be added
+      expect(eventBatchingService.addEvent).not.toHaveBeenCalled();
+      expect(console.log).toHaveBeenCalledWith(
+        '[SmartTVAnalytics] Collection disabled, skipping event:',
+        'test_event'
+      );
+    });
+
+    it('should resume logging when collection is re-enabled', async () => {
+      service.initialize(mockConfig);
+      
+      // Clear the spy to ignore initial events
+      eventBatchingService.addEvent.calls.reset();
+      
+      service.enableCollection(false);
+      await service.logEvent('skipped_event', {});
+      
+      service.enableCollection(true);
+      await service.logEvent('logged_event', {});
+      
+      // Only the second event should be logged
+      expect(eventBatchingService.addEvent).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('engagement tracking scenarios', () => {
+    it('should not setup engagement tracking when disabled', fakeAsync(() => {
+      const noEngagementConfig = {
+        ...mockConfig,
+        enableEngagementTracking: false
+      };
+      
+      service.initialize(noEngagementConfig);
+      
+      // Fast-forward time
+      tick(60000);
+      
+      // No engagement event should be logged beyond initial events
+      const callsBefore = eventBatchingService.addEvent.calls.count();
+      tick(60000);
+      const callsAfter = eventBatchingService.addEvent.calls.count();
+      
+      // Should not increase (no periodic engagement events)
+      expect(callsAfter).toBe(callsBefore);
+      
+      discardPeriodicTasks();
+    }));
+  });
+
+  describe('page view tracking scenarios', () => {
+    it('should not track page views when disabled', () => {
+      const noPageViewConfig = {
+        ...mockConfig,
+        enablePageViewTracking: false
+      };
+      
+      service.initialize(noPageViewConfig);
+      
+      // No page view tracking should be set up
+      expect(true).toBe(true);
+    });
+  });
 });

@@ -1,6 +1,8 @@
 # Smart TV Analytics Library
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![npm](https://img.shields.io/npm/v/smart-tv-analytics.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Coverage](https://img.shields.io/badge/coverage-93.72%25-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![npm](https://img.shields.io/npm/v/smart-tv-analytics.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Coverage](https://img.shields.io/badge/coverage-95.19%25-brightgreen.svg)
+
+![Statements](https://img.shields.io/badge/statements-95.19%25-brightgreen.svg) ![Branches](https://img.shields.io/badge/branches-85.85%25-green.svg) ![Functions](https://img.shields.io/badge/functions-89.77%25-green.svg)
 
 ![Statements](https://img.shields.io/badge/statements-93.72%25-brightgreen.svg) ![Branches](https://img.shields.io/badge/branches-77.36%25-yellowgreen.svg) ![Functions](https://img.shields.io/badge/functions-89.77%25-green.svg)
 

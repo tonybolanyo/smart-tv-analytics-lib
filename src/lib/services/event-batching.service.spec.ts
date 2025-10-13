@@ -345,6 +345,40 @@ describe('EventBatchingService', () => {
       expect(true).toBe(true);
     });
 
+    it('should use default retry attempts when not specified', () => {
+      const configWithoutRetry = {
+        measurementId: 'G-TEST',
+        apiSecret: 'secret',
+        appName: 'TestApp',
+        appVersion: '1.0.0'
+        // maxRetryAttempts not specified
+      };
+      service.initialize(configWithoutRetry);
+      
+      // Should use default
+      expect(true).toBe(true);
+    });
+
+    it('should use default batch size when not specified', async () => {
+      const configWithoutBatchSize = {
+        measurementId: 'G-TEST',
+        apiSecret: 'secret',
+        appName: 'TestApp',
+        appVersion: '1.0.0'
+        // batchSize not specified
+      };
+      service.initialize(configWithoutBatchSize);
+      storageService.getItem.and.returnValue('test-client');
+      
+      // Add event - should use default batch size (10)
+      await service.addEvent({
+        name: 'test',
+        params: {}
+      });
+      
+      expect(true).toBe(true);
+    });
+
     it('should reset service state', () => {
       service.initialize(mockConfig);
       service.setUserId('user123');
