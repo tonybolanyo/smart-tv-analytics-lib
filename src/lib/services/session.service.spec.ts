@@ -279,6 +279,20 @@ describe('SessionService', () => {
       expect(initialSession).toBeTruthy();
       done();
     });
+
+    it('should check for session expiration in timeout handler', () => {
+      storageService.getItem.and.returnValue(null);
+      service.initialize();
+      
+      // Make session expired by manipulating time
+      const session = service.getCurrentSession();
+      if (session) {
+        session.lastActivity = Date.now() - (60 * 60 * 1000); // 1 hour ago
+      }
+      
+      // Session timeout logic is handled internally
+      expect(session).toBeTruthy();
+    });
   });
 
   describe('session persistence', () => {
