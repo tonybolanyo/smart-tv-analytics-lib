@@ -242,7 +242,7 @@ Los tests E2E cubren los siguientes flujos críticos:
 
 Para una guía completa sobre cómo ejecutar, escribir y extender los tests E2E, consulta:
 
-**[E2E Testing Guide](../../draft-docs/E2E-TESTING.md)**
+**[E2E Testing Guide](../draft-docs/E2E-TESTING.md)**
 
 Este documento incluye:
 - Configuración del entorno de testing
@@ -266,7 +266,7 @@ Esto generará un archivo `.ipk` en `dist/packages/` que puede ser instalado en 
 - webOS CLI tools instalado (`@webosose/ares-cli`)
 - Configuración de `webos/appinfo.json` actualizada
 
-Ver [EMPAQUETADO.md](../../draft-docs/EMPAQUETADO.md) para más detalles.
+Ver [EMPAQUETADO.md](../draft-docs/EMPAQUETADO.md) para más detalles.
 
 ### Empaquetar para Tizen
 
@@ -281,7 +281,7 @@ Esto generará un archivo `.wgt` en `dist/packages/` que puede ser instalado en 
 - Perfil de certificado configurado
 - Configuración de `tizen/config.xml` actualizada
 
-Ver [EMPAQUETADO.md](../../draft-docs/EMPAQUETADO.md) para más detalles.
+Ver [EMPAQUETADO.md](../draft-docs/EMPAQUETADO.md) para más detalles.
 
 ## Funcionalidades Demostradas
 
@@ -416,7 +416,7 @@ this.analytics.logEvent('nombre_evento', {
 ## Recursos Adicionales
 
 - [Documentación de smart-tv-analytics](../../README.md)
-- [Guía de Empaquetado](../../draft-docs/EMPAQUETADO.md)
+- [Guía de Empaquetado](../draft-docs/EMPAQUETADO.md)
 - [Firebase Analytics](https://firebase.google.com/docs/analytics)
 - [Tizen Developer Guide](https://developer.samsung.com/smarttv/develop/guides/fundamentals.html)
 - [webOS Developer Guide](https://webostv.developer.lge.com/develop/guides)
