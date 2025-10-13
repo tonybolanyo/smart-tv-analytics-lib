@@ -28,18 +28,6 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 - TypeScript 4.3 o superior
 - Node.js 14 o superior
 
-## 📚 Documentación
-
-**Toda la documentación actualizada está disponible en la carpeta [`/docs`](./docs/INDEX.md).**
-
-- **[Índice de Documentación](./docs/INDEX.md)** - Inicio y guía completa
-- **[Guía Principal](./docs/README.md)** - Instalación, configuración y API
-- **[Solución de Problemas](./docs/TROUBLESHOOTING.md)** - Guía para resolver problemas comunes
-- **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)** - Tutorial completo con ejemplo
-- **[Historial de Cambios](./docs/CHANGELOG.md)** - Versiones y actualizaciones
-
-> **Nota**: Los documentos en borrador y en desarrollo están en [`/draft-docs`](./draft-docs/README.md)
-
 ## Instalación
 
 ```bash
@@ -50,9 +38,8 @@ npm install smart-tv-analytics
 
 Tenemos una **aplicación de ejemplo completa** que demuestra cómo integrar y usar esta librería:
 
-- **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)**: App Angular completa con tracking de video
-- **[Más Ejemplos](./docs/EXAMPLES.md)**: Índice completo de ejemplos disponibles
-- **[Scripts de Empaquetado](./draft-docs/EMPAQUETADO.md)**: Guía detallada para crear paquetes Tizen (.wgt) y webOS (.ipk)
+- **[Aplicación de Ejemplo](./examples/sample-app/README.md)**: App Angular completa con tracking de video
+- **[Scripts de Empaquetado](../draft-docs/EMPAQUETADO.md)**: Guía para crear paquetes Tizen (.wgt) y webOS (.ipk)
 
 ### Inicio Rápido con el Ejemplo
 
@@ -277,7 +264,7 @@ cd examples/sample-app
 npm run e2e
 ```
 
-Para más información sobre testing E2E, consulta la [guía completa de E2E testing](./draft-docs/E2E-TESTING.md).
+Para más información sobre testing E2E, consulta la [guía completa de E2E testing](../draft-docs/E2E-TESTING.md).
 
 ### Ejemplo de test personalizado
 
