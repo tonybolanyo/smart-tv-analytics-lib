@@ -87,7 +87,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detecta la plataforma/SO
+   * Detecta la plataforma/sistema operativo
    * @private
    */
   private detectPlatform(userAgent: string): string {
@@ -175,7 +175,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detecta la versión del SO
+   * Detecta la versión del sistema operativo
    * @private
    */
   private detectOSVersion(userAgent: string, platform: string): string | undefined {

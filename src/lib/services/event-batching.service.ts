@@ -63,8 +63,8 @@ export class EventBatchingService {
   }
 
   /**
-   * Agrega un evento a la cola de lotes
-   * @param event - Evento de analytics a agregar
+   * Agrega un evento analítico a la cola de lotes
+   * @param event - Evento analítico a agregar
    */
   async addEvent(event: AnalyticsEvent): Promise<void> {
     this.eventQueue.push(event);

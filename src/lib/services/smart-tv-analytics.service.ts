@@ -1,5 +1,5 @@
 /**
- * @fileoverview Servicio Principal de Analytics para Smart TV Analytics
+ * @fileoverview Servicio principal de Analytics para Smart TV Analytics
  * @author Smart TV Analytics Team
  * @version 1.0.0
  */
@@ -86,7 +86,7 @@ export class SmartTVAnalyticsService implements OnDestroy {
    * Registra un evento personalizado a Firebase Analytics
    * @param eventName - Nombre del evento
    * @param parameters - Parámetros opcionales del evento
-   * @returns Promise que se resuelve cuando el evento se agrega a la cola
+   * @returns Promise que se resuelve cuando el evento es encolado
    */
   async logEvent(eventName: string, parameters?: EventParameters): Promise<void> {
     if (!this.isInitialized) {
