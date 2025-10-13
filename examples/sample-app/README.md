@@ -14,21 +14,21 @@ Esta es una aplicación de ejemplo completa que demuestra cómo integrar y usar 
 - [Empaquetado](#empaquetado)
 - [Funcionalidades Demostradas](#funcionalidades-demostradas)
 
-## ✨ Características
+## Características
 
 Esta aplicación de ejemplo incluye:
 
-- ✅ Integración completa de smart-tv-analytics
-- ✅ Tracking automático de sesiones y páginas
-- ✅ Eventos personalizados de interacción
-- ✅ Simulador de reproductor de video con analytics
-- ✅ Navegación entre páginas
-- ✅ Optimización para Smart TVs (Tizen y webOS)
-- ✅ Scripts de empaquetado para ambas plataformas
-- ✅ Configuración lista para producción
-- ✅ **Suite completa de tests end-to-end con Playwright**
+- Integración completa de smart-tv-analytics
+- Tracking automático de sesiones y páginas
+- Eventos personalizados de interacción
+- Simulador de reproductor de video con analytics
+- Navegación entre páginas
+- Optimización para Smart TVs (Tizen y webOS)
+- Scripts de empaquetado para ambas plataformas
+- Configuración lista para producción
+- **Suite completa de tests end-to-end con Playwright**
 
-## 📦 Requisitos Previos
+## Requisitos Previos
 
 ### Para Desarrollo
 
@@ -53,7 +53,7 @@ npm install -g @webosose/ares-cli
 - [Tizen Studio](https://developer.samsung.com/smarttv/develop/getting-started/setting-up-sdk/installing-tv-sdk.html)
 - Tizen CLI configurado en el PATH
 
-## 🚀 Instalación
+## Instalación
 
 ### Opción 1: Desde el Repositorio (para desarrollo)
 
@@ -107,7 +107,7 @@ cd examples/sample-app
 npm install
 ```
 
-## 🔧 Configuración
+## Configuración
 
 Edita el archivo `src/environments/environment.prod.ts`:
 
@@ -129,7 +129,7 @@ Para obtener estas credenciales:
 - Ve a Admin > Data Streams > Web > Measurement Protocol API secrets
 - Crea un nuevo secret y copia el valor
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 sample-app/
@@ -203,7 +203,7 @@ Este comando:
 1. Compila la aplicación en modo producción
 2. Copia los archivos al directorio `webos/dist/`
 
-## 🧪 Testing
+## Testing
 
 Esta aplicación incluye una suite completa de tests end-to-end (E2E) usando Playwright.
 
@@ -233,16 +233,16 @@ npm run e2e:report
 
 Los tests E2E cubren los siguientes flujos críticos:
 
-- ✅ **Página de Inicio**: Carga, visualización del catálogo, navegación
-- ✅ **Reproductor de Video**: Controles de reproducción, pausa, seek
-- ✅ **Navegación**: Flujos completos de usuario entre páginas
-- ✅ **Analytics**: Verificación de eventos de tracking
+- **Página de Inicio**: Carga, visualización del catálogo, navegación
+- **Reproductor de Video**: Controles de reproducción, pausa, seek
+- **Navegación**: Flujos completos de usuario entre páginas
+- **Analytics**: Verificación de eventos de tracking
 
 ### Documentación Completa de Testing
 
 Para una guía completa sobre cómo ejecutar, escribir y extender los tests E2E, consulta:
 
-**[📖 E2E Testing Guide](./E2E-TESTING.md)**
+**[E2E Testing Guide](./E2E-TESTING.md)**
 
 Este documento incluye:
 - Configuración del entorno de testing
@@ -252,7 +252,7 @@ Este documento incluye:
 - Troubleshooting
 - Integración con CI/CD
 
-## 📦 Empaquetado
+## Empaquetado
 
 ### Empaquetar para webOS
 
@@ -283,7 +283,7 @@ Esto generará un archivo `.wgt` en `dist/packages/` que puede ser instalado en 
 
 Ver [EMPAQUETADO.md](./EMPAQUETADO.md) para más detalles.
 
-## 🎯 Funcionalidades Demostradas
+## Funcionalidades Demostradas
 
 ### 1. Tracking Automático
 
@@ -385,7 +385,7 @@ private detectPlatform(): string {
    - `select_content` (personalizado)
    - `video_start`, `video_play`, `video_pause`, etc. (personalizados)
 
-## 🛠️ Personalización
+## Personalización
 
 ### Cambiar Estilos
 
@@ -413,7 +413,7 @@ this.analytics.logEvent('nombre_evento', {
 });
 ```
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 - [Documentación de smart-tv-analytics](../../README.md)
 - [Guía de Empaquetado](./EMPAQUETADO.md)
@@ -440,6 +440,6 @@ this.analytics.logEvent('nombre_evento', {
 - **webOS**: Verifica que `ares-package` esté instalado: `ares-package --version`
 - **Tizen**: Verifica que Tizen CLI esté en el PATH: `tizen version`
 
-## 📝 Licencia
+## Licencia
 
 MIT License - ver el archivo LICENSE en la raíz del proyecto para más detalles.

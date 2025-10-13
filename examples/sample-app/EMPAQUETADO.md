@@ -299,7 +299,7 @@ tizen run -p TuApp.TuApp -t <nombre-del-dispositivo>
 
 ---
 
-## 🐛 Depuración
+## Depuración
 
 ### Depurar en webOS
 
@@ -339,7 +339,7 @@ sdb dlog SmartTVAnalyticsSample
 
 ---
 
-## 🔧 Solución de Problemas
+## Solución de Problemas
 
 ### webOS
 
@@ -388,7 +388,7 @@ Solución: Verifica la contraseña del certificado o crea uno nuevo.
 
 ---
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 ### webOS
 
@@ -404,7 +404,7 @@ Solución: Verifica la contraseña del certificado o crea uno nuevo.
 
 ---
 
-## 💡 Consejos
+## Consejos
 
 1. **Versionado**: Incrementa la versión en `appinfo.json` / `config.xml` con cada build
 2. **Íconos**: Usa íconos de alta calidad para mejor apariencia
@@ -415,7 +415,7 @@ Solución: Verifica la contraseña del certificado o crea uno nuevo.
 
 ---
 
-## 🎯 Checklist de Empaquetado
+## Checklist de Empaquetado
 
 ### webOS
 - [ ] webOS CLI instalado

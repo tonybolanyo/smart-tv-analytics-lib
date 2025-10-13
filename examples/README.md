@@ -2,22 +2,22 @@
 
 Este directorio contiene ejemplos y aplicaciones de demostración para la librería **smart-tv-analytics**.
 
-## 📂 Contenido
+## Contenido
 
 ### Sample App
 
 Una aplicación Angular completa que demuestra:
 
-- ✅ Integración de smart-tv-analytics
-- ✅ Tracking de sesiones y navegación
-- ✅ Eventos personalizados
-- ✅ Simulador de reproductor de video
-- ✅ Scripts de empaquetado para Tizen y webOS
-- ✅ Documentación completa en español
+- Integración de smart-tv-analytics
+- Tracking de sesiones y navegación
+- Eventos personalizados
+- Simulador de reproductor de video
+- Scripts de empaquetado para Tizen y webOS
+- Documentación completa en español
 
 **[Ver documentación completa →](./sample-app/README.md)**
 
-## 🚀 Inicio Rápido
+## Inicio Rápido
 
 ### Prerrequisito: Compilar la Librería
 
@@ -64,12 +64,12 @@ npm run package:webos
 npm run package:tizen
 ```
 
-## 📚 Documentación
+## Documentación
 
 - **[README - Sample App](./sample-app/README.md)**: Guía completa de la aplicación de ejemplo
 - **[EMPAQUETADO](./sample-app/EMPAQUETADO.md)**: Guía detallada de empaquetado para Tizen y webOS
 
-## 🎯 Características Demostradas
+## Características Demostradas
 
 ### Tracking Automático
 
@@ -115,7 +115,7 @@ SmartTVAnalyticsModule.forRoot({
 })
 ```
 
-## 🛠️ Requisitos
+## Requisitos
 
 ### Para Desarrollo
 - Node.js 14+
@@ -128,14 +128,14 @@ SmartTVAnalyticsModule.forRoot({
 ### Para Empaquetado Tizen
 - [Tizen Studio](https://developer.samsung.com/smarttv/develop/getting-started/setting-up-sdk/installing-tv-sdk.html)
 
-## 📖 Recursos Adicionales
+## Recursos Adicionales
 
 - [Documentación Principal](../README.md)
 - [Firebase Analytics](https://firebase.google.com/docs/analytics)
 - [Tizen Developer Guide](https://developer.samsung.com/smarttv/develop/guides/fundamentals.html)
 - [webOS Developer Guide](https://webostv.developer.lge.com/develop/guides)
 
-## 💡 Próximos Ejemplos
+## Próximos Ejemplos
 
 Estamos trabajando en más ejemplos:
 
@@ -144,10 +144,10 @@ Estamos trabajando en más ejemplos:
 - [ ] Ejemplo con testing avanzado
 - [ ] Ejemplo con configuración dinámica
 
-## 🤝 Contribuciones
+## Contribuciones
 
 Si tienes ideas para nuevos ejemplos o mejoras, ¡no dudes en contribuir!
 
-## 📝 Licencia
+## Licencia
 
 MIT License - ver el archivo LICENSE en la raíz del proyecto.
