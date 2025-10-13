@@ -1,75 +1,75 @@
-# E2E Tests
+# Pruebas E2E
 
-This directory contains end-to-end tests for the Smart TV Analytics sample application using Playwright.
+Este directorio contiene pruebas end-to-end para la aplicación de ejemplo de Smart TV Analytics usando Playwright.
 
-## Test Files
+## Archivos de Prueba
 
-- **`home.spec.ts`** - Tests for the home page and video catalog
-- **`video-player.spec.ts`** - Tests for the video player functionality
-- **`navigation.spec.ts`** - Tests for navigation flows and user journeys
-- **`analytics.spec.ts`** - Tests for analytics event tracking
+- **`home.spec.ts`** - Pruebas para la página de inicio y catálogo de videos
+- **`video-player.spec.ts`** - Pruebas para la funcionalidad del reproductor de video
+- **`navigation.spec.ts`** - Pruebas para flujos de navegación y recorridos de usuario
+- **`analytics.spec.ts`** - Pruebas para seguimiento de eventos de analytics
 
-## Running Tests
+## Ejecutar Pruebas
 
-From the `examples/sample-app` directory:
+Desde el directorio `examples/sample-app`:
 
 ```bash
-# Run all tests
+# Ejecutar todas las pruebas
 npm run e2e
 
-# Run with UI
+# Ejecutar con UI
 npm run e2e:headed
 
-# Run specific test file
+# Ejecutar archivo de prueba específico
 npx playwright test e2e/home.spec.ts
 
-# Debug tests
+# Depurar pruebas
 npm run e2e:debug
 ```
 
-## Test Structure
+## Estructura de Pruebas
 
-Each test file follows this structure:
+Cada archivo de prueba sigue esta estructura:
 
 ```typescript
 import { test, expect } from '@playwright/test';
 
-test.describe('Feature Name', () => {
+test.describe('Nombre de Característica', () => {
   test.beforeEach(async ({ page }) => {
-    // Setup for each test
+    // Configuración para cada prueba
   });
 
-  test('should do something', async ({ page }) => {
-    // Test implementation
+  test('debería hacer algo', async ({ page }) => {
+    // Implementación de prueba
   });
 });
 ```
 
-## Writing New Tests
+## Escribir Nuevas Pruebas
 
-1. Create a new `.spec.ts` file in this directory
-2. Use `data-testid` attributes to select elements
-3. Follow the existing patterns in other test files
-4. Run tests to verify they pass
+1. Crear un nuevo archivo `.spec.ts` en este directorio
+2. Usar atributos `data-testid` para seleccionar elementos
+3. Seguir los patrones existentes en otros archivos de prueba
+4. Ejecutar pruebas para verificar que pasen
 
-For detailed guidance, see [E2E-TESTING.md](../E2E-TESTING.md)
+Para orientación detallada, ver [E2E-TESTING.md](../E2E-TESTING.md)
 
-## Test Data IDs
+## IDs de Datos de Prueba
 
-Components use the following `data-testid` attributes:
+Los componentes usan los siguientes atributos `data-testid`:
 
-### Home Page
-- `home-page` - Main container
-- `video-grid` - Video grid
-- `video-card-{id}` - Video cards
-- `video-title-{id}` - Video titles
+### Página de Inicio
+- `home-page` - Contenedor principal
+- `video-grid` - Cuadrícula de videos
+- `video-card-{id}` - Tarjetas de video
+- `video-title-{id}` - Títulos de videos
 
-### Video Page
-- `video-page` - Main container
-- `play-button` - Play button
-- `pause-button` - Pause button
-- `seek-forward-button` - Seek forward
-- `seek-backward-button` - Seek backward
-- `back-button` - Back to home
+### Página de Video
+- `video-page` - Contenedor principal
+- `play-button` - Botón reproducir
+- `pause-button` - Botón pausar
+- `seek-forward-button` - Adelantar
+- `seek-backward-button` - Retroceder
+- `back-button` - Volver a inicio
 
-See component HTML files for complete list of test IDs.
+Ver archivos HTML de componentes para lista completa de IDs de prueba.

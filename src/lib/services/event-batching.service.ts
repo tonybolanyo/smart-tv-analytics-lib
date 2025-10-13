@@ -1,5 +1,5 @@
 /**
- * @fileoverview Event batching service for Smart TV Analytics
+ * @fileoverview Servicio de agrupación de eventos para Smart TV Analytics
  * @author Smart TV Analytics Team
  * @version 1.0.0
  */
@@ -19,7 +19,7 @@ import {
 import { StorageService } from './storage.service';
 
 /**
- * Service responsible for batching and sending events to Firebase Analytics
+ * Servicio responsable de agrupar y enviar eventos a Firebase Analytics
  */
 @Injectable({
   providedIn: 'root'
@@ -45,8 +45,8 @@ export class EventBatchingService {
   }
 
   /**
-   * Initialize the service with configuration
-   * @param config - Analytics configuration
+   * Inicializa el servicio con configuración
+   * @param config - Configuración de analytics
    */
   initialize(config: SmartTVAnalyticsConfig): void {
     this.config = config;
@@ -63,8 +63,8 @@ export class EventBatchingService {
   }
 
   /**
-   * Add an event to the batch queue
-   * @param event - Analytics event to add
+   * Agrega un evento analítico a la cola de lotes
+   * @param event - Evento analítico a agregar
    */
   async addEvent(event: AnalyticsEvent): Promise<void> {
     this.eventQueue.push(event);
@@ -80,17 +80,17 @@ export class EventBatchingService {
   }
 
   /**
-   * Set user property
-   * @param propertyName - Property name
-   * @param value - Property value
+   * Establece una propiedad de usuario
+   * @param propertyName - Nombre de la propiedad
+   * @param value - Valor de la propiedad
    */
   setUserProperty(propertyName: string, value: string): void {
     this.userProperties[propertyName] = value;
   }
 
   /**
-   * Set user ID
-   * @param userId - User identifier
+   * Establece el ID de usuario
+   * @param userId - Identificador de usuario
    */
   setUserId(userId: string): void {
     this.userId = userId;

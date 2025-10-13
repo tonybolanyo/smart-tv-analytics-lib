@@ -2,7 +2,7 @@
 
 Esta guía te llevará paso a paso desde cero hasta tener la aplicación de ejemplo funcionando.
 
-## ⏱️ Tiempo estimado: 15-20 minutos
+## Tiempo estimado: 15-20 minutos
 
 ## 📋 Paso a Paso
 
@@ -116,7 +116,7 @@ La aplicación se abrirá automáticamente en http://localhost:4200
    - select_content
    - video_play, video_pause, etc.
 
-## 🎯 Próximos Pasos
+## Próximos Pasos
 
 ### Compilar para Producción
 
@@ -156,7 +156,7 @@ Ver [EMPAQUETADO.md](EMPAQUETADO.md#empaquetado-para-webos-lg) para más detalle
 
 Ver [EMPAQUETADO.md](EMPAQUETADO.md#empaquetado-para-tizen-samsung) para más detalles.
 
-## 🐛 Solución de Problemas Comunes
+## Solución de Problemas Comunes
 
 ### Error: "Cannot find module 'smart-tv-analytics'"
 
@@ -204,7 +204,7 @@ export const environment = {
    - Algunos bloqueadores bloquean las llamadas a Google Analytics
    - Prueba en modo incógnito o desactiva el bloqueador
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 - [README completo](README.md)
 - [Guía de empaquetado](EMPAQUETADO.md)
@@ -217,7 +217,7 @@ export const environment = {
 - Crea un nuevo issue si encuentras un problema
 - Consulta la documentación oficial de Firebase Analytics
 
-## ✅ Checklist de Verificación
+## Checklist de Verificación
 
 - [ ] Repositorio clonado
 - [ ] Dependencias de la librería instaladas

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Main Analytics Service for Smart TV Analytics
+ * @fileoverview Servicio principal de Analytics para Smart TV Analytics
  * @author Smart TV Analytics Team
  * @version 1.0.0
  */
@@ -24,8 +24,8 @@ import { SessionService } from './session.service';
 import { StorageService } from './storage.service';
 
 /**
- * Main service for Smart TV Analytics
- * Provides methods to track events, manage user properties, and handle automatic events
+ * Servicio principal para Smart TV Analytics
+ * Proporciona métodos para rastrear eventos, gestionar propiedades de usuario y manejar eventos automáticos
  */
 @Injectable({
   providedIn: 'root'
@@ -54,8 +54,8 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Initialize the analytics service with configuration
-   * @param config - Analytics configuration
+   * Inicializa el servicio de analytics con configuración
+   * @param config - Configuración de analytics
    */
   initialize(config: SmartTVAnalyticsConfig): void {
     this.config = { ...DEFAULT_CONFIG, ...config };
@@ -83,10 +83,10 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Log a custom event to Firebase Analytics
-   * @param eventName - Name of the event
-   * @param parameters - Optional event parameters
-   * @returns Promise that resolves when event is queued
+   * Registra un evento personalizado a Firebase Analytics
+   * @param eventName - Nombre del evento
+   * @param parameters - Parámetros opcionales del evento
+   * @returns Promise que se resuelve cuando el evento es encolado
    */
   async logEvent(eventName: string, parameters?: EventParameters): Promise<void> {
     if (!this.isInitialized) {
@@ -114,9 +114,9 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Set a user property
-   * @param propertyName - Name of the property
-   * @param value - Value of the property
+   * Establece una propiedad de usuario
+   * @param propertyName - Nombre de la propiedad
+   * @param value - Valor de la propiedad
    */
   setUserProperty(propertyName: string, value: string): void {
     this.userProperties[propertyName] = value;
@@ -128,8 +128,8 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Set the user ID
-   * @param userId - Unique identifier for the user
+   * Establece el ID de usuario
+   * @param userId - Identificador único del usuario
    */
   setUserId(userId: string): void {
     this.userId = userId;
@@ -141,8 +141,8 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Enable or disable analytics collection
-   * @param enabled - Whether to enable collection
+   * Habilita o deshabilita la recopilación de analytics
+   * @param enabled - Si se debe habilitar la recopilación
    */
   enableCollection(enabled: boolean): void {
     this.collectionEnabled = enabled;
@@ -153,23 +153,23 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Get the current session information
-   * @returns Current session info
+   * Obtiene la información de sesión actual
+   * @returns Información de sesión actual
    */
   getCurrentSession(): SessionInfo | null {
     return this.sessionService.getCurrentSession();
   }
 
   /**
-   * Force flush all pending events
-   * @returns Promise that resolves when all events are sent
+   * Fuerza el envío de todos los eventos pendientes
+   * @returns Promise que se resuelve cuando todos los eventos se envían
    */
   async flush(): Promise<void> {
     return this.eventBatching.flush();
   }
 
   /**
-   * Reset all user data and start a new session
+   * Reinicia todos los datos de usuario e inicia una nueva sesión
    */
   reset(): void {
     this.userId = undefined;
@@ -183,7 +183,7 @@ export class SmartTVAnalyticsService implements OnDestroy {
   }
 
   /**
-   * Clean up resources when service is destroyed
+   * Libera recursos cuando el servicio se destruye
    */
   ngOnDestroy(): void {
     this.destroy$.next();

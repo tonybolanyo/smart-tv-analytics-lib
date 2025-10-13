@@ -34,7 +34,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 npm install smart-tv-analytics
 ```
 
-## 📖 Ejemplos
+## Ejemplos
 
 Tenemos una **aplicación de ejemplo completa** que demuestra cómo integrar y usar esta librería:
 
@@ -137,7 +137,7 @@ export class HomeComponent {
 }
 ```
 
-## 📊 Eventos Automáticos
+## Eventos Automáticos
 
 La librería envía automáticamente estos eventos:
 
@@ -147,7 +147,7 @@ La librería envía automáticamente estos eventos:
 - **app_update**: Cuando cambia la versión de la app
 - **engagement**: Tiempo de uso cada 30 segundos
 
-## 🔧 API Referencia
+## API Referencia
 
 ### SmartTVAnalyticsService
 
@@ -197,7 +197,7 @@ Reinicia todos los datos de usuario y comienza una nueva sesión.
 this.analytics.reset();
 ```
 
-## ⚙️ Configuración Avanzada
+## Configuración Avanzada
 
 ### Opciones de SmartTVAnalyticsConfig
 
@@ -237,7 +237,7 @@ this.analytics.logEvent('purchase', {
 });
 ```
 
-## 🏗 Arquitectura
+## Arquitectura
 
 La librería está compuesta por varios servicios especializados:
 
@@ -247,7 +247,7 @@ La librería está compuesta por varios servicios especializados:
 - **DeviceInfoService**: Detección de información del dispositivo
 - **StorageService**: Almacenamiento con fallback a memoria
 
-## 🧪 Testing
+## Testing
 
 La librería incluye tests unitarios completos usando Jasmine y Karma.
 
@@ -295,14 +295,14 @@ describe('Analytics Integration', () => {
 });
 ```
 
-## 🔒 Privacidad y Cumplimiento
+## Privacidad y Cumplimiento
 
 - No almacena datos personales sin consentimiento
 - Respeta las configuraciones de privacidad del usuario
 - Compatible con GDPR y otras regulaciones
 - Método `enableCollection(false)` para deshabilitar completamente
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Eventos no se envían
 1. Verificar el `measurementId` y `apiSecret`
@@ -373,7 +373,7 @@ this.analytics.logEvent('app_navigation', {
 3. **Respetar la privacidad** del usuario
 4. **Testear en dispositivos reales** siempre que sea posible
 
-## 📝 Changelog
+## Changelog
 
 ### v1.0.0
 - Lanzamiento inicial
@@ -383,7 +383,7 @@ this.analytics.logEvent('app_navigation', {
 - Tests unitarios completos
 - **Suite completa de tests E2E con Playwright**
 
-## 🤝 Contribuir
+## Contribuir
 
 1. Fork del repositorio
 2. Crear rama de feature (`git checkout -b feature/nueva-funcionalidad`)
@@ -391,11 +391,11 @@ this.analytics.logEvent('app_navigation', {
 4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
 5. Crear Pull Request
 
-## 📄 Licencia
+## Licencia
 
 MIT License - ver [LICENSE](LICENSE) para detalles.
 
-## 🆘 Soporte
+## Soporte
 
 - [Issues en GitHub](https://github.com/your-org/smart-tv-analytics/issues)
 - [Documentación completa](https://your-org.github.io/smart-tv-analytics)
