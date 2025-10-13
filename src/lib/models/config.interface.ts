@@ -1,5 +1,5 @@
 /**
- * @fileoverview Configuration interfaces and types for Smart TV Analytics
+ * @fileoverview Interfaces y tipos de configuración para Smart TV Analytics
  * @author Smart TV Analytics Team
  * @version 1.0.0
  */

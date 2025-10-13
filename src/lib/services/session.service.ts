@@ -1,5 +1,5 @@
 /**
- * @fileoverview Session management service for Smart TV Analytics
+ * @fileoverview Servicio de gestión de sesiones para Smart TV Analytics
  * @author Smart TV Analytics Team
  * @version 1.0.0
  */
@@ -10,7 +10,7 @@ import { SessionInfo } from '../models/config.interface';
 import { StorageService } from './storage.service';
 
 /**
- * Service responsible for managing user sessions
+ * Servicio responsable de gestionar sesiones de usuario
  */
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class SessionService {
   constructor(private storage: StorageService) {}
 
   /**
-   * Initialize the session service
+   * Inicializa el servicio de sesiones
    */
   initialize(): void {
     this.loadOrCreateSession();
@@ -35,16 +35,16 @@ export class SessionService {
   }
 
   /**
-   * Get the current session information
-   * @returns Current session info or null if no active session
+   * Obtiene la información de sesión actual
+   * @returns Información de sesión actual o null si no hay sesión activa
    */
   getCurrentSession(): SessionInfo | null {
     return this.currentSession;
   }
 
   /**
-   * Observable that emits when a new session starts
-   * @returns Observable of session start events
+   * Observable que emite cuando comienza una nueva sesión
+   * @returns Observable de eventos de inicio de sesión
    */
   onSessionStart(): Observable<SessionInfo> {
     return this.sessionStartSubject.asObservable().pipe(
@@ -53,8 +53,8 @@ export class SessionService {
   }
 
   /**
-   * Start a new session
-   * @returns The new session information
+   * Inicia una nueva sesión
+   * @returns La nueva información de sesión
    */
   startNewSession(): SessionInfo {
     const now = Date.now();
@@ -79,7 +79,7 @@ export class SessionService {
   }
 
   /**
-   * Update the last activity time for the current session
+   * Actualiza la hora de última actividad de la sesión actual
    */
   updateActivity(): void {
     if (this.currentSession) {
@@ -90,7 +90,7 @@ export class SessionService {
   }
 
   /**
-   * End the current session
+   * Finaliza la sesión actual
    */
   endSession(): void {
     if (this.sessionTimeoutId) {
@@ -102,8 +102,8 @@ export class SessionService {
   }
 
   /**
-   * Check if the current session is expired
-   * @returns True if session is expired
+   * Verifica si la sesión actual ha expirado
+   * @returns True si la sesión ha expirado
    */
   isSessionExpired(): boolean {
     if (!this.currentSession) {

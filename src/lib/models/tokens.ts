@@ -1,5 +1,5 @@
 /**
- * @fileoverview Configuration tokens for Smart TV Analytics
+ * @fileoverview Tokens de configuración para Smart TV Analytics
  * @author Smart TV Analytics Team  
  * @version 1.1.0
  */

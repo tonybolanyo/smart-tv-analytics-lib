@@ -1,5 +1,5 @@
 /**
- * @fileoverview Device information service for Smart TV Analytics
+ * @fileoverview Servicio de información de dispositivo para Smart TV Analytics
  * @author Smart TV Analytics Team
  * @version 1.0.0
  */
@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { DeviceInfo } from '../models/config.interface';
 
 /**
- * Service for detecting and providing device information
+ * Servicio para detectar y proporcionar información del dispositivo
  */
 @Injectable({
   providedIn: 'root'
@@ -21,55 +21,55 @@ export class DeviceInfoService {
   }
 
   /**
-   * Get comprehensive device information
-   * @returns Device information object
+   * Obtiene información completa del dispositivo
+   * @returns Objeto de información del dispositivo
    */
   getDeviceInfo(): DeviceInfo {
     return { ...this.deviceInfo };
   }
 
   /**
-   * Get the detected platform
-   * @returns Platform name (Tizen, WebOS, Browser, etc.)
+   * Obtiene la plataforma detectada
+   * @returns Nombre de la plataforma (Tizen, WebOS, Browser, etc.)
    */
   getPlatform(): string {
     return this.deviceInfo.platform;
   }
 
   /**
-   * Check if running on a Smart TV
-   * @returns True if detected as Smart TV
+   * Verifica si se ejecuta en un Smart TV
+   * @returns True si se detecta como Smart TV
    */
   isSmartTV(): boolean {
     return ['Tizen', 'WebOS', 'SmartTV'].includes(this.deviceInfo.platform);
   }
 
   /**
-   * Check if running on Samsung Tizen
-   * @returns True if Tizen platform
+   * Verifica si se ejecuta en Samsung Tizen
+   * @returns True si es plataforma Tizen
    */
   isTizen(): boolean {
     return this.deviceInfo.platform === 'Tizen';
   }
 
   /**
-   * Check if running on LG WebOS
-   * @returns True if WebOS platform
+   * Verifica si se ejecuta en LG WebOS
+   * @returns True si es plataforma WebOS
    */
   isWebOS(): boolean {
     return this.deviceInfo.platform === 'WebOS';
   }
 
   /**
-   * Get screen resolution information
-   * @returns Screen resolution string or undefined
+   * Obtiene información de resolución de pantalla
+   * @returns Cadena de resolución de pantalla o undefined
    */
   getScreenResolution(): string | undefined {
     return this.deviceInfo.screenResolution;
   }
 
   /**
-   * Detect comprehensive device information
+   * Detecta información completa del dispositivo
    * @private
    */
   private detectDeviceInfo(): DeviceInfo {
@@ -87,7 +87,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detect the platform/OS
+   * Detecta la plataforma/SO
    * @private
    */
   private detectPlatform(userAgent: string): string {
@@ -151,7 +151,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detect device model
+   * Detecta el modelo del dispositivo
    * @private
    */
   private detectModel(userAgent: string, platform: string): string | undefined {
@@ -175,7 +175,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detect OS version
+   * Detecta la versión del SO
    * @private
    */
   private detectOSVersion(userAgent: string, platform: string): string | undefined {
@@ -202,7 +202,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detect screen resolution
+   * Detecta la resolución de pantalla
    * @private
    */
   private detectScreenResolution(): string | undefined {
@@ -221,7 +221,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detect device language
+   * Detecta el idioma del dispositivo
    * @private
    */
   private detectLanguage(): string {
@@ -233,7 +233,7 @@ export class DeviceInfoService {
   }
 
   /**
-   * Detect timezone
+   * Detecta la zona horaria
    * @private
    */
   private detectTimezone(): string | undefined {
