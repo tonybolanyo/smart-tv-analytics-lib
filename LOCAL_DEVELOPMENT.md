@@ -7,8 +7,8 @@ This guide provides detailed instructions for building the library and running t
 ### Node.js Version
 
 - **Recommended**: Node.js 14.x or 16.x
-- **Supported**: Node.js 14.x - 18.x
-- **Not Recommended**: Node.js 20+ (requires workarounds due to OpenSSL 3.0 changes)
+- **Supported with no workarounds**: Node.js 14.x - 16.x
+- **Supported with workarounds**: Node.js 17+ (requires `NODE_OPTIONS="--openssl-legacy-provider"` due to OpenSSL 3.0 changes)
 
 You can use [nvm](https://github.com/nvm-sh/nvm) to manage Node.js versions:
 
@@ -92,7 +92,7 @@ This will automatically link to the built library in `../../dist`.
 npm start
 ```
 
-#### For Node.js 17-20 (requires workaround):
+#### For Node.js 17+ (requires workaround):
 
 Due to OpenSSL 3.0 changes in Node.js 17+, you need to use the legacy OpenSSL provider:
 
@@ -130,7 +130,7 @@ You should see the Smart TV Analytics sample application running.
 npm run build:prod
 ```
 
-### With Node.js 17-20
+### With Node.js 17+
 
 ```bash
 NODE_OPTIONS="--openssl-legacy-provider" npm run build:prod

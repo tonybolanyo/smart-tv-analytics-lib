@@ -26,7 +26,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 
 - Angular 12 o superior
 - TypeScript 4.3 o superior
-- Node.js 14, 16, or 18 (recommended: 14.x or 16.x)
+- Node.js 14.x o superior (recommended: 14.x or 16.x)
 
 > **Nota para Node.js 17+**: Si usas Node.js 17 o superior, necesitarás usar `NODE_OPTIONS="--openssl-legacy-provider"` debido a cambios en OpenSSL 3.0. Ver [Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md) para más detalles.
 

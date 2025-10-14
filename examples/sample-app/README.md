@@ -87,7 +87,7 @@ La aplicación está configurada para usar la librería local mediante `"smart-t
 # Para Node.js 14-16
 npm start
 
-# Para Node.js 17-20 (requiere flag adicional)
+# Para Node.js 17+ (requiere flag adicional debido a OpenSSL 3.0)
 NODE_OPTIONS="--openssl-legacy-provider" npm start
 ```
 
