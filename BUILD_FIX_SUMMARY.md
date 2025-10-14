@@ -105,24 +105,33 @@ Both builds have been verified successfully:
 
 ## Quick Reference Commands
 
+### Library Commands (from repository root)
+
 | Task | Command |
 |------|---------|
 | Install library deps | `npm install` |
 | Build library | `npm run build` |
-| Install sample app deps | `cd examples/sample-app && npm install` |
-| Run sample app (Node 14-16) | `npm start` |
-| Run sample app (Node 17+) | `NODE_OPTIONS="--openssl-legacy-provider" npm start` |
-| Build sample app | `npm run build:prod` |
+
+### Sample App Commands (from examples/sample-app/)
+
+| Task | Command |
+|------|---------|
+| Install sample app deps | `npm install` |
+| Run dev server (Node 14-16) | `npm start` |
+| Run dev server (Node 17+) | `NODE_OPTIONS="--openssl-legacy-provider" npm start` |
+| Build for production | `npm run build:prod` |
+| Build for Tizen | `npm run build:tizen` |
+| Build for webOS | `npm run build:webos` |
 
 ## Next Steps
 
 You can now:
 
-1. ✅ Build the library locally with `npm run build`
-2. ✅ Run the sample app on localhost with `npm start`
+1. ✅ Build the library locally with `npm run build` (from repository root)
+2. ✅ Run the sample app on localhost with `npm start` (from examples/sample-app/)
 3. ✅ Make changes to the library and test them in the sample app
-4. ✅ Build for Tizen with `npm run build:tizen`
-5. ✅ Build for webOS with `npm run build:webos`
+4. ✅ Build for Tizen with `npm run build:tizen` (from examples/sample-app/)
+5. ✅ Build for webOS with `npm run build:webos` (from examples/sample-app/)
 
 No publishing to npm or any other registry is required!
 
