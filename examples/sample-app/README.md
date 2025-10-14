@@ -79,7 +79,19 @@ cd examples/sample-app
 npm install
 ```
 
-La aplicación está configurada para usar la librería local mediante `"smart-tv-analytics": "file:../.."` en package.json.
+La aplicación está configurada para usar la librería local mediante `"smart-tv-analytics": "file:../../dist"` en package.json.
+
+4. **Inicia el servidor de desarrollo:**
+
+```bash
+# Para Node.js 14-16
+npm start
+
+# Para Node.js 17-20 (requiere flag adicional)
+NODE_OPTIONS="--openssl-legacy-provider" npm start
+```
+
+> **Nota**: Si encuentras el error "digital envelope routines::unsupported", es porque usas Node.js 17+. Usa el comando con NODE_OPTIONS mostrado arriba, o cambia a Node.js 14 o 16 con nvm.
 
 ### Opción 2: Desde NPM (cuando la librería esté publicada)
 

@@ -26,7 +26,9 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 
 - Angular 12 o superior
 - TypeScript 4.3 o superior
-- Node.js 14 o superior
+- Node.js 14, 16, or 18 (recommended: 14.x or 16.x)
+
+> **Nota para Node.js 17+**: Si usas Node.js 17 o superior, necesitarás usar `NODE_OPTIONS="--openssl-legacy-provider"` debido a cambios en OpenSSL 3.0. Ver [Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md) para más detalles.
 
 ## 📚 Documentación
 
@@ -34,6 +36,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 
 - **[Índice de Documentación](./docs/INDEX.md)** - Inicio y guía completa
 - **[Guía Principal](./docs/README.md)** - Instalación, configuración y API
+- **[Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md)** - 🆕 Build y ejecución sin publicar a npm
 - **[Solución de Problemas](./docs/TROUBLESHOOTING.md)** - Guía para resolver problemas comunes
 - **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)** - Tutorial completo con ejemplo
 - **[Historial de Cambios](./docs/CHANGELOG.md)** - Versiones y actualizaciones
@@ -56,13 +59,26 @@ Tenemos una **aplicación de ejemplo completa** que demuestra cómo integrar y u
 
 ### Inicio Rápido con el Ejemplo
 
+Para ejecutar la aplicación de ejemplo localmente sin publicar a npm:
+
 ```bash
-cd examples/sample-app
+# 1. Compilar la librería
 npm install
+npm run build
+
+# 2. Ir al directorio del ejemplo
+cd examples/sample-app
+
+# 3. Instalar dependencias
+npm install
+
+# 4. Iniciar el servidor de desarrollo
 npm start
 ```
 
-Para más información, consulta la [documentación de ejemplos](./examples/README.md).
+**Nota**: Si usas Node.js 17+, ejecuta: `NODE_OPTIONS="--openssl-legacy-provider" npm start`
+
+Para instrucciones detalladas, consulta la **[Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md)**.
 
 ## Configuración
 
