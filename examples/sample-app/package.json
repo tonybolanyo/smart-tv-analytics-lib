@@ -4,6 +4,7 @@
   "description": "Aplicación de ejemplo para smart-tv-analytics en Tizen y WebOS",
   "scripts": {
     "ng": "ng",
+    "postinstall": "ngcc --properties es2015 module main",
     "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
