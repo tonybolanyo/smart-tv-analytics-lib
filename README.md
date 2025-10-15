@@ -13,7 +13,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 ## Características
 
 - **Compatible con Smart TVs**: Optimizado para Tizen, WebOS y otros navegadores de TV
-- **Compatibilidad ES5**: Compilado para ES5 para máxima compatibilidad
+- **Compatibilidad ES5**: Compilado para ES5 garantizando máxima compatibilidad
 - **Sin IndexedDB**: No depende de APIs de almacenamiento local que pueden estar bloqueadas en Smart TVs
 - **API REST directa**: Utiliza Firebase Measurement Protocol v2
 - **Eventos automáticos**: Seguimiento automático de sesiones, páginas y engagement
