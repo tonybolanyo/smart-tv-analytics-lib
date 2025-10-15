@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../dist/out-tsc",
-    "target": "es5",
+    "target": "es2015",
     "module": "es2015",
     "moduleResolution": "node",
     "declaration": true,
@@ -21,10 +21,6 @@
     ]
   },
   "angularCompilerOptions": {
-    "enableIvy": true,
-    "compilationMode": "full",
-    "skipTemplateCodegen": false,
-    "strictMetadataEmit": true,
     "enableResourceInlining": true
   },
   "exclude": [
