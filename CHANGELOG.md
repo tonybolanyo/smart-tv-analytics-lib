@@ -5,6 +5,15 @@ Todos los cambios notables de este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2025-10-15
+
+### Corregido
+- **Dependencia zone.js**: Eliminada la importación de polyfills (incluyendo zone.js) del public API de la librería. Las aplicaciones ahora deben importar zone.js y otros polyfills en sus propios archivos `polyfills.ts`. Esto resuelve el error "The target entry-point 'smart-tv-analytics' has missing dependencies: - zone.js/dist/zone" al construir aplicaciones.
+
+### Documentación
+- Actualizada la guía de configuración para Smart TVs para aclarar que las aplicaciones deben importar polyfills directamente
+- Actualizada la documentación en README.md y docs/README.md con instrucciones sobre polyfills
+
 ## [1.1.0] - 2025-10-10
 
 ### Agregado

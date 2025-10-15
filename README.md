@@ -13,7 +13,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 ## Características
 
 - **Compatible con Smart TVs**: Optimizado para Tizen, WebOS y otros navegadores de TV
-- **Compatibilidad ES5**: Compilado para ES5 con polyfills incluidos para máxima compatibilidad
+- **Compatibilidad ES5**: Compilado para ES5 para máxima compatibilidad
 - **Sin IndexedDB**: No depende de APIs de almacenamiento local que pueden estar bloqueadas en Smart TVs
 - **API REST directa**: Utiliza Firebase Measurement Protocol v2
 - **Eventos automáticos**: Seguimiento automático de sesiones, páginas y engagement
@@ -105,7 +105,20 @@ export class AppModule { }
 
 ### 2. Configuración para Smart TVs
 
-Para garantizar la compatibilidad con Tizen y WebOS, la librería incluye polyfills automáticos. No se requiere configuración adicional, pero se recomienda:
+Para garantizar la compatibilidad con Tizen y WebOS, debes importar los polyfills necesarios en tu aplicación. Asegúrate de que tu archivo `polyfills.ts` incluya:
+
+```typescript
+// Polyfills necesarios para Smart TVs
+import 'core-js/es/array';
+import 'core-js/es/object';
+import 'core-js/es/promise';
+// ... otros polyfills según sea necesario
+
+// Zone.js requerido por Angular
+import 'zone.js/dist/zone';
+```
+
+Se recomienda la siguiente configuración para cada plataforma:
 
 #### Tizen (Samsung Smart TVs)
 
