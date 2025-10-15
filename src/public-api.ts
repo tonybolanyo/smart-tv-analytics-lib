@@ -4,9 +4,6 @@
  * @version 1.0.0
  */
 
-// Polyfills for Smart TV compatibility
-import './polyfills';
-
 // Smart TV configurations
 export {
   createSmartTVConfig, DEBUG_CONFIG,

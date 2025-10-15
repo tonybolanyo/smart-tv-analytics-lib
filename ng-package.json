@@ -9,8 +9,6 @@
     "CHANGELOG.md"
   ],
   "allowedNonPeerDependencies": [
-    "tslib",
-    "core-js",
-    "zone.js"
+    "tslib"
   ]
 }
