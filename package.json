@@ -5,7 +5,6 @@
   "main": "bundles/smart-tv-analytics.umd.js",
   "module": "fesm2015/smart-tv-analytics.js",
   "es2015": "fesm2015/smart-tv-analytics.js",
-  "esm2015": "esm2015/smart-tv-analytics.js",
   "fesm2015": "fesm2015/smart-tv-analytics.js",
   "typings": "smart-tv-analytics.d.ts",
   "metadata": "smart-tv-analytics.metadata.json",
@@ -81,7 +80,7 @@
     "typescript": "~4.3.0"
   },
   "scripts": {
-    "build": "ng-packagr -p ng-package.json && node transpile-es5.js",
+    "build": "ng-packagr -p ng-package.json && node transpile-es5.js && node scripts/fix-package-json.js",
     "build:lib": "ng-packagr -p ng-package.json",
     "build:es5": "node transpile-es5.js",
     "test": "karma start",

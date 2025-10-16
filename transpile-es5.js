@@ -67,10 +67,6 @@ async function transpileFile(filePath) {
       const es5Path = fullPath.replace('.js', '.es5.js');
       fs.writeFileSync(es5Path, result.code);
       console.log(`✓ Creado: ${path.relative(distDir, es5Path)}`);
-      
-      // Sobrescribir el archivo original también
-      fs.writeFileSync(fullPath, result.code);
-      console.log(`✓ Actualizado: ${filePath}`);
     }
   } catch (error) {
     console.error(`Error transpilando ${filePath}:`, error.message);
