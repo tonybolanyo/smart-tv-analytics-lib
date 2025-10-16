@@ -37,6 +37,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 - **[Índice de Documentación](./docs/INDEX.md)** - Inicio y guía completa
 - **[Guía Principal](./docs/README.md)** - Instalación, configuración y API
 - **[Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md)** - 🆕 Build y ejecución sin publicar a npm
+- **[Compatibilidad ES5](./ES5-COMPATIBILITY.md)** - 🆕 Cómo usar TypeScript moderno que se transpila a ES5
 - **[Solución de Problemas](./docs/TROUBLESHOOTING.md)** - Guía para resolver problemas comunes
 - **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)** - Tutorial completo con ejemplo
 - **[Historial de Cambios](./docs/CHANGELOG.md)** - Versiones y actualizaciones

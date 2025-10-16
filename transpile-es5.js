@@ -17,7 +17,12 @@ const babelConfig = {
   presets: [
     ['@babel/preset-env', {
       targets: {
-        browsers: ['> 0.25%', 'not dead']
+        // Target older Smart TV browsers explicitly
+        browsers: [
+          'ie 11',           // Baseline for ES5
+          'Samsung >= 5',    // Tizen 2.4+
+          'Chrome >= 38'     // webOS 3.0+
+        ]
       },
       modules: false,
       useBuiltIns: 'entry',
