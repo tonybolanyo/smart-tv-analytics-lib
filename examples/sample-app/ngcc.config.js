@@ -10,7 +10,7 @@ module.exports = {
             main: './bundles/smart-tv-analytics.umd.js',
             module: './fesm2015/smart-tv-analytics.js',
             es2015: './fesm2015/smart-tv-analytics.js',
-            esm2015: './esm2015/smart-tv-analytics.js',
+            fesm2015: './fesm2015/smart-tv-analytics.js',
             typings: './smart-tv-analytics.d.ts',
           },
         },

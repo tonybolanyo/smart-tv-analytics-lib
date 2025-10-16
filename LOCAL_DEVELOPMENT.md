@@ -62,11 +62,16 @@ Check that the dist folder contains the compiled library:
 ls -la dist/
 ```
 
-You should see folders like:
-- `bundles/` - UMD bundles
-- `fesm2015/` - Flat ESM bundles
+You should see folders and files like:
+- `bundles/` - UMD bundles (`.umd.js` and `.umd.es5.js`)
+- `esm2015/` - Individual ES modules (intermediate output)
+- `fesm2015/` - Flat ESM bundles (`.js` and `.es5.js`) 
 - `lib/` - Compiled library files
 - Various `.d.ts` type definition files
+- `package.json` - Package metadata
+- `README.md` and `CHANGELOG.md` - Documentation
+
+**Note**: The `esm2015` folder contains intermediate compilation output (non-flat individual modules) that lacks Angular Ivy metadata. The library uses `fesm2015` (flat ES modules) for module resolution, which are properly compiled and include the necessary Angular metadata (ɵmod, ɵfac, etc.) for ngcc to process correctly.
 
 ## Step 3: Run the Sample Application
 
@@ -83,6 +88,12 @@ npm install
 ```
 
 This will automatically link to the built library in `../../dist`.
+
+**Note**: The library uses a local file reference (`file:../../dist`) which creates a symlink. If you encounter module resolution issues during development, try clearing the Angular build cache:
+
+```bash
+rm -rf .angular node_modules/.cache
+```
 
 ### Start the Development Server
 
@@ -196,9 +207,14 @@ After making changes to the library:
    npm run build
    ```
 
-2. Restart the sample app development server (it should auto-reload)
+2. Clear the sample app caches and restart:
+   ```bash
+   cd examples/sample-app
+   rm -rf .angular node_modules/.cache
+   npm start
+   ```
 
-If changes still don't appear:
+If changes still don't appear, reinstall the library link:
 
 ```bash
 cd examples/sample-app
@@ -206,6 +222,37 @@ rm -rf node_modules/smart-tv-analytics
 npm install
 npm start
 ```
+
+### Module Resolution Errors
+
+If you see errors like "Type SmartTVAnalyticsModule does not have 'ɵmod' property":
+
+1. Clear all caches:
+   ```bash
+   cd examples/sample-app
+   rm -rf .angular node_modules/.cache node_modules/smart-tv-analytics
+   npm install
+   ```
+
+2. Verify the library was built correctly:
+   ```bash
+   ls -la ../../dist/
+   # Should show bundles/, esm2015/, fesm2015/, lib/, and package.json
+   ```
+
+3. Check that `dist/package.json` has the correct entries (`main`, `module`, `es2015`, `fesm2015`) and does NOT have an `esm2015` entry
+
+### Service Initialization Warnings
+
+If you see warnings like "[SmartTVAnalytics] Service not initialized":
+
+This is expected when using placeholder Firebase credentials in `examples/sample-app/src/environments/environment.ts`. To test with real analytics:
+
+1. Create a Firebase project and get your Measurement ID and API Secret
+2. Update `environment.ts` with your real credentials
+3. Restart the development server
+
+The service will initialize properly with valid credentials and you'll see analytics events in the Firebase Console.
 
 ## Development Workflow
 
@@ -256,6 +303,17 @@ The sample app's `package.json` uses a local file reference:
 This tells npm to link directly to the built library in the `dist` folder, allowing you to test changes without publishing to npm.
 
 ## Building for Smart TV Platforms
+
+### ES5 Compatibility
+
+The library build process creates ES5-compatible versions of the bundles for maximum Smart TV compatibility:
+
+- `fesm2015/smart-tv-analytics.js` - Modern ES2015 bundle (used by default)
+- `fesm2015/smart-tv-analytics.es5.js` - ES5-transpiled bundle for older browsers
+- `bundles/smart-tv-analytics.umd.js` - UMD bundle (ES2015)
+- `bundles/smart-tv-analytics.umd.es5.js` - UMD bundle (ES5)
+
+When developing and testing locally, the ES2015 versions are used automatically. The ES5 versions are available for deployment to older Smart TV browsers that don't support ES6+ features.
 
 ### Build for Tizen (Samsung)
 
