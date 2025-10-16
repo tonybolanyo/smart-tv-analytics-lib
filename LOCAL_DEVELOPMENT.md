@@ -71,7 +71,7 @@ You should see folders and files like:
 - `package.json` - Package metadata
 - `README.md` and `CHANGELOG.md` - Documentation
 
-**Note**: The `esm2015` folder contains intermediate compilation output. The library uses `fesm2015` (flat ES modules) for module resolution, which are properly compiled and include Angular metadata.
+**Note**: The `esm2015` folder contains intermediate compilation output (non-flat individual modules) that lacks Angular Ivy metadata. The library uses `fesm2015` (flat ES modules) for module resolution, which are properly compiled and include the necessary Angular metadata (ɵmod, ɵfac, etc.) for ngcc to process correctly.
 
 ## Step 3: Run the Sample Application
 
@@ -240,7 +240,7 @@ If you see errors like "Type SmartTVAnalyticsModule does not have 'ɵmod' proper
    # Should show bundles/, esm2015/, fesm2015/, lib/, and package.json
    ```
 
-3. Check that `dist/package.json` does NOT have an `esm2015` entry (only `es2015`, `module`, and `fesm2015`)
+3. Check that `dist/package.json` has the correct entries (`main`, `module`, `es2015`, `fesm2015`) and does NOT have an `esm2015` entry
 
 ### Service Initialization Warnings
 
