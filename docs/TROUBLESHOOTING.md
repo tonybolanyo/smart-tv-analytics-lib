@@ -1,65 +1,721 @@
-# Guía de Solución de Problemas
+# Guía de solución de problemas - Smart TV Analytics
 
-Esta guía te ayudará a resolver los problemas más comunes al usar Smart TV Analytics Library.
+## Índice
 
-## 📋 Tabla de Contenidos
+- [Problemas de instalación](#problemas-de-instalación)
+- [Problemas de configuración](#problemas-de-configuración)
+- [Problemas de conectividad](#problemas-de-conectividad)
+- [Problemas por plataforma](#problemas-por-plataforma)
+- [Problemas de rendimiento](#problemas-de-performance)
+- [Problemas de depuración](#problemas-de-debugging)
+- [FAQ](#faq)
+- [Herramientas de diagnóstico](#herramientas-de-diagnóstico)
 
-- [Problemas de Inicialización](#problemas-de-inicialización)
-- [Problemas de Credenciales](#problemas-de-credenciales)
-- [Eventos no aparecen en Google Analytics](#eventos-no-aparecen-en-google-analytics)
-- [Problemas en Localhost](#problemas-en-localhost)
-- [Problemas en Producción](#problemas-en-producción)
-- [Problemas Específicos de Smart TV](#problemas-específicos-de-smart-tv)
+## Problemas de instalación
 
----
-
-## Problemas de Inicialización
-
-### ❌ Error: "SmartTVAnalytics service is not initialized"
+### Error: Cannot resolve dependency 'smart-tv-analytics'
 
 **Síntomas:**
-- El servicio no se inicializa
-- Los eventos no se envían
-- Error en consola: "Service not initialized"
+```
+npm ERR! Could not resolve dependency:
+npm ERR! peer smart-tv-analytics@"^1.0.0" from your-app@1.0.0
+```
 
-**Causas comunes:**
-1. El módulo no está configurado correctamente en `app.module.ts`
-2. Faltan las credenciales de Google Analytics 4
-3. El servicio se usa antes de que Angular lo haya inicializado
+**Soluciones:**
+
+1. **Limpiar cache de npm:**
+```bash
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+```
+
+2. **Verificar compatibilidad de versiones:**
+```bash
+npm ls smart-tv-analytics
+npm outdated
+```
+
+3. **Instalar con flag de force (último recurso):**
+```bash
+npm install smart-tv-analytics --force
+```
+
+### Error: Module not found '@angular/common'
+
+**Síntomas:**
+```
+Error: Cannot find module '@angular/common/http'
+```
 
 **Solución:**
+```bash
+npm install @angular/common @angular/core @angular/router rxjs zone.js
+```
 
-#### 1. Verificar la configuración del módulo
+### Error de TypeScript en la compilación
 
-Asegúrate de que `SmartTVAnalyticsModule.forRoot()` esté en el array `imports` de tu `AppModule`:
+**Síntomas:**
+```
+error TS2307: Cannot find module 'smart-tv-analytics'
+```
 
+**Soluciones:**
+
+1. **Verificar tsconfig.json:**
+```json
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  }
+}
+```
+
+2. **Crear declaración manual (temporal):**
 ```typescript
-import { SmartTVAnalyticsModule } from 'smart-tv-analytics';
-import { environment } from '../environments/environment';
+// src/types/smart-tv-analytics.d.ts
+declare module 'smart-tv-analytics' {
+  export * from 'smart-tv-analytics/lib/public-api';
+}
+```
 
+### Error de compilación con Angular 12+
+
+**Síntomas:**
+```
+ERROR in The target entry-point "smart-tv-analytics" has missing dependencies
+```
+
+**Solución:**
+```bash
+# Configurar ngcc
+npx ngcc --packages smart-tv-analytics
+
+# O crear ngcc.config.js
+echo 'module.exports = {
+  packages: {
+    "smart-tv-analytics": {
+      ignorableDeepImportMatchers: [/rxjs\//]
+    }
+  }
+}' > ngcc.config.js
+```
+
+## Problemas de configuración
+
+### Error: Invalid Measurement ID
+
+**Síntomas:**
+```
+AnalyticsConfigError: Invalid measurement ID format
+```
+
+**Verificación:**
+```typescript
+// Measurement ID debe tener formato G-XXXXXXXXXX
+const measurementId = 'G-ABC123XYZ';
+const isValid = /^G-[A-Z0-9]+$/.test(measurementId);
+console.log('ID válido:', isValid);
+```
+
+**Solución:**
+1. Verificar el Measurement ID en Google Analytics
+2. Asegurarse de usar GA4 (no Universal Analytics)
+3. Copiar exactamente desde Admin > Property > Data Streams
+
+### Error: API Secret Invalid
+
+**Síntomas:**
+```
+HTTP 403: Invalid API secret
+```
+
+**Verificación:**
+```typescript
+// Generar nuevo API secret
+// 1. Ir a Google Analytics
+// 2. Admin > Property > Data Streams
+// 3. Seleccionar stream
+// 4. Measurement Protocol API secrets
+// 5. Create new secret
+```
+
+### Error: Module Configuration
+
+**Síntomas:**
+```
+NullInjectorError: No provider for SmartTVAnalyticsService
+```
+
+**Solución:**
+```typescript
+// Verificar que está importado correctamente
 @NgModule({
-  declarations: [
-    AppComponent,
-    // ... otros componentes
-  ],
   imports: [
-    BrowserModule,
-    // ... otros módulos
     SmartTVAnalyticsModule.forRoot({
-      measurementId: environment.analytics.measurementId,
-      apiSecret: environment.analytics.apiSecret,
-      appName: environment.analytics.appName,
-      appVersion: environment.analytics.appVersion,
-      enableDebugMode: !environment.production
+      measurementId: 'G-XXXXXXXXXX',
+      apiSecret: 'your-api-secret'
     })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+  ]
 })
 export class AppModule { }
 ```
 
-#### 2. Verificar las credenciales en environment.ts
+### Error: Environment Variables
+
+**Síntomas:**
+```
+Cannot read property 'measurementId' of undefined
+```
+
+**Solución:**
+```typescript
+// Verificar environments/environment.ts
+export const environment = {
+  production: false,
+  firebase: {
+    measurementId: 'G-XXXXXXXXXX',
+    apiSecret: 'your-secret'
+  }
+};
+
+// Verificar importación
+import { environment } from '../environments/environment';
+```
+
+## Problemas de conectividad
+
+### Error: CORS Policy
+
+**Síntomas:**
+```
+Access to XMLHttpRequest blocked by CORS policy
+```
+
+**Soluciones:**
+
+1. **Usar Proxy Strategy:**
+```typescript
+SmartTVAnalyticsModule.forRoot({
+  sendingStrategy: 'proxy',
+  proxyUrl: '/api/analytics-proxy',
+  // ... otras configuraciones
+})
+```
+
+2. **Configurar servidor proxy:**
+```javascript
+// proxy.conf.json (Angular CLI)
+{
+  "/api/analytics-proxy/*": {
+    "target": "https://www.google-analytics.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api/analytics-proxy": "/mp/collect"
+    }
+  }
+}
+```
+
+3. **Usar Beacon Strategy (recomendado):**
+```typescript
+SmartTVAnalyticsModule.forRoot({
+  sendingStrategy: 'beacon',
+  fallbackStrategy: 'fetch',
+  // ... otras configuraciones
+})
+```
+
+### Error: Network Timeout
+
+**Síntomas:**
+```
+NetworkError: Request timeout after 15000ms
+```
+
+**Solución:**
+```typescript
+SmartTVAnalyticsModule.forRoot({
+  requestTimeout: 30000, // Aumentar timeout
+  maxRetryAttempts: 5,   // Más reintentos
+  retryDelay: 2000,      // Delay entre reintentos
+  // ... otras configuraciones
+})
+```
+
+### Error: DNS Resolution
+
+**Síntomas:**
+```
+NetworkError: DNS resolution failed for www.google-analytics.com
+```
+
+**Verificación:**
+```bash
+# En el dispositivo Smart TV (si tienes acceso)
+nslookup www.google-analytics.com
+ping www.google-analytics.com
+```
+
+**Soluciones:**
+1. Verificar conectividad a internet
+2. Usar DNS alternativo (8.8.8.8)
+3. Configurar proxy local
+
+### Error: SSL/TLS Certificate
+
+**Síntomas:**
+```
+SSL certificate error
+```
+
+**Solución:**
+```typescript
+// Para desarrollo únicamente
+SmartTVAnalyticsModule.forRoot({
+  enableHttpFallback: true, // Solo en desarrollo
+  // ... otras configuraciones
+})
+```
+
+## Problemas por plataforma
+
+### Samsung Tizen
+
+#### Error: Security Privilege
+
+**Síntomas:**
+```
+Security Error: Network access denied
+```
+
+**Solución en config.xml:**
+```xml
+<tizen:privilege name="http://tizen.org/privilege/internet"/>
+<tizen:privilege name="http://tizen.org/privilege/network.get"/>
+<tizen:privilege name="http://tizen.org/privilege.externalstorage"/>
+```
+
+#### Error: Content Security Policy
+
+**Síntomas:**
+```
+CSP: Refused to connect to 'https://www.google-analytics.com'
+```
+
+**Solución:**
+```html
+<!-- En index.html -->
+<meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval';">
+```
+
+### LG webOS
+
+#### Error: Application Permissions
+
+**Síntomas:**
+```
+Permission denied: network.operation
+```
+
+**Solución en appinfo.json:**
+```json
+{
+  "requiredPermissions": [
+    "network.operation",
+    "storage.operation"
+  ],
+  "allowedDomains": [
+    "*.google-analytics.com",
+    "*.googleapis.com"
+  ]
+}
+```
+
+#### Error: webOS Service
+
+**Síntomas:**
+```
+webOS service not available
+```
+
+**Verificación:**
+```javascript
+// Verificar disponibilidad de servicios webOS
+if (window.webOS) {
+  console.log('webOS platform detected');
+  console.log('webOS version:', window.webOS.platform.version);
+} else {
+  console.log('webOS not detected');
+}
+```
+
+## Problemas de rendimiento
+
+### Error: Memory Leaks
+
+**Síntomas:**
+```
+JavaScript heap out of memory
+```
+
+**Soluciones:**
+
+1. **Configurar límites de batch:**
+```typescript
+SmartTVAnalyticsModule.forRoot({
+  batchSize: 5,           // Lotes pequeños
+  maxEventQueueSize: 50,  // Cola limitada
+  memoryThreshold: 80,    // Límite de memoria
+  // ... otras configuraciones
+})
+```
+
+2. **Limpiar subscripciones:**
+```typescript
+export class YourComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
+
+  ngOnInit() {
+    this.analytics.events$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(event => {
+      // Manejar eventos
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}
+```
+
+### Error: CPU Usage High
+
+**Síntomas:**
+La app consume mucha CPU.
+
+**Solución:**
+```typescript
+// Configuración de bajo recurso
+import { LOW_RESOURCE_CONFIG } from 'smart-tv-analytics';
+
+SmartTVAnalyticsModule.forRoot({
+  ...LOW_RESOURCE_CONFIG,
+  measurementId: 'G-XXXXXXXXXX',
+  apiSecret: 'your-secret'
+})
+```
+
+### Error: Storage Quota
+
+**Síntomas:**
+```
+QuotaExceededError: Storage quota exceeded
+```
+
+**Solución:**
+```typescript
+SmartTVAnalyticsModule.forRoot({
+  maxStorageSize: 5 * 1024 * 1024, // 5MB límite
+  storageStrategy: 'memory',        // Usar memoria en lugar de disco
+  autoCleanup: true,                // Limpieza automática
+  // ... otras configuraciones
+})
+```
+
+## Problemas de depuración
+
+### Error: Debug Mode No Funciona
+
+**Síntomas:**
+No aparecen logs en consola.
+
+**Solución:**
+```typescript
+SmartTVAnalyticsModule.forRoot({
+  enableDebugMode: true,
+  logLevel: 'verbose',
+  mockMode: true, // Para evitar envíos reales
+  // ... otras configuraciones
+})
+```
+
+### Error: Events Not Visible in Firebase
+
+**Síntomas:**
+Los eventos no aparecen en Firebase Analytics.
+
+**Verificación:**
+1. Revisar Real-time Events en Firebase Console
+2. Esperar hasta 24 horas para datos no real-time
+3. Verificar filtros de fecha en Firebase
+4. Confirmar que usas GA4 (no Universal Analytics)
+
+**Debug:**
+```typescript
+// Habilitar logging detallado
+this.analytics.logEvent('debug_test', {
+  timestamp: Date.now(),
+  client_id: this.analytics.getClientId(),
+  session_id: this.analytics.getSessionId()
+}).then(() => {
+  console.log('Event sent successfully');
+}).catch(error => {
+  console.error('Event failed:', error);
+});
+```
+
+### Error: Source Maps
+
+**Síntomas:**
+Errores difíciles de debuggear en producción.
+
+**Solución:**
+```json
+// angular.json
+{
+  "configurations": {
+    "production": {
+      "sourceMap": true,
+      "namedChunks": true
+    }
+  }
+}
+```
+
+## FAQ
+
+### ¿Por qué los eventos no aparecen inmediatamente en Firebase?
+
+Los eventos pueden tardar hasta 24 horas en aparecer en informes estándar de Firebase. Para verificación inmediata, usa:
+- Real-time Events en Firebase Console
+- DebugView (requiere debug mode)
+
+### ¿Cómo sé si mi configuración es correcta?
+
+```typescript
+ngOnInit() {
+  // Verificar inicialización
+  console.log('Analytics initialized:', this.analytics.isInitialized());
+  console.log('Client ID:', this.analytics.getClientId());
+  console.log('Session ID:', this.analytics.getSessionId());
+  
+  // Test event
+  this.analytics.logEvent('config_test', {
+    platform: this.detectPlatform(),
+    timestamp: Date.now()
+  });
+}
+```
+
+### ¿Qué hacer si la app es muy lenta?
+
+1. Usar configuración de bajo recurso
+2. Reducir frecuencia de eventos
+3. Aumentar batch size e interval
+4. Usar strategy 'beacon' para mejor performance
+
+### ¿Cómo depurar problemas de CORS?
+
+1. Verificar en Network tab del navegador
+2. Usar strategy 'beacon' (evita CORS)
+3. Configurar proxy en desarrollo
+4. Verificar headers de respuesta
+
+### ¿Qué hacer si falla en una plataforma específica?
+
+1. Verificar user agent detection
+2. Usar configuración específica de plataforma
+3. Revisar permisos de la plataforma
+4. Testear en emulador/dispositivo real
+
+## Herramientas de diagnóstico
+
+### Script de diagnóstico básico
+
+```typescript
+// diagnostic.service.ts
+@Injectable()
+export class DiagnosticService {
+  constructor(private analytics: SmartTVAnalyticsService) {}
+
+  async runDiagnostics(): Promise<DiagnosticReport> {
+    const report: DiagnosticReport = {
+      timestamp: Date.now(),
+      platform: this.detectPlatform(),
+      analytics: {
+        initialized: this.analytics.isInitialized(),
+        clientId: this.analytics.getClientId(),
+        sessionId: this.analytics.getSessionId()
+      },
+      network: await this.testNetworkConnectivity(),
+      storage: this.testStorageAvailability(),
+      permissions: this.testPermissions()
+    };
+
+    console.log('Diagnostic Report:', report);
+    return report;
+  }
+
+  private async testNetworkConnectivity(): Promise<boolean> {
+    try {
+      const response = await fetch('https://www.google-analytics.com/mp/collect', {
+        method: 'HEAD',
+        mode: 'no-cors'
+      });
+      return true;
+    } catch (error) {
+      console.error('Network test failed:', error);
+      return false;
+    }
+  }
+
+  private testStorageAvailability(): boolean {
+    try {
+      localStorage.setItem('test', 'test');
+      localStorage.removeItem('test');
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  private testPermissions(): any {
+    return {
+      localStorage: !!window.localStorage,
+      sessionStorage: !!window.sessionStorage,
+      navigator: !!navigator,
+      fetch: !!window.fetch,
+      beacon: !!(navigator && navigator.sendBeacon)
+    };
+  }
+
+  private detectPlatform(): string {
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes('tizen')) return 'tizen';
+    if (userAgent.includes('webos')) return 'webos';
+    if (userAgent.includes('android')) return 'android_tv';
+    return 'unknown';
+  }
+}
+
+interface DiagnosticReport {
+  timestamp: number;
+  platform: string;
+  analytics: {
+    initialized: boolean;
+    clientId: string;
+    sessionId: string;
+  };
+  network: boolean;
+  storage: boolean;
+  permissions: any;
+}
+```
+
+### Monitor de rendimiento
+
+```typescript
+@Injectable()
+export class PerformanceMonitorService {
+  private metrics: PerformanceMetric[] = [];
+
+  startMonitoring() {
+    // Monitor memory usage
+    setInterval(() => {
+      if ('memory' in performance) {
+        const memory = (performance as any).memory;
+        this.metrics.push({
+          timestamp: Date.now(),
+          type: 'memory',
+          value: memory.usedJSHeapSize,
+          limit: memory.jsHeapSizeLimit
+        });
+      }
+    }, 30000);
+
+    // Monitor analytics queue size
+    setInterval(() => {
+      const queueSize = this.getAnalyticsQueueSize();
+      this.metrics.push({
+        timestamp: Date.now(),
+        type: 'queue_size',
+        value: queueSize
+      });
+    }, 10000);
+  }
+
+  getReport(): PerformanceReport {
+    return {
+      averageMemoryUsage: this.calculateAverage('memory'),
+      maxQueueSize: this.calculateMax('queue_size'),
+      recommendations: this.generateRecommendations()
+    };
+  }
+
+  private calculateAverage(type: string): number {
+    const values = this.metrics
+      .filter(m => m.type === type)
+      .map(m => m.value);
+    return values.reduce((a, b) => a + b, 0) / values.length;
+  }
+
+  private calculateMax(type: string): number {
+    const values = this.metrics
+      .filter(m => m.type === type)
+      .map(m => m.value);
+    return Math.max(...values);
+  }
+
+  private generateRecommendations(): string[] {
+    const recommendations: string[] = [];
+    
+    const avgMemory = this.calculateAverage('memory');
+    if (avgMemory > 50 * 1024 * 1024) { // 50MB
+      recommendations.push('Consider reducing batch size or enabling auto cleanup');
+    }
+
+    const maxQueue = this.calculateMax('queue_size');
+    if (maxQueue > 100) {
+      recommendations.push('Consider reducing flush interval or increasing batch size');
+    }
+
+    return recommendations;
+  }
+
+  private getAnalyticsQueueSize(): number {
+    // Implementar según la API interna del servicio
+    return 0; // Placeholder
+  }
+}
+
+interface PerformanceMetric {
+  timestamp: number;
+  type: string;
+  value: number;
+  limit?: number;
+}
+
+interface PerformanceReport {
+  averageMemoryUsage: number;
+  maxQueueSize: number;
+  recommendations: string[];
+}
+```
+
+### FAQ
+
+#### Verificar las credenciales en environment.ts
 
 ```typescript
 // src/environments/environment.ts
@@ -74,9 +730,9 @@ export const environment = {
 };
 ```
 
-#### 3. No usar el servicio en el constructor
+#### No usar el servicio en el constructor
 
-**❌ Incorrecto:**
+**Incorrecto:**
 ```typescript
 constructor(private analytics: SmartTVAnalyticsService) {
   // No hacer esto en el constructor
@@ -84,7 +740,7 @@ constructor(private analytics: SmartTVAnalyticsService) {
 }
 ```
 
-**✅ Correcto:**
+**Correcto:**
 ```typescript
 constructor(private analytics: SmartTVAnalyticsService) {}
 
@@ -94,11 +750,9 @@ ngOnInit() {
 }
 ```
 
----
+## Problemas de credenciales
 
-## Problemas de Credenciales
-
-### ❌ Error: Eventos no se envían o errores de autenticación
+### Error: Eventos no se envían o errores de autenticación
 
 **Síntomas:**
 - Errores 401 o 403 en la consola de red
@@ -108,7 +762,7 @@ ngOnInit() {
 **Causa común:**
 Estás usando credenciales incorrectas o de un tipo incorrecto de proyecto de Analytics.
 
-### ⚠️ Importante: Google Analytics 4 vs Firebase
+### Importante: Google Analytics 4 vs Firebase
 
 **Esta librería usa Google Analytics 4 (GA4), NO Firebase Analytics directamente.**
 
@@ -118,7 +772,7 @@ Si estás viendo errores como:
 
 Es porque estás usando credenciales de Firebase en lugar de Google Analytics 4.
 
-### ✅ Configuración Correcta
+### Configuración correcta
 
 #### Paso 1: Crear o acceder a Google Analytics 4
 
@@ -156,13 +810,13 @@ export const environment = {
 };
 ```
 
-### ❌ NO uses:
+### NO uses:
 - Firebase API Key
 - Firebase Project ID
 - Universal Analytics Tracking ID (UA-XXXXXX)
 - Google Cloud API Key
 
-### ✅ SÍ usa:
+### SÍ usa:
 - Google Analytics 4 Measurement ID (`G-XXXXXXXXXX`)
 - Measurement Protocol API Secret
 
@@ -214,11 +868,9 @@ Si ves estos mensajes, los eventos se están enviando correctamente.
    - Verifica que no haya filtros que excluyan tu tráfico
    - Admin > Data Settings > Data Filters
 
----
+## Problemas en localhost
 
-## Problemas en Localhost
-
-### ❌ Eventos no se envían desde localhost
+### Eventos no se envían desde localhost
 
 **Síntoma:**
 La aplicación funciona en localhost pero los eventos no llegan a GA4.
@@ -271,9 +923,7 @@ Google Analytics 4 Measurement Protocol debería funcionar sin problemas de CORS
 
 En localhost, asegúrate de tener conexión a internet para que los eventos se envíen a GA4.
 
----
-
-## Problemas en Producción
+## Problemas en producción
 
 ### Los eventos funcionan en desarrollo pero no en producción
 
@@ -305,9 +955,7 @@ En localhost, asegúrate de tener conexión a internet para que los eventos se e
 4. **Contenido Security Policy (CSP)**
    - Asegúrate de que tu CSP permite conexiones a `*.google-analytics.com`
 
----
-
-## Problemas Específicos de Smart TV
+## Problemas específicos de Smart TV
 
 ### Tizen (Samsung)
 
@@ -362,9 +1010,7 @@ SmartTVAnalyticsModule.forRoot({
 })
 ```
 
----
-
-## Diagnóstico General
+## Diagnóstico general
 
 ### Lista de verificación completa
 
@@ -388,36 +1034,12 @@ Usa esta checklist para diagnosticar problemas:
 - [ ] No hay errores en la consola del navegador
 - [ ] La red muestra requests a `google-analytics.com`
 
-#### Build
+#### Compilación
 - [ ] `ng build --configuration production` sin errores
 - [ ] Los archivos de producción incluyen las credenciales correctas
 - [ ] No hay errores de minificación en la consola
 
----
+## Recursos adicionales
 
-## Obtener Ayuda
-
-Si después de seguir esta guía aún tienes problemas:
-
-1. **Revisa los issues existentes:**
-   https://github.com/tonybolanyo/smart-tv-analytics-lib/issues
-
-2. **Abre un nuevo issue con:**
-   - Descripción del problema
-   - Pasos para reproducir
-   - Logs de consola (con datos sensibles removidos)
-   - Versión de Angular y de la librería
-   - Plataforma (Tizen, webOS, navegador web)
-
-3. **Documentación de Google Analytics 4:**
-   https://developers.google.com/analytics/devguides/collection/ga4
-
----
-
-## Recursos Adicionales
-
-- [Guía Principal](./README.md)
-- [Índice de Documentación](./INDEX.md)
-- [Aplicación de Ejemplo](./SAMPLE-APP.md)
 - [Google Analytics 4 Documentation](https://developers.google.com/analytics/devguides/collection/ga4)
 - [Measurement Protocol Reference](https://developers.google.com/analytics/devguides/collection/protocol/ga4)

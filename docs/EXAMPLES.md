@@ -1,8 +1,15 @@
-# Ejemplos - Smart TV Analytics
+# Ejemplos de uso - Smart TV Analytics
 
-Este directorio contiene ejemplos y aplicaciones de demostración para la librería **smart-tv-analytics**.
+## Índice
 
-## Contenido
+- [Configuración básica](#configuración-básica)
+- [Eventos de video](#eventos-de-video)
+- [Eventos de navegación](#eventos-de-navegación)
+- [Eventos de comercio](#eventos-de-comercio)
+- [Eventos personalizados](#eventos-personalizados)
+- [Configuraciones avanzadas](#configuraciones-avanzadas)
+- [Patrones comunes](#patrones-comunes)
+- [Integración con componentes](#integración-con-componentes)
 
 ### Sample App
 
@@ -15,11 +22,11 @@ Una aplicación Angular completa que demuestra:
 - Scripts de empaquetado para Tizen y webOS
 - Documentación completa en español
 
-**[Ver documentación completa →](./sample-app/README.md)**
+**[Ver documentación completa →](./SAMPLE-APP.md)**
 
-## Inicio Rápido
+## Inicio rápido
 
-### Prerrequisito: Compilar la Librería
+### Prerrequisito: Compilar la librería
 
 Si trabajas desde el repositorio clonado, primero compila la librería:
 
@@ -29,24 +36,24 @@ npm install
 npm run build
 ```
 
-### 1. Instalar Dependencias
+### 1. Instalar dependencias
 
 ```bash
-cd sample-app
+cd examples/sample-app
 npm install
 ```
 
-### 2. Configurar Credenciales
+### 2. Configurar credenciales
 
-Edita `sample-app/src/environments/environment.prod.ts` con tus credenciales de Google Analytics 4.
+Edita `examples/sample-app/src/environments/environment.ts` o `examples/sample-app/src/environments/environment.prod.ts`con tus credenciales de Google Analytics 4.
 
-### 3. Ejecutar en Desarrollo
+### 3. Ejecutar en desarrollo
 
 ```bash
 npm start
 ```
 
-### 4. Compilar para Producción
+### 4. Compilar para producción
 
 ```bash
 npm run build:prod
@@ -66,12 +73,12 @@ npm run package:tizen
 
 ## Documentación
 
-- **[README - Sample App](./sample-app/README.md)**: Guía completa de la aplicación de ejemplo
-- **[EMPAQUETADO](../draft-docs/EMPAQUETADO.md)**: Guía detallada de empaquetado para Tizen y webOS
+- **[README - Sample App](./SAMPLE_APP.md)**: Guía completa de la aplicación de ejemplo
+- **[EMPAQUETADO](./EMPAQUETADO.md)**: Guía detallada de empaquetado para Tizen y webOS
 
-## Características Demostradas
+## Características demostradas
 
-### Tracking Automático
+### Tracking automático
 
 ```typescript
 // Configuración en app.module.ts
@@ -84,7 +91,7 @@ SmartTVAnalyticsModule.forRoot({
 })
 ```
 
-### Eventos Personalizados
+### Eventos personalizados
 
 ```typescript
 // Evento de navegación
@@ -117,37 +124,19 @@ SmartTVAnalyticsModule.forRoot({
 
 ## Requisitos
 
-### Para Desarrollo
+### Para desarrollo
 - Node.js 14+
 - npm 6+
 - Angular CLI 12+
 
-### Para Empaquetado webOS
+### Para empaquetado webOS
 - webOS CLI: `npm install -g @webosose/ares-cli`
 
-### Para Empaquetado Tizen
+### Para empaquetado Tizen
 - [Tizen Studio](https://developer.samsung.com/smarttv/develop/getting-started/setting-up-sdk/installing-tv-sdk.html)
 
-## Recursos Adicionales
+## Recursos adicionales
 
-- [Documentación Principal](../README.md)
 - [Firebase Analytics](https://firebase.google.com/docs/analytics)
 - [Tizen Developer Guide](https://developer.samsung.com/smarttv/develop/guides/fundamentals.html)
 - [webOS Developer Guide](https://webostv.developer.lge.com/develop/guides)
-
-## Próximos Ejemplos
-
-Estamos trabajando en más ejemplos:
-
-- [ ] Ejemplo minimalista (sin router)
-- [ ] Ejemplo con múltiples plataformas de analytics
-- [ ] Ejemplo con testing avanzado
-- [ ] Ejemplo con configuración dinámica
-
-## Contribuciones
-
-Si tienes ideas para nuevos ejemplos o mejoras, ¡no dudes en contribuir!
-
-## Licencia
-
-MIT License - ver el archivo LICENSE en la raíz del proyecto.

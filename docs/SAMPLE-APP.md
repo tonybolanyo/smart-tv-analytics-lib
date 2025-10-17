@@ -1,18 +1,18 @@
-# Aplicación de Ejemplo - Smart TV Analytics
+# Aplicación de ejemplo - Smart TV Analytics
 
 Esta es una aplicación de ejemplo completa que demuestra cómo integrar y usar la librería **smart-tv-analytics** en aplicaciones Angular para Smart TVs (Tizen y webOS).
 
-## 📋 Contenido
+## Contenido
 
 - [Características](#características)
-- [Requisitos Previos](#requisitos-previos)
+- [Requisitos previos](#requisitos-previos)
 - [Instalación](#instalación)
-- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Estructura del proyecto](#estructura-del-proyecto)
 - [Desarrollo](#desarrollo)
 - [Compilación](#compilación)
 - [Testing](#testing)
 - [Empaquetado](#empaquetado)
-- [Funcionalidades Demostradas](#funcionalidades-demostradas)
+- [Funcionalidades demostradas](#funcionalidades-demostradas)
 
 ## Características
 
@@ -26,11 +26,11 @@ Esta aplicación de ejemplo incluye:
 - Optimización para Smart TVs (Tizen y webOS)
 - Scripts de empaquetado para ambas plataformas
 - Configuración lista para producción
-- **Suite completa de tests end-to-end con Playwright**
+- Suite completa de tests end-to-end con Playwright
 
-## Requisitos Previos
+## Requisitos previos
 
-### Para Desarrollo
+### Para desarrollo
 
 - Node.js 14 o superior
 - npm 6 o superior
@@ -40,7 +40,7 @@ Esta aplicación de ejemplo incluye:
 npm install -g @angular/cli@12
 ```
 
-### Para Empaquetado webOS
+### Para empaquetado webOS
 
 - webOS CLI tools
 
@@ -48,14 +48,14 @@ npm install -g @angular/cli@12
 npm install -g @webosose/ares-cli
 ```
 
-### Para Empaquetado Tizen
+### Para empaquetado Tizen
 
 - [Tizen Studio](https://developer.samsung.com/smarttv/develop/getting-started/setting-up-sdk/installing-tv-sdk.html)
 - Tizen CLI configurado en el PATH
 
 ## Instalación
 
-### Opción 1: Desde el Repositorio (para desarrollo)
+### Opción 1: Desde el repositorio (para desarrollo)
 
 Si has clonado el repositorio completo de smart-tv-analytics:
 
@@ -92,8 +92,6 @@ NODE_OPTIONS="--openssl-legacy-provider" npm start
 ```
 
 > **Nota**: Si encuentras el error "digital envelope routines::unsupported", es porque usas Node.js 17+. Usa el comando con NODE_OPTIONS mostrado arriba, o cambia a Node.js 14 o 16 con nvm.
->
-> Para más detalles, consulta la [Guía de Desarrollo Local](../LOCAL_DEVELOPMENT.md).
 
 ### Opción 2: Desde NPM (cuando la librería esté publicada)
 
@@ -143,7 +141,7 @@ Para obtener estas credenciales:
 - Ve a Admin > Data Streams > Web > Measurement Protocol API secrets
 - Crea un nuevo secret y copia el valor
 
-## Estructura del Proyecto
+## Estructura del proyecto
 
 ```
 sample-app/
@@ -171,9 +169,9 @@ sample-app/
 └── package.json
 ```
 
-## 💻 Desarrollo
+## Desarrollo
 
-### Servidor de Desarrollo
+### Servidor de desarrollo
 
 Inicia el servidor de desarrollo:
 
@@ -183,13 +181,13 @@ npm start
 
 Navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si cambias algún archivo.
 
-### Modo Debug
+### Modo debug
 
 La aplicación está configurada para activar el modo debug en desarrollo automáticamente. Verás los eventos de analytics en la consola del navegador.
 
-## 🔨 Compilación
+## Compilación
 
-### Build de Producción
+### Build de producción
 
 ```bash
 npm run build:prod
@@ -221,7 +219,7 @@ Este comando:
 
 Esta aplicación incluye una suite completa de tests end-to-end (E2E) usando Playwright.
 
-### Tests Unitarios
+### Tests unitarios
 
 ```bash
 npm test
@@ -243,28 +241,14 @@ npm run e2e:ui
 npm run e2e:report
 ```
 
-### Cobertura de Tests E2E
+### Cobertura de tests E2E
 
 Los tests E2E cubren los siguientes flujos críticos:
 
-- **Página de Inicio**: Carga, visualización del catálogo, navegación
-- **Reproductor de Video**: Controles de reproducción, pausa, seek
+- **Página de inicio**: Carga, visualización del catálogo, navegación
+- **Reproductor de video**: Controles de reproducción, pausa, seek
 - **Navegación**: Flujos completos de usuario entre páginas
 - **Analytics**: Verificación de eventos de tracking
-
-### Documentación Completa de Testing
-
-Para una guía completa sobre cómo ejecutar, escribir y extender los tests E2E, consulta:
-
-**[E2E Testing Guide](../draft-docs/E2E-TESTING.md)**
-
-Este documento incluye:
-- Configuración del entorno de testing
-- Cómo ejecutar tests
-- Cómo escribir nuevos tests
-- Mejores prácticas
-- Troubleshooting
-- Integración con CI/CD
 
 ## Empaquetado
 
@@ -299,7 +283,7 @@ Ver [EMPAQUETADO.md](../draft-docs/EMPAQUETADO.md) para más detalles.
 
 ## Funcionalidades Demostradas
 
-### 1. Tracking Automático
+### 1. Tracking automático
 
 La aplicación demuestra el tracking automático de:
 
@@ -307,9 +291,9 @@ La aplicación demuestra el tracking automático de:
 - **Navegación**: Cada cambio de página se registra automáticamente
 - **Engagement**: Se calcula y envía el tiempo de interacción
 
-### 2. Eventos Personalizados
+### 2. Eventos personalizados
 
-#### Página de Inicio (HomeComponent)
+#### Página de inicio (HomeComponent)
 
 ```typescript
 // Al cargar la página
@@ -325,7 +309,7 @@ this.analytics.logEvent('select_content', {
 });
 ```
 
-#### Página de Video (VideoComponent)
+#### Página de video (VideoComponent)
 
 ```typescript
 // Inicio del video
@@ -357,7 +341,7 @@ this.analytics.logEvent('video_complete', {
 });
 ```
 
-### 3. Configuración Optimizada para Smart TVs
+### 3. Configuración optimizada para Smart TVs
 
 En `app.module.ts`:
 
@@ -375,7 +359,7 @@ SmartTVAnalyticsModule.forRoot({
 })
 ```
 
-### 4. Detección de Plataforma
+### 4. Detección de plataforma
 
 ```typescript
 private detectPlatform(): string {
@@ -386,7 +370,7 @@ private detectPlatform(): string {
 }
 ```
 
-## 🔍 Verificar Eventos en Google Analytics
+## Verificar eventos en Google Analytics
 
 1. Ve a tu propiedad de Google Analytics 4
 2. Navega a **Informes > Engagement > Events**
@@ -401,11 +385,11 @@ private detectPlatform(): string {
 
 ## Personalización
 
-### Cambiar Estilos
+### Cambiar estilos
 
 Los estilos están en archivos CSS separados por componente. Puedes modificarlos para adaptarlos a tu marca.
 
-### Agregar Nuevas Páginas
+### Agregar nuevas páginas
 
 1. Genera un nuevo componente:
    ```bash
@@ -416,7 +400,7 @@ Los estilos están en archivos CSS separados por componente. Puedes modificarlos
 
 3. Agrega eventos de analytics según necesites
 
-### Modificar Eventos
+### Modificar eventos
 
 Puedes crear tus propios eventos personalizados:
 
@@ -427,15 +411,15 @@ this.analytics.logEvent('nombre_evento', {
 });
 ```
 
-## Recursos Adicionales
+## Recursos adicionales
 
-- [Documentación de smart-tv-analytics](../../README.md)
-- [Guía de Empaquetado](../draft-docs/EMPAQUETADO.md)
+- [Documentación de smart-tv-analytics](../README.md)
+- [Guía de Empaquetado](./EMPAQUETADO.md)
 - [Firebase Analytics](https://firebase.google.com/docs/analytics)
 - [Tizen Developer Guide](https://developer.samsung.com/smarttv/develop/guides/fundamentals.html)
 - [webOS Developer Guide](https://webostv.developer.lge.com/develop/guides)
 
-## ❓ Solución de Problemas
+## Solución de Problemas
 
 ### Los eventos no aparecen en Google Analytics
 
@@ -453,7 +437,3 @@ this.analytics.logEvent('nombre_evento', {
 
 - **webOS**: Verifica que `ares-package` esté instalado: `ares-package --version`
 - **Tizen**: Verifica que Tizen CLI esté en el PATH: `tizen version`
-
-## Licencia
-
-MIT License - ver el archivo LICENSE en la raíz del proyecto para más detalles.

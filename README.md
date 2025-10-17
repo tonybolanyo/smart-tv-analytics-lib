@@ -1,342 +1,72 @@
 # Smart TV Analytics Library
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![npm](https://img.shields.io/npm/v/smart-tv-analytics.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Coverage](https://img.shields.io/badge/coverage-95.19%25-brightgreen.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Angular](https://img.shields.io/badge/angular-12+-red.svg)
+![RxJS](https://img.shields.io/badge/rxjs-7+-red.svg)
+![TypeScript](https://img.shields.io/badge/typescript-4.3+-blue.svg)
+![Node 14](https://img.shields.io/badge/node-14+-blue.svg)
+![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen.svg)
+![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
-![Statements](https://img.shields.io/badge/statements-95.19%25-brightgreen.svg) ![Branches](https://img.shields.io/badge/branches-85.85%25-green.svg) ![Functions](https://img.shields.io/badge/functions-89.77%25-green.svg)
+Una librería de Firebase Analytics optimizada para aplicaciones Angular en Smart TVs, compatible con ES5 y diseñada específicamente para funcionar en Tizen, WebOS y otros sistemas de televisión inteligente.
 
-![Statements](https://img.shields.io/badge/statements-93.72%25-brightgreen.svg) ![Branches](https://img.shields.io/badge/branches-77.36%25-yellowgreen.svg) ![Functions](https://img.shields.io/badge/functions-89.77%25-green.svg)
+## Índice
 
-![Statements](https://img.shields.io/badge/statements-88.28%25-green.svg) ![Branches](https://img.shields.io/badge/branches-67.45%25-yellow.svg) ![Functions](https://img.shields.io/badge/functions-87.50%25-green.svg)
-
-Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compatible con ES5, diseñada específicamente para funcionar en Tizen, WebOS y otros sistemas de Smart TVs.
+- [Características](#características)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Configuración Rápida](#configuración-rápida)
+- [Arquitectura](#arquitectura)
+- [Documentación Completa](#documentación-completa)
+- [Ejemplos de Uso](#ejemplos-de-uso)
+- [Testing](#testing)
+- [Roadmap](#roadmap)
+- [Contribución](#contribución)
+- [Licencia](#licencia)
 
 ## Características
 
-- **Compatible con Smart TVs**: Optimizado para Tizen, WebOS y otros navegadores de TV
-- **Compatibilidad ES5**: Compilado para ES5 garantizando máxima compatibilidad
-- **Sin IndexedDB**: No depende de APIs de almacenamiento local que pueden estar bloqueadas en Smart TVs
-- **API REST directa**: Utiliza Firebase Measurement Protocol v2
-- **Eventos automáticos**: Seguimiento automático de sesiones, páginas y engagement
-- **Batching inteligente**: Agrupa eventos para optimizar el rendimiento de red
-- **Reintentos automáticos**: Manejo robusto de errores de red con backoff exponencial
-- **Angular Ivy**: Compilado con Angular Ivy para mejor tree-shaking y rendimiento
-- **TypeScript completo**: Tipado fuerte y documentación JSDoc completa
+### Caracteristicas _core_
+- **Compatibilidad Smart TV**: Optimizado para navegadores de TV con limitaciones de JavaScript
+- **Compatible con ES5**: Transpilado automáticamente para máxima compatibilidad
+- **Sin IndexedDB**: Evita APIs de almacenamiento que pueden estar bloqueadas
+- **Firebase Measurement Protocol**: Integración directa con GA4 usando API REST
+- **Angular Ivy**: Compilado para mejor tree-shaking y rendimiento
+
+### Caracteristicas de analíticas
+- **Eventos automáticos**: Tracking de sesiones, páginas y engagement sin configuración
+- **Batching inteligente**: Agrupa eventos para optimizar peticiones de red
+- **Reintentos automáticos**: Manejo robusto de errores con backoff exponencial
+- **Múltiples estrategias de envío**: Soporte para envío directo, proxy o modo mock
+- **Modo debug**: Logging detallado para desarrollo y debugging
+
+### Experiencia de desarrollo
+- **TypeScript completo**: Tipado fuerte con documentación JSDoc
+- **Configuración flexible**: Múltiples presets para diferentes entornos
+- **Testing integrado**: Suite completa de tests unitarios, integración y E2E
+- **Hot reload**: Soporte para desarrollo local sin publicar a npm
 
 ## Requisitos
 
-- Angular 12 o superior
-- TypeScript 4.3 o superior
-- Node.js 14.x o superior (recommended: 14.x or 16.x)
+| Dependencia | Versión | Notas |
+|-------------|---------|-------|
+| Angular | 12+ | Compilado con Angular Ivy |
+| TypeScript | 4.3+ | Para compatibilidad con Angular 12 |
+| Node.js | 14.x-16.x | Recomendado para desarrollo |
+| RxJS | 7+ | Para manejo de streams |
 
-> **Nota para Node.js 17+**: Si usas Node.js 17 o superior, necesitarás usar `NODE_OPTIONS="--openssl-legacy-provider"` debido a cambios en OpenSSL 3.0. Ver [Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md) para más detalles.
+> **Importante**: Para Node.js 17+, usar `NODE_OPTIONS="--openssl-legacy-provider"` debido a cambios en OpenSSL 3.0.
 
-## Documentación
+## Compatibilidad
 
-**Toda la documentación actualizada está disponible en la carpeta [`/docs`](./docs/INDEX.md).**
+| Plataforma | Versión | Estado |
+|------------|---------|--------|
+| Samsung Tizen | 2.4+ | Soportado |
+| LG webOS | 3.0+ | Soportado |
 
-- **[Índice de Documentación](./docs/INDEX.md)** - Inicio y guía completa
-- **[Guía Principal](./docs/README.md)** - Instalación, configuración y API
-- **[Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md)** - 🆕 Build y ejecución sin publicar a npm
-- **[Compatibilidad ES5](./ES5-COMPATIBILITY.md)** - 🆕 Cómo usar TypeScript moderno que se transpila a ES5
-- **[Solución de Problemas](./docs/TROUBLESHOOTING.md)** - Guía para resolver problemas comunes
-- **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)** - Tutorial completo con ejemplo
-- **[Historial de Cambios](./docs/CHANGELOG.md)** - Versiones y actualizaciones
+## Changelog
 
-> **Nota**: Los documentos en borrador y en desarrollo están en [`/draft-docs`](./draft-docs/README.md)
-
-## Instalación
-
-```bash
-npm install smart-tv-analytics
-```
-
-## Ejemplos
-
-Tenemos una **aplicación de ejemplo completa** que demuestra cómo integrar y usar esta librería:
-
-- **[Aplicación de Ejemplo](./docs/SAMPLE-APP.md)**: App Angular completa con tracking de video
-- **[Más Ejemplos](./docs/EXAMPLES.md)**: Índice completo de ejemplos disponibles
-- **[Scripts de Empaquetado](./draft-docs/EMPAQUETADO.md)**: Guía detallada para crear paquetes Tizen (.wgt) y webOS (.ipk)
-
-### Inicio Rápido con el Ejemplo
-
-Para ejecutar la aplicación de ejemplo localmente sin publicar a npm:
-
-```bash
-# 1. Compilar la librería
-npm install
-npm run build
-
-# 2. Ir al directorio del ejemplo
-cd examples/sample-app
-
-# 3. Instalar dependencias
-npm install
-
-# 4. Iniciar el servidor de desarrollo
-npm start
-```
-
-**Nota**: Si usas Node.js 17+, ejecuta: `NODE_OPTIONS="--openssl-legacy-provider" npm start`
-
-Para instrucciones detalladas, consulta la **[Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md)**.
-
-## Configuración
-
-### 1. Configurar en app.module.ts
-
-```typescript
-import { SmartTVAnalyticsModule } from 'smart-tv-analytics';
-
-@NgModule({
-  imports: [
-    SmartTVAnalyticsModule.forRoot({
-      measurementId: 'G-XXXXXXXXXX',
-      apiSecret: 'your-measurement-protocol-api-secret',
-      appName: 'MySmartTVApp',
-      appVersion: '1.0.0',
-      enableDebugMode: false,
-      batchSize: 10,
-      flushInterval: 30000
-    })
-  ]
-})
-export class AppModule { }
-```
-
-### 2. Configuración para Smart TVs
-
-Para garantizar la compatibilidad con Tizen y WebOS, debes importar los polyfills necesarios en tu aplicación. Asegúrate de que tu archivo `polyfills.ts` incluya:
-
-```typescript
-// Polyfills necesarios para Smart TVs
-import 'core-js/es/array';
-import 'core-js/es/object';
-import 'core-js/es/promise';
-// ... otros polyfills según sea necesario
-
-// Zone.js requerido por Angular
-import 'zone.js/dist/zone';
-```
-
-Se recomienda la siguiente configuración para cada plataforma:
-
-#### Tizen (Samsung Smart TVs)
-
-```typescript
-// En app.module.ts, configuración recomendada para Tizen
-SmartTVAnalyticsModule.forRoot({
-  measurementId: 'G-XXXXXXXXXX',
-  apiSecret: 'your-api-secret',
-  appName: 'MyTizenApp',
-  appVersion: '1.0.0',
-  enableDebugMode: false,
-  batchSize: 5,           // Menor tamaño de lote para Tizen
-  flushInterval: 60000,   // Mayor intervalo para conservar recursos
-  requestTimeout: 15000   // Timeout más largo para conexiones lentas
-})
-```
-
-#### WebOS (LG Smart TVs)
-
-```typescript
-// En app.module.ts, configuración recomendada para WebOS
-SmartTVAnalyticsModule.forRoot({
-  measurementId: 'G-XXXXXXXXXX',
-  apiSecret: 'your-api-secret',
-  appName: 'MyWebOSApp',
-  appVersion: '1.0.0',
-  enableDebugMode: false,
-  batchSize: 8,           // Tamaño óptimo para WebOS
-  flushInterval: 45000,   // Intervalo equilibrado
-  maxRetries: 2           // Menos reintentos para evitar congestión
-})
-```
-
-### 3. Usar en componentes
-
-```typescript
-import { SmartTVAnalyticsService } from 'smart-tv-analytics';
-
-@Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html'
-})
-export class HomeComponent {
-  constructor(private analytics: SmartTVAnalyticsService) {}
-
-  onButtonClick() {
-    this.analytics.logEvent('button_click', {
-      button_name: 'play_video',
-      content_id: 'movie_123',
-      value: 1
-    });
-  }
-
-  onUserLogin(userId: string) {
-    this.analytics.setUserId(userId);
-    this.analytics.setUserProperty('user_type', 'premium');
-  }
-}
-```
-
-## Eventos Automáticos
-
-La librería envía automáticamente estos eventos:
-
-- **session_start**: Al iniciar la aplicación
-- **first_visit**: Primera vez que se abre la app
-- **page_view**: Navegación entre rutas de Angular
-- **app_update**: Cuando cambia la versión de la app
-- **engagement**: Tiempo de uso cada 30 segundos
-
-## API Referencia
-
-### SmartTVAnalyticsService
-
-#### logEvent(eventName: string, parameters?: EventParameters)
-Envía un evento personalizado a Firebase Analytics.
-
-```typescript
-this.analytics.logEvent('video_play', {
-  video_title: 'Movie Title',
-  video_duration: 120,
-  user_engagement: true
-});
-```
-
-#### setUserProperty(propertyName: string, value: string)
-Establece una propiedad de usuario.
-
-```typescript
-this.analytics.setUserProperty('subscription_type', 'premium');
-```
-
-#### setUserId(userId: string)
-Establece el ID único del usuario.
-
-```typescript
-this.analytics.setUserId('user_12345');
-```
-
-#### enableCollection(enabled: boolean)
-Habilita o deshabilita la recolección de datos.
-
-```typescript
-this.analytics.enableCollection(false); // Deshabilitar
-```
-
-#### flush(): Promise<void>
-Fuerza el envío inmediato de todos los eventos pendientes.
-
-```typescript
-await this.analytics.flush();
-```
-
-#### reset()
-Reinicia todos los datos de usuario y comienza una nueva sesión.
-
-```typescript
-this.analytics.reset();
-```
-
-## Configuración Avanzada
-
-### Opciones de SmartTVAnalyticsConfig
-
-```typescript
-interface SmartTVAnalyticsConfig {
-  measurementId: string;           // ID de medición GA4
-  apiSecret: string;               // API Secret del Measurement Protocol
-  appName: string;                 // Nombre de la aplicación
-  appVersion: string;              // Versión de la aplicación
-  enableDebugMode?: boolean;       // Modo debug (default: false)
-  batchSize?: number;              // Eventos por lote (default: 10)
-  flushInterval?: number;          // Intervalo de envío en ms (default: 30000)
-  requestTimeout?: number;         // Timeout de requests (default: 10000)
-  maxRetryAttempts?: number;       // Intentos de reintento (default: 3)
-  enablePageViewTracking?: boolean; // Tracking automático de páginas
-  enableSessionTracking?: boolean;  // Tracking automático de sesiones
-  enableEngagementTracking?: boolean; // Tracking automático de engagement
-  customUserAgent?: string;        // User agent personalizado
-  defaultParameters?: EventParameters; // Parámetros por defecto
-}
-```
-
-### Parámetros de Evento
-
-```typescript
-interface EventParameters {
-  [key: string]: string | number | boolean;
-}
-
-// Ejemplo de uso
-this.analytics.logEvent('purchase', {
-  transaction_id: 'T12345',
-  value: 15.99,
-  currency: 'USD',
-  item_category: 'movies',
-  payment_method: 'credit_card'
-});
-```
-
-## Arquitectura
-
-La librería está compuesta por varios servicios especializados:
-
-- **SmartTVAnalyticsService**: Servicio principal y API pública
-- **EventBatchingService**: Manejo de lotes y envío a Firebase
-- **SessionService**: Gestión de sesiones de usuario
-- **DeviceInfoService**: Detección de información del dispositivo
-- **StorageService**: Almacenamiento con fallback a memoria
-
-## Testing
-
-La librería incluye tests unitarios completos usando Jasmine y Karma.
-
-```bash
-npm test
-```
-
-### Tests End-to-End
-
-La aplicación de ejemplo incluye una suite completa de tests E2E usando Playwright:
-
-```bash
-cd examples/sample-app
-npm run e2e
-```
-
-Para más información sobre testing E2E, consulta la [guía completa de E2E testing](./draft-docs/E2E-TESTING.md).
-
-### Ejemplo de test personalizado
-
-```typescript
-import { TestBed } from '@angular/core/testing';
-import { SmartTVAnalyticsService } from 'smart-tv-analytics';
-
-describe('Analytics Integration', () => {
-  let service: SmartTVAnalyticsService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SmartTVAnalyticsModule.forRoot({
-        measurementId: 'G-TEST',
-        apiSecret: 'test-secret',
-        appName: 'TestApp',
-        appVersion: '1.0.0'
-      })]
-    });
-    
-    service = TestBed.inject(SmartTVAnalyticsService);
-  });
-
-  it('should track custom events', async () => {
-    await service.logEvent('test_event', { test_param: 'value' });
-    // Assertions...
-  });
-});
-```
+Ver [CHANGELOG.md](docs/CHANGELOG.md) para el historial completo de versiones.
 
 ## Privacidad y Cumplimiento
 
@@ -345,101 +75,286 @@ describe('Analytics Integration', () => {
 - Compatible con GDPR y otras regulaciones
 - Método `enableCollection(false)` para deshabilitar completamente
 
-## Troubleshooting
+## Documentación
 
-### Eventos no se envían
-1. Verificar el `measurementId` y `apiSecret`
-2. Comprobar conectividad de red
-3. Habilitar `enableDebugMode` para logs detallados
+## Instalación
 
-### Errores de CORS
-La librería usa el Measurement Protocol que no tiene restricciones CORS, pero verifica la configuración de red del Smart TV.
+```bash
+# Instalación desde npm
+npm install smart-tv-analytics
 
-### Memoria limitada
-La librería está optimizada para Smart TVs con recursos limitados y usa almacenamiento en memoria como fallback.
+# O con yarn
+yarn add smart-tv-analytics
+```
 
-## Mejores Prácticas para Smart TVs
+### Desarrollo local
 
-### Optimización de Rendimiento
+Para desarrollo sin publicar a npm:
 
-1. **Usar lotes pequeños** (5-8 eventos) para conservar memoria
-2. **Intervalos de flush más largos** (45-60 segundos) para reducir tráfico de red
-3. **Limitar parámetros por evento** (máximo 25 por evento)
-4. **Implementar error handling** robusto para conexiones inestables
+```bash
+# En el directorio de la librería
+npm run build
+npm pack
 
-### Compatibilidad con Smart TVs
+# En tu proyecto
+npm install path/to/smart-tv-analytics-1.0.0.tgz
+```
 
-1. **Tizen (Samsung)**:
-   - Usar `batchSize: 5` para mejor rendimiento
-   - Timeout de red de al menos 15 segundos
-   - Evitar operaciones intensivas durante la reproducción de video
+## Configuración rápida
 
-2. **WebOS (LG)**:
-   - Configurar `batchSize: 8` para aprovecha mejor los recursos
-   - Usar `maxRetries: 2` para evitar congestión de red
-   - Implementar debounce en eventos de navegación frecuentes
-
-3. **Dispositivos con recursos limitados**:
-   - Deshabilitar debug mode en producción
-   - Usar `flush()` manual en momentos apropiados (fin de sesión, pausa de contenido)
-   - Monitorear el uso de memoria con herramientas de desarrollo del TV
-
-### Eventos Recomendados para Smart TVs
+### 1. Importar el módulo
 
 ```typescript
-// Eventos específicos para aplicaciones de TV
-this.analytics.logEvent('content_start', {
+import { NgModule } from '@angular/core';
+import { SmartTVAnalyticsModule } from 'smart-tv-analytics';
+
+@NgModule({
+  imports: [
+    SmartTVAnalyticsModule.forRoot({
+      measurementId: 'G-XXXXXXXXXX',
+      apiSecret: 'your-api-secret',
+      appName: 'MySmartTVApp',
+      appVersion: '1.0.0',
+      enableDebugMode: true
+    })
+  ]
+})
+export class AppModule { }
+```
+
+### 2. Usar el servicio
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { SmartTVAnalyticsService } from 'smart-tv-analytics';
+
+@Component({
+  selector: 'app-home',
+  template: '<h1>App Smart TV</h1>'
+})
+export class HomeComponent implements OnInit {
+  constructor(private analytics: SmartTVAnalyticsService) {}
+
+  ngOnInit() {
+    // Eventos automáticos ya están activos
+    
+    // Evento personalizado
+    this.analytics.logEvent('page_view', {
+      page_title: 'Home',
+      page_location: '/home'
+    });
+  }
+
+  onVideoPlay() {
+    this.analytics.logEvent('video_play', {
+      video_id: 'abc123',
+      video_title: 'Vídeo de ejemplo'
+    });
+  }
+}
+```
+
+## Arquitectura
+
+### Estructura del proyecto
+
+```
+smart-tv-analytics/
+├── src/
+│   ├── lib/
+│   │   ├── models/           # Interfaces y tipos
+│   │   ├── services/         # Servicios core
+│   │   └── smart-tv-analytics.module.ts
+│   ├── smart-tv-configs.ts   # Configuraciones predefinidas
+│   └── public-api.ts         # API pública
+├── examples/
+│   └── sample-app/           # App de ejemplo completa
+├── docs/                     # Documentación detallada
+├── scripts/                  # Scripts de build y utilities
+└── dist/                     # Build output
+```
+
+### Servicios _core_
+
+| Servicio | Descripción | Responsabilidades |
+|----------|-------------|-------------------|
+| `SmartTVAnalyticsService` | Servicio principal | API pública, orquestación |
+| `EventBatchingService` | Batching de eventos | Agrupa y envía eventos |
+| `SessionService` | Gestión de sesiones | Tracking de sesiones automático |
+| `DeviceInfoService` | Información del dispositivo | Detección de plataforma y specs |
+| `StorageService` | Almacenamiento local | Persistencia sin IndexedDB |
+
+### Flujo de datos
+
+```
+Component → SmartTVAnalyticsService → EventBatchingService → Firebase GA4
+    ↑              ↑                          ↑
+DeviceInfo    SessionService           StorageService
+```
+
+## Documentación completa
+
+### Documentos principales
+
+- **[Guía de instalación y configuración](docs/INSTALLATION.md)** - Setup detallado
+- **[Guía API](docs/API.md)** - Referencia completa de la API
+- **[Arquitectura del sistema](docs/ARCHITECTURE.md)** - Diseño y patrones
+- **[Buenas prácticas](docs/BEST-PRACTICES.md)** - Recomendaciones de uso
+- **[Análisis funcional](docs/FUNCTIONAL-ANALYSIS.md)** - Casos de uso y requisitos
+
+### Documentos de desarrollo
+
+- **[Guía de testing](docs/TESTING.md)** - Tests unitarios, integración y E2E
+- **[Desarrollo local](docs/LOCAL-DEVELOPMENT.md)** - Setup para desarrollo
+- **[Troubleshooting](docs/TROUBLESHOOTING.md)** - Solución de problemas
+- **[Compatibilidad ES5](docs/ES5-COMPATIBILITY.md)** - Detalles técnicos
+
+### Ejemplos y tutoriales
+
+- **[Aplicación de ejemplo](docs/SAMPLE-APP.md)** - Tutorial paso a paso
+- **[Ejemplos de código](docs/EXAMPLES.md)** - Casos de uso comunes
+- **[Configuraciones avanzadas](docs/ADVANCED-CONFIG.md)** - Configuraciones personalizadas
+
+## Ejemplos de uso
+
+### Configuraciones predefinidas
+
+```typescript
+import { TIZEN_CONFIG, WEBOS_CONFIG, DEBUG_CONFIG } from 'smart-tv-analytics';
+
+// Para Tizen
+SmartTVAnalyticsModule.forRoot({
+  ...TIZEN_CONFIG,
+  measurementId: 'G-XXXXXXXXXX',
+  apiSecret: 'your-secret'
+})
+
+// Para desarrollo
+SmartTVAnalyticsModule.forRoot({
+  ...DEBUG_CONFIG,
+  measurementId: 'G-XXXXXXXXXX',
+  apiSecret: 'your-secret',
+  mockMode: true
+})
+```
+
+### Eventos personalizados
+
+```typescript
+// Evento de navegación
+this.analytics.logEvent('screen_view', {
+  screen_name: 'VideoPlayer',
+  screen_class: 'VideoComponent'
+});
+
+// Evento de interacción
+this.analytics.logEvent('select_content', {
   content_type: 'video',
-  content_id: 'movie_123',
-  content_title: 'Título de la película',
-  content_duration: 7200,
-  quality: '4K'
+  content_id: 'video_123',
+  content_name: 'Episode 1'
 });
 
-this.analytics.logEvent('remote_control_action', {
-  action: 'pause',
-  content_position: 1800,
-  device_type: 'samsung_tizen'
-});
-
-this.analytics.logEvent('app_navigation', {
-  from_screen: 'home',
-  to_screen: 'movie_details',
-  navigation_method: 'remote_control'
+// Propiedades de usuario
+this.analytics.setUserProperties({
+  platform: 'tizen',
+  app_version: '1.0.0'
 });
 ```
 
-### Mejores Prácticas Generales
+### Manejo de errores
 
-1. **Usar nombres descriptivos** para eventos y parámetros
-2. **Agrupar eventos relacionados** con prefijos consistentes
-3. **Respetar la privacidad** del usuario
-4. **Testear en dispositivos reales** siempre que sea posible
+```typescript
+try {
+  await this.analytics.logEvent('custom_event', { param: 'value' });
+} catch (error) {
+  console.error('Analytics error:', error);
+  // Fallback o logging local
+}
+```
 
-## Changelog
+## Testing
 
-### v1.0.0
-- Lanzamiento inicial
-- Soporte completo para Tizen y WebOS
-- API REST con Firebase Measurement Protocol
-- Eventos automáticos y batching
-- Tests unitarios completos
-- **Suite completa de tests E2E con Playwright**
+### Tests unitarios
 
-## Contribuir
+```bash
+# Ejecutar todos los tests
+npm run test
 
-1. Fork del repositorio
-2. Crear rama de feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
+# Tests con coverage
+npm run test:coverage
 
-## Licencia
+# Tests en modo watch
+npm run test:watch
 
-MIT License - ver [LICENSE](LICENSE) para detalles.
+# Tests para CI
+npm run test:ci
+```
 
-## Soporte
+### Tests de integración
 
-- [Issues en GitHub](https://github.com/your-org/smart-tv-analytics/issues)
-- [Documentación completa](https://your-org.github.io/smart-tv-analytics)
-- Email: support@your-org.com
+```bash
+# En la aplicación de ejemplo
+cd examples/sample-app
+npm run test
+```
+
+### Tests E2E
+
+```bash
+# Tests end-to-end con Playwright
+cd examples/sample-app
+npm run e2e
+
+# Tests con UI
+npm run e2e:ui
+
+# Tests en modo debug
+npm run e2e:debug
+```
+
+### Cobertura de tests
+
+- **Statements**: 95%+
+- **Branches**: 85%+
+- **Functions**: 90%+
+- **Lines**: 95%+
+
+## Contribución
+
+### Desarrollo local
+
+```bash
+# Clonar repositorio
+git clone ...
+cd smart-tv-analytics-lib
+
+# Instalar dependencias
+npm install
+
+# Build de desarrollo
+npm run build
+
+# Ejecutar tests
+npm run test
+
+# Ejecutar ejemplo
+cd examples/sample-app
+npm install
+npm start
+```
+
+### Guías de desarrollo
+
+1. **[Guía de contribución](CONTRIBUTING.md)** - Proceso y estándares
+2. **[Código de conducta](CODE_OF_CONDUCT.md)** - Normas de la comunidad
+3. **[Guía de incidencias](docs/ISSUE-TEMPLATE.md)** - Cómo reportar bugs
+4. **[Guía de PR](docs/PR-TEMPLATE.md)** - Guía para los Pull Request
+
+### Estándares de código
+
+- **Linting**: ESLint + Prettier
+- **Testing**: Mínimo 85% de cobertura
+- **Documentation**: JSDoc para todas las APIs públicas
+- **Commits**: Conventional Commits
+
+
