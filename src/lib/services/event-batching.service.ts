@@ -198,6 +198,20 @@ export class EventBatchingService {
     headers: HttpHeaders,
     attemptsLeft: number
   ): Promise<void> {
+    // Verificar estrategia de envío
+    if (this.config.mockMode || this.config.sendingStrategy === 'mock') {
+      return this.mockSendRequest(url, payload);
+    }
+
+    if (this.config.sendingStrategy === 'proxy' && this.config.proxyUrl) {
+      return this.sendViaProxy(url, payload, headers, attemptsLeft);
+    }
+
+    if (this.config.sendingStrategy === 'gtag') {
+      return this.sendViaGtag(payload);
+    }
+
+    // Estrategia directa (original)
     try {
       await this.http.post(url, payload, {
         headers
@@ -262,5 +276,87 @@ export class EventBatchingService {
         });
       }
     }, flushInterval);
+  }
+
+  /**
+   * Mock sending - logs to console instead of making HTTP request
+   * @private
+   */
+  private async mockSendRequest(url: string, payload: MeasurementPayload): Promise<void> {
+    if (this.config.enableDebugMode) {
+      console.log('[EventBatching] MOCK MODE - Request would be sent to:', url);
+      console.log('[EventBatching] MOCK MODE - Payload:', JSON.stringify(payload, null, 2));
+      console.log('[EventBatching] MOCK MODE - Events:', payload.events.map(e => `${e.name}: ${Object.keys(e.params || {}).length} params`));
+    }
+    
+    // Simular delay de red
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  /**
+   * Send via proxy server to avoid CORS
+   * @private
+   */
+  private async sendViaProxy(
+    url: string, 
+    payload: MeasurementPayload, 
+    headers: HttpHeaders, 
+    attemptsLeft: number
+  ): Promise<void> {
+    const proxyPayload = {
+      targetUrl: url,
+      headers: headers,
+      data: payload
+    };
+
+    try {
+      await this.http.post(this.config.proxyUrl!, proxyPayload).toPromise();
+      
+      if (this.config.enableDebugMode) {
+        console.log('[EventBatching] Proxy request successful');
+      }
+    } catch (error) {
+      if (attemptsLeft <= 1) {
+        throw error;
+      }
+
+      const delay = Math.min(
+        this.retryConfig.baseDelay * Math.pow(this.retryConfig.backoffMultiplier, this.retryConfig.maxAttempts - attemptsLeft),
+        this.retryConfig.maxDelay
+      );
+
+      if (this.config.enableDebugMode) {
+        console.log(`[EventBatching] Proxy request failed, retrying in ${delay}ms. Attempts left:`, attemptsLeft - 1);
+      }
+
+      setTimeout(() => {
+        this.sendViaProxy(url, payload, headers, attemptsLeft - 1);
+      }, delay);
+    }
+  }
+
+  /**
+   * Send via gtag.js (no CORS issues)
+   * @private
+   */
+  private async sendViaGtag(payload: MeasurementPayload): Promise<void> {
+    if (typeof (window as any).gtag !== 'function') {
+      throw new Error('gtag is not available. Make sure Google Analytics script is loaded.');
+    }
+
+    const gtag = (window as any).gtag;
+
+    // Enviar cada evento individualmente via gtag
+    payload.events.forEach(event => {
+      gtag('event', event.name, {
+        ...event.params,
+        client_id: payload.client_id,
+        timestamp_micros: event.timestamp_micros
+      });
+
+      if (this.config.enableDebugMode) {
+        console.log(`[EventBatching] Event sent via gtag: ${event.name}`);
+      }
+    });
   }
 }

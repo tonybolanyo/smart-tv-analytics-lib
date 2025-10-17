@@ -13,8 +13,20 @@ module.exports = {
             fesm2015: './fesm2015/smart-tv-analytics.js',
             typings: './smart-tv-analytics.d.ts',
           },
+          ignoreMissingDependencies: true
         },
       },
     },
+    // Configuración para core-js
+    'core-js': {
+      entryPoints: {
+        '.': {
+          ignoreMissingDependencies: true
+        }
+      }
+    }
   },
+  // Configuración global
+  processingConcurrency: 1,
+  hashAlgorithm: 'md5'
 };

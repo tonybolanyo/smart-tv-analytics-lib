@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { SmartTVAnalyticsModule } from 'smart-tv-analytics';
 
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { VideoComponent } from './video/video.component';
-import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { environment } from '../environments/environment';
       apiSecret: environment.analytics.apiSecret,
       appName: environment.analytics.appName,
       appVersion: environment.analytics.appVersion,
-      enableDebugMode: !environment.production,
+      enableDebugMode: true, //!environment.production,
       enablePageViewTracking: true,
       enableSessionTracking: true,
       enableEngagementTracking: true,

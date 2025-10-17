@@ -30,7 +30,7 @@ Una librería de Firebase Analytics para aplicaciones Angular en Smart TVs compa
 
 > **Nota para Node.js 17+**: Si usas Node.js 17 o superior, necesitarás usar `NODE_OPTIONS="--openssl-legacy-provider"` debido a cambios en OpenSSL 3.0. Ver [Guía de Desarrollo Local](./LOCAL_DEVELOPMENT.md) para más detalles.
 
-## 📚 Documentación
+## Documentación
 
 **Toda la documentación actualizada está disponible en la carpeta [`/docs`](./docs/INDEX.md).**
 

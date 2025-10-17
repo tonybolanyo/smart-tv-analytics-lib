@@ -57,11 +57,11 @@ export default defineConfig({
     // },
   ],
 
-  // Web server configuration
-  webServer: {
-    command: 'npm start',
-    url: 'http://localhost:4200',
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
-  },
+  // Web server configuration (commented out to use existing server)
+  // webServer: {
+  //   command: './build-and-serve.sh',
+  //   url: 'http://localhost:4200',
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 180 * 1000, // Más tiempo para build completo
+  // },
 });

@@ -49,6 +49,15 @@ export interface SmartTVAnalyticsConfig {
   
   /** Additional default parameters for all events */
   defaultParameters?: EventParameters;
+  
+  /** Analytics sending strategy to handle CORS issues */
+  sendingStrategy?: 'direct' | 'proxy' | 'mock' | 'gtag';
+  
+  /** Proxy server URL when using proxy strategy */
+  proxyUrl?: string;
+  
+  /** Mock mode - logs events to console instead of sending */
+  mockMode?: boolean;
 }
 
 /**
