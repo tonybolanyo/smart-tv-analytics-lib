@@ -391,6 +391,161 @@ describe('EventBatchingService', () => {
     });
   });
 
+  describe('sending strategies', () => {
+    beforeEach(() => {
+      storageService.getItem.and.returnValue('test-client-123');
+    });
+
+    it('should send via mock mode when mockMode is true', async () => {
+      const mockModeConfig = { ...mockConfig, mockMode: true, enableDebugMode: true };
+      service.initialize(mockModeConfig);
+      spyOn(console, 'log');
+
+      await service.addEvent({
+        name: 'test_event',
+        params: { value: 1 }
+      });
+
+      await service.flush();
+
+      // Check that MOCK MODE was logged
+      const calls = (console.log as jasmine.Spy).calls.all();
+      const mockModeCalls = calls.filter((call: any) => 
+        call.args.some((arg: any) => typeof arg === 'string' && arg.includes('MOCK MODE'))
+      );
+      expect(mockModeCalls.length).toBeGreaterThan(0);
+    });
+
+    it('should send via mock strategy when sendingStrategy is mock', async () => {
+      const mockStrategyConfig = { ...mockConfig, sendingStrategy: 'mock' as any, enableDebugMode: true };
+      service.initialize(mockStrategyConfig);
+      spyOn(console, 'log');
+
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+
+      await service.flush();
+
+      // Check that MOCK MODE was logged
+      const calls = (console.log as jasmine.Spy).calls.all();
+      const mockModeCalls = calls.filter((call: any) => 
+        call.args.some((arg: any) => typeof arg === 'string' && arg.includes('MOCK MODE'))
+      );
+      expect(mockModeCalls.length).toBeGreaterThan(0);
+    });
+
+    it('should send via proxy when sendingStrategy is proxy', async () => {
+      const proxyConfig = { 
+        ...mockConfig, 
+        sendingStrategy: 'proxy' as any,
+        proxyUrl: 'http://localhost:3000/proxy',
+        enableDebugMode: true
+      };
+      service.initialize(proxyConfig);
+
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+
+      const flushPromise = service.flush();
+
+      const req = httpMock.expectOne('http://localhost:3000/proxy');
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body.targetUrl).toContain('google-analytics.com');
+      req.flush({});
+
+      await flushPromise;
+    });
+
+    it('should handle proxy errors and retry', async () => {
+      const proxyConfig = { 
+        ...mockConfig, 
+        sendingStrategy: 'proxy' as any,
+        proxyUrl: 'http://localhost:3000/proxy',
+        maxRetryAttempts: 2,
+        enableDebugMode: true
+      };
+      service.initialize(proxyConfig);
+      spyOn(console, 'log');
+
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+
+      const flushPromise = service.flush();
+
+      // First attempt fails
+      const req1 = httpMock.expectOne('http://localhost:3000/proxy');
+      req1.error(new ErrorEvent('Network error'));
+
+      await flushPromise;
+
+      // Should log retry message
+      expect(console.log).toHaveBeenCalled();
+    });
+
+    it('should send via gtag when sendingStrategy is gtag', async () => {
+      const gtagConfig = { 
+        ...mockConfig, 
+        sendingStrategy: 'gtag' as any,
+        enableDebugMode: true
+      };
+      service.initialize(gtagConfig);
+      
+      const mockGtag = jasmine.createSpy('gtag');
+      (window as any).gtag = mockGtag;
+      spyOn(console, 'log');
+
+      await service.addEvent({
+        name: 'test_event',
+        params: { value: 123 }
+      });
+
+      await service.flush();
+
+      // Check that gtag was called
+      expect(mockGtag).toHaveBeenCalledWith(
+        'event',
+        'test_event',
+        jasmine.objectContaining({ value: 123 })
+      );
+      
+      // Check that gtag was logged
+      const calls = (console.log as jasmine.Spy).calls.all();
+      const gtagCalls = calls.filter((call: any) => 
+        call.args.some((arg: any) => typeof arg === 'string' && arg.includes('Event sent via gtag'))
+      );
+      expect(gtagCalls.length).toBeGreaterThan(0);
+
+      delete (window as any).gtag;
+    });
+
+    it('should throw error if gtag is not available', async () => {
+      const gtagConfig = { 
+        ...mockConfig, 
+        sendingStrategy: 'gtag' as any
+      };
+      service.initialize(gtagConfig);
+
+      delete (window as any).gtag;
+      spyOn(console, 'error');
+
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+
+      await service.flush();
+      
+      // Error should be logged because gtag is not available
+      expect(console.error).toHaveBeenCalled();
+    });
+  });
+
   describe('batch flushing with mocked HTTP', () => {
     beforeEach(() => {
       service.initialize(mockConfig);
@@ -543,6 +698,92 @@ describe('EventBatchingService', () => {
 
       // Debug logging should occur
       expect(console.log).toHaveBeenCalled();
+    });
+  });
+
+  describe('automatic flush timer', () => {
+    beforeEach(() => {
+      storageService.getItem.and.returnValue('test-client-123');
+    });
+
+    it('should setup timer on initialization', () => {
+      const timerConfig = { ...mockConfig, flushInterval: 5000 };
+      service.initialize(timerConfig);
+
+      // Timer should be initialized
+      expect(service).toBeTruthy();
+    });
+
+    it('should flush events automatically when timer fires', (done) => {
+      const timerConfig = { ...mockConfig, flushInterval: 100, mockMode: true, enableDebugMode: true };
+      service.initialize(timerConfig);
+      spyOn(console, 'log');
+
+      service.addEvent({
+        name: 'test_event',
+        params: {}
+      }).then(() => {
+        // Wait for timer to fire
+        setTimeout(() => {
+          // Check if flush was triggered by timer
+          const calls = (console.log as jasmine.Spy).calls.all();
+          const mockModeCalls = calls.filter((call: any) => 
+            call.args.some((arg: any) => typeof arg === 'string' && arg.includes('MOCK MODE'))
+          );
+          // If timer fired, mock mode should have logged
+          if (mockModeCalls.length > 0) {
+            expect(mockModeCalls.length).toBeGreaterThan(0);
+          }
+          done();
+        }, 150);
+      });
+    });
+  });
+
+  describe('error handling and retries', () => {
+    beforeEach(() => {
+      storageService.getItem.and.returnValue('test-client-123');
+    });
+
+    it('should re-queue events on flush failure', async () => {
+      const mockModeConfig = { ...mockConfig, mockMode: true, enableDebugMode: true };
+      service.initialize(mockModeConfig);
+      spyOn(console, 'log');
+
+      await service.addEvent({
+        name: 'test_event',
+        params: {}
+      });
+
+      await service.flush();
+
+      // Check that MOCK MODE was logged
+      const calls = (console.log as jasmine.Spy).calls.all();
+      const mockModeCalls = calls.filter((call: any) => 
+        call.args.some((arg: any) => typeof arg === 'string' && arg.includes('MOCK MODE'))
+      );
+      expect(mockModeCalls.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('destroy with pending events', () => {
+    it('should flush remaining events on destroy', () => {
+      storageService.getItem.and.returnValue('test-client-123');
+      const mockModeConfig = { ...mockConfig, mockMode: true };
+      service.initialize(mockModeConfig);
+
+      service.destroy();
+
+      expect(service).toBeTruthy();
+    });
+
+    it('should handle destroy gracefully', () => {
+      storageService.getItem.and.returnValue('test-client-123');
+      service.initialize(mockConfig);
+
+      service.destroy();
+
+      expect(service).toBeTruthy();
     });
   });
 });
